@@ -1,0 +1,73 @@
+---
+const navLinks = [
+  { label: 'Sobre mí', href: '#sobre-mi' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Experiencia', href: '#experiencia' },
+  { label: 'Contacto', href: '#contacto' },
+];
+---
+
+<nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+    <a href="#" class="text-2xl font-bold font-heading text-text-primary">
+      MKG<span class="text-accent-cyan">.</span>
+    </a>
+
+    <div class="hidden md:flex items-center gap-8">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-text-secondary hover:text-text-primary transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/cv-matias-kalil.pdf"
+        download
+        class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+      >
+        Descargar CV
+      </a>
+    </div>
+
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden p-2 text-text-primary"
+      aria-label="Toggle menu"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+    <div class="px-6 py-4 flex flex-col gap-4">
+      {navLinks.map((link) => (
+        <a href={link.href} class="text-text-secondary hover:text-text-primary py-2">
+          {link.label}
+        </a>
+      ))}
+      <a
+        href="/cv-matias-kalil.pdf"
+        download
+        class="px-4 py-2 bg-accent text-white rounded-lg text-center"
+      >
+        Descargar CV
+      </a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>
