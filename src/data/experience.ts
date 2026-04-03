@@ -21,8 +21,7 @@ export const experience: Experience[] = [
     period: '2021 — Presente',
     role: 'Diplomatura en Programación .NET',
     company: 'Universidad Tecnológica Nacional',
-    description:
-      'Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.',
+    description: 'Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.',
     tech: ['C#', '.NET Core', 'SQL Server'],
     current: false,
   },

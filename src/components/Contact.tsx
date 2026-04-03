@@ -57,8 +57,8 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-12">
           <div>
             <p className="text-lg text-text-secondary mb-8">
-              ¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo
-              lo antes posible.
+              ¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo lo antes
+              posible.
             </p>
 
             <div className="space-y-4">
@@ -122,9 +122,7 @@ export default function Contact() {
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
                 placeholder="tu@email.com"
               />
-              {errors.email && (
-                <span className="text-red-500 text-sm">{errors.email.message}</span>
-              )}
+              {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
             </div>
 
             <div>
@@ -166,7 +164,11 @@ export default function Contact() {
             >
               {status === 'loading' && <Loader2 className="w-5 h-5 animate-spin" />}
               {status === 'success' && <Check className="w-5 h-5" />}
-              {status === 'loading' ? 'Enviando...' : status === 'success' ? 'Enviado!' : 'Enviar mensaje'}
+              {status === 'loading'
+                ? 'Enviando...'
+                : status === 'success'
+                  ? 'Enviado!'
+                  : 'Enviar mensaje'}
             </button>
 
             {status === 'error' && (

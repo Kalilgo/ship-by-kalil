@@ -1,1 +1,119 @@
-import{j as e,m as i}from"./proxy.Ce3DUqBB.js";import{r}from"./index.DYrVU9rO.js";import{A as m}from"./index.D1eonDqi.js";const n=[{name:"Frontend",skills:[{name:"React",level:85},{name:"Astro",level:80},{name:"TypeScript",level:75},{name:"Tailwind CSS",level:85},{name:"JavaScript",level:90}]},{name:"Backend",skills:[{name:"C# / .NET Core",level:80},{name:"MVC",level:75},{name:"REST APIs",level:80}]},{name:"Bases de Datos",skills:[{name:"SQL Server",level:80},{name:"PostgreSQL",level:70}]},{name:"Cloud & DevOps",skills:[{name:"AWS",level:65},{name:"Vercel",level:85},{name:"Railway",level:70},{name:"GitHub / Git",level:85}]},{name:"Herramientas IA",skills:[{name:"Cursor",level:80},{name:"Claude AI",level:80}]}];function c({name:l,level:s,index:a}){return e.jsxs("div",{className:"space-y-2",children:[e.jsxs("div",{className:"flex justify-between text-sm",children:[e.jsx("span",{className:"text-text-primary",children:l}),e.jsxs("span",{className:"text-text-secondary",children:[s,"%"]})]}),e.jsx("div",{className:"h-2 bg-surface-2 rounded-full overflow-hidden",children:e.jsx(i.div,{initial:{width:0},whileInView:{width:`${s}%`},transition:{duration:.8,delay:a*.1},viewport:{once:!0},className:"h-full bg-gradient-to-r from-accent to-accent-cyan rounded-full"})})]})}function p(){const[l,s]=r.useState(0);return e.jsx("section",{id:"skills",className:"py-20",children:e.jsxs("div",{className:"max-w-6xl mx-auto px-6",children:[e.jsxs("h2",{className:"text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12",children:["Skills & ",e.jsx("span",{className:"text-accent-cyan",children:"Technologies"})]}),e.jsx("div",{className:"flex flex-wrap gap-2 mb-8",children:n.map((a,t)=>e.jsx("button",{onClick:()=>s(t),className:`px-4 py-2 rounded-lg text-sm font-medium transition-all ${l===t?"bg-accent text-white":"bg-surface-2 text-text-secondary hover:text-text-primary"}`,children:a.name},a.name))}),e.jsx(m,{mode:"wait",children:e.jsx(i.div,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},exit:{opacity:0,y:-20},transition:{duration:.3},className:"grid sm:grid-cols-2 gap-6",children:n[l].skills.map((a,t)=>e.jsx(c,{...a,index:t},a.name))},l)})]})})}export{p as default};
+import { j as e, m as i } from './proxy.Ce3DUqBB.js';
+import { r } from './index.DYrVU9rO.js';
+import { A as m } from './index.D1eonDqi.js';
+const n = [
+  {
+    name: 'Frontend',
+    skills: [
+      { name: 'React', level: 85 },
+      { name: 'Astro', level: 80 },
+      { name: 'TypeScript', level: 75 },
+      { name: 'Tailwind CSS', level: 85 },
+      { name: 'JavaScript', level: 90 },
+    ],
+  },
+  {
+    name: 'Backend',
+    skills: [
+      { name: 'C# / .NET Core', level: 80 },
+      { name: 'MVC', level: 75 },
+      { name: 'REST APIs', level: 80 },
+    ],
+  },
+  {
+    name: 'Bases de Datos',
+    skills: [
+      { name: 'SQL Server', level: 80 },
+      { name: 'PostgreSQL', level: 70 },
+    ],
+  },
+  {
+    name: 'Cloud & DevOps',
+    skills: [
+      { name: 'AWS', level: 65 },
+      { name: 'Vercel', level: 85 },
+      { name: 'Railway', level: 70 },
+      { name: 'GitHub / Git', level: 85 },
+    ],
+  },
+  {
+    name: 'Herramientas IA',
+    skills: [
+      { name: 'Cursor', level: 80 },
+      { name: 'Claude AI', level: 80 },
+    ],
+  },
+];
+function c({ name: l, level: s, index: a }) {
+  return e.jsxs('div', {
+    className: 'space-y-2',
+    children: [
+      e.jsxs('div', {
+        className: 'flex justify-between text-sm',
+        children: [
+          e.jsx('span', { className: 'text-text-primary', children: l }),
+          e.jsxs('span', { className: 'text-text-secondary', children: [s, '%'] }),
+        ],
+      }),
+      e.jsx('div', {
+        className: 'h-2 bg-surface-2 rounded-full overflow-hidden',
+        children: e.jsx(i.div, {
+          initial: { width: 0 },
+          whileInView: { width: `${s}%` },
+          transition: { duration: 0.8, delay: a * 0.1 },
+          viewport: { once: !0 },
+          className: 'h-full bg-gradient-to-r from-accent to-accent-cyan rounded-full',
+        }),
+      }),
+    ],
+  });
+}
+function p() {
+  const [l, s] = r.useState(0);
+  return e.jsx('section', {
+    id: 'skills',
+    className: 'py-20',
+    children: e.jsxs('div', {
+      className: 'max-w-6xl mx-auto px-6',
+      children: [
+        e.jsxs('h2', {
+          className: 'text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12',
+          children: [
+            'Skills & ',
+            e.jsx('span', { className: 'text-accent-cyan', children: 'Technologies' }),
+          ],
+        }),
+        e.jsx('div', {
+          className: 'flex flex-wrap gap-2 mb-8',
+          children: n.map((a, t) =>
+            e.jsx(
+              'button',
+              {
+                onClick: () => s(t),
+                className: `px-4 py-2 rounded-lg text-sm font-medium transition-all ${l === t ? 'bg-accent text-white' : 'bg-surface-2 text-text-secondary hover:text-text-primary'}`,
+                children: a.name,
+              },
+              a.name
+            )
+          ),
+        }),
+        e.jsx(m, {
+          mode: 'wait',
+          children: e.jsx(
+            i.div,
+            {
+              initial: { opacity: 0, y: 20 },
+              animate: { opacity: 1, y: 0 },
+              exit: { opacity: 0, y: -20 },
+              transition: { duration: 0.3 },
+              className: 'grid sm:grid-cols-2 gap-6',
+              children: n[l].skills.map((a, t) => e.jsx(c, { ...a, index: t }, a.name)),
+            },
+            l
+          ),
+        }),
+      ],
+    }),
+  });
+}
+export { p as default };

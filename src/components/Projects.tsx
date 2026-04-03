@@ -8,9 +8,7 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('Todos');
 
   const filteredProjects =
-    activeFilter === 'Todos'
-      ? projects
-      : projects.filter((p) => p.tags.includes(activeFilter));
+    activeFilter === 'Todos' ? projects : projects.filter((p) => p.tags.includes(activeFilter));
 
   return (
     <section id="proyectos" className="py-20 bg-surface">

@@ -23,11 +23,13 @@ npx tsc --noEmit    # Type checking
 ## Code Style Guidelines
 
 ### TypeScript
+
 - Strict mode enabled - never use `any`, prefer `unknown` or proper typing
 - Use explicit return types for exported functions
 - Prefer interfaces over types for object shapes
 
 ### Imports
+
 ```typescript
 // React components (client islands)
 import Skills from '../components/Skills';
@@ -42,6 +44,7 @@ import { projects } from '../data/projects';
 ### Component Patterns
 
 **React (client islands):**
+
 ```typescript
 import { motion } from 'framer-motion';
 
@@ -56,6 +59,7 @@ export default function Component({ title, items }: Props) {
 ```
 
 **Astro:**
+
 ```astro
 ---
 interface Props { title: string; }
@@ -65,6 +69,7 @@ const { title } = Astro.props;
 ```
 
 ### Naming Conventions
+
 - Components: PascalCase (`Hero.astro`, `Skills.tsx`)
 - Files: kebab-case (`contact-form.ts`)
 - Variables: camelCase
@@ -72,16 +77,19 @@ const { title } = Astro.props;
 - Props interfaces: `ComponentNameProps`
 
 ### CSS / Tailwind
+
 - Custom colors in tailwind.config.mjs: `background` (#0A0A0F), `surface`, `accent` (#2563EB), `accent-cyan` (#06B6D4)
 - Fonts: `font-heading` (Syne), `font-body` (DM Sans)
 - Use semantic class names for complex layouts
 
 ### Error Handling
+
 - Always use `console.error()` for errors, never silence them
 - Form submissions must handle loading/success/error states
 - API routes return proper error responses
 
 ### Accessibility
+
 - All images require `alt` text
 - Use semantic HTML: `<nav>`, `<main>`, `<section>`, `<article>`
 - Keyboard focus visible on interactive elements
@@ -109,6 +117,7 @@ src/
 ```
 
 ### React Islands Pattern
+
 ```astro
 <Skills client:visible />
 <Projects client:visible />
@@ -120,6 +129,7 @@ src/
 ## Section Requirements
 
 Each section MUST have an ID for smooth scrolling:
+
 - `id="sobre-mi"` (About)
 - `id="skills"` (Skills)
 - `id="proyectos"` (Projects)
@@ -163,5 +173,6 @@ Each section MUST have an ID for smooth scrolling:
 Push to `main` triggers GitHub Actions CI (lint + build). Auto-deploys to Vercel.
 
 Environment variables:
+
 - `RESEND_API_KEY` - Resend API key
 - `CONTACT_EMAIL` - Target email (gomezukalil@gmail.com)
