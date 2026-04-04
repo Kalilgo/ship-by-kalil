@@ -108,13 +108,19 @@ export default function Contact() {
                 Nombre
               </label>
               <input
-                {...register('name', { required: 'Name is required' })}
+                {...register('name', { required: 'Nombre es requerido' })}
                 type="text"
                 id="name"
+                aria-invalid={errors.name ? 'true' : 'false'}
+                aria-describedby={errors.name ? 'name-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
                 placeholder="Tu nombre"
               />
-              {errors.name && <span className="text-red-500 text-sm">{errors.name.message}</span>}
+              {errors.name && (
+                <span id="name-error" className="text-red-500 text-sm" role="alert">
+                  {errors.name.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -123,18 +129,24 @@ export default function Contact() {
               </label>
               <input
                 {...register('email', {
-                  required: 'Email is required',
+                  required: 'Email es requerido',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
+                    message: 'Email inválido',
                   },
                 })}
                 type="email"
                 id="email"
+                aria-invalid={errors.email ? 'true' : 'false'}
+                aria-describedby={errors.email ? 'email-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
                 placeholder="tu@email.com"
               />
-              {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
+              {errors.email && (
+                <span id="email-error" className="text-red-500 text-sm" role="alert">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
 
             <div>
@@ -142,14 +154,18 @@ export default function Contact() {
                 Asunto
               </label>
               <input
-                {...register('subject', { required: 'Subject is required' })}
+                {...register('subject', { required: 'Asunto es requerido' })}
                 type="text"
                 id="subject"
+                aria-invalid={errors.subject ? 'true' : 'false'}
+                aria-describedby={errors.subject ? 'subject-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
                 placeholder="¿De qué se trata?"
               />
               {errors.subject && (
-                <span className="text-red-500 text-sm">{errors.subject.message}</span>
+                <span id="subject-error" className="text-red-500 text-sm" role="alert">
+                  {errors.subject.message}
+                </span>
               )}
             </div>
 
@@ -158,14 +174,18 @@ export default function Contact() {
                 Mensaje
               </label>
               <textarea
-                {...register('message', { required: 'Message is required' })}
+                {...register('message', { required: 'Mensaje es requerido' })}
                 id="message"
+                aria-invalid={errors.message ? 'true' : 'false'}
+                aria-describedby={errors.message ? 'message-error' : undefined}
                 rows={5}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors resize-none"
                 placeholder="Tu mensaje..."
               />
               {errors.message && (
-                <span className="text-red-500 text-sm">{errors.message.message}</span>
+                <span id="message-error" className="text-red-500 text-sm" role="alert">
+                  {errors.message.message}
+                </span>
               )}
             </div>
 

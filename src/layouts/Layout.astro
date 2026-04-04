@@ -4,11 +4,13 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
 }
 
 const {
   title = 'Matías Kalil Gómez — Full Stack Developer',
   description = 'Desarrollador Web Full Stack especializado en React, Astro, .NET y AWS. Disponible para proyectos freelance.',
+  canonicalUrl = Astro.url.href,
 } = Astro.props;
 ---
 
@@ -19,6 +21,8 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content="/og-image.png" />
@@ -33,6 +37,17 @@ const {
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
     <slot />
+    
+    <button
+      id="back-to-top"
+      aria-label="Volver arriba"
+      class="fixed bottom-6 right-6 z-50 p-3 bg-accent-cyan text-background rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-accent-cyan/80"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    </button>
+
     <script is:inline>
       (() => {
         const initReveal = () => {
@@ -61,6 +76,22 @@ const {
           document.addEventListener('DOMContentLoaded', initReveal, { once: true });
         } else {
           initReveal();
+        }
+
+        const backToTopBtn = document.getElementById('back-to-top');
+        if (backToTopBtn) {
+          window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+              backToTopBtn.classList.remove('opacity-0', 'invisible');
+              backToTopBtn.classList.add('opacity-100', 'visible');
+            } else {
+              backToTopBtn.classList.remove('opacity-100', 'visible');
+              backToTopBtn.classList.add('opacity-0', 'invisible');
+            }
+          });
+          backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
         }
       })();
     </script>
