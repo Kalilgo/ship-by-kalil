@@ -1,8 +1,16 @@
 ---
 const highlights = [
   { icon: '📍', text: 'San Miguel, Buenos Aires' },
-  { icon: '🎓', text: 'Lic. en Sistemas — UNGS (en curso)' },
+  { icon: '🎓', text: 'Lic. Sistemas — UNGS' },
+  { icon: '🎂', text: '22/05/1999' },
   { icon: '💼', text: 'Freelance · Disponible' },
+];
+
+const skills = [
+  { icon: '⚡', title: 'Frontend', items: ['React', 'Astro', 'Tailwind', 'TypeScript'] },
+  { icon: '🔧', title: 'Backend', items: ['.NET Core', 'C#', 'Node.js', 'SQL Server'] },
+  { icon: '☁️', title: 'Cloud', items: ['AWS', 'Vercel', 'Railway'] },
+  { icon: '🤖', title: 'IA Tools', items: ['Cursor', 'Claude AI'] },
 ];
 ---
 
@@ -17,17 +25,20 @@ const highlights = [
         <div class="w-48 h-48 rounded-full glass-panel bg-surface-2 border-2 border-accent-cyan flex items-center justify-center text-4xl font-heading text-accent-cyan animate-float">
           MKG
         </div>
+        <div class="mt-6 text-center">
+          <h3 class="text-xl font-bold text-text-primary">Matías Kalil Gómez</h3>
+          <p class="text-accent-cyan text-sm">Desarrollador Web Full Stack</p>
+        </div>
       </div>
 
       <div class="space-y-6 reveal" style="--reveal-delay: 180ms;">
         <p class="text-lg text-text-secondary leading-relaxed">
-          Soy un desarrollador Full Stack basado en San Miguel, Buenos Aires. Trabajo con
-          equipos freelance desarrollando soluciones para financieras e inmobiliarias. Me
-          apasiona construir productos que realmente funcionen, usar las mejores herramientas
-          disponibles y seguir aprendiendo.
+          Desarrollador web Full Stack con experiencia en proyectos freelance para el sector financiero e inmobiliario. 
+          Proactivo, resolutivo y con capacidad de aprendizaje autónomo. Manejo herramientas modernas de desarrollo 
+          asistido por inteligencia artificial para aumentar productividad y calidad del código.
         </p>
 
-        <div class="grid sm:grid-cols-3 gap-4 pt-4">
+        <div class="grid sm:grid-cols-2 gap-4 pt-2">
           {highlights.map((item, index) => (
             <div
               class="flex items-center gap-2 text-text-secondary glass-panel border border-border rounded-lg p-3 hover-lift reveal"
@@ -43,18 +54,42 @@ const highlights = [
           <article class="glass-panel border border-border rounded-xl p-5 hover-lift reveal" style="--reveal-delay: 380ms;">
             <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">Cómo trabajo</p>
             <p class="text-text-secondary text-sm">
-              Priorizo comunicación clara, entregas frecuentes y decisiones técnicas orientadas a
-              impacto de negocio.
+              Priorizo comunicación clara, entregas frecuentes y decisiones técnicas orientadas a impacto de negocio.
             </p>
           </article>
           <article class="glass-panel border border-border rounded-xl p-5 hover-lift reveal" style="--reveal-delay: 460ms;">
             <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">Valor para tu equipo</p>
             <p class="text-text-secondary text-sm">
-              Conecto producto + desarrollo para que las ideas lleguen rápido a producción con
-              calidad y buena UX.
+              Conecto producto + desarrollo para que las ideas lleguen rápido a producción con calidad y buena UX.
             </p>
           </article>
         </div>
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <h3 class="text-2xl font-bold font-heading text-text-primary mb-8 text-center">
+        Stack <span class="text-accent-cyan">Tecnológico</span>
+      </h3>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {skills.map((skill, index) => (
+          <div
+            class="glass-panel border border-border rounded-xl p-5 hover-lift reveal"
+            style={`--reveal-delay: ${index * 80}ms;`}
+          >
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xl">{skill.icon}</span>
+              <h4 class="font-bold text-text-primary">{skill.title}</h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {skill.items.map((item) => (
+                <span class="px-2 py-1 bg-background text-text-secondary text-xs rounded-md border border-border">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </div>
