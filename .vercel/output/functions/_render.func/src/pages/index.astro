@@ -15,10 +15,10 @@ import Footer from '../components/Footer.astro';
   <main>
     <Hero />
     <About />
-    <Skills client:visible />
-    <Projects client:visible />
+    <Skills client:only="react" />
+    <Projects client:only="react" />
     <Experience />
-    <Contact client:load />
+    <Contact client:only="react" />
   </main>
   <Footer />
 </Layout>

@@ -6,7 +6,7 @@ const qualityTable = {
   low: 25,
   mid: 50,
   high: 80,
-  max: 100,
+  max: 100
 };
 async function loadSharp() {
   let sharpImport;
@@ -19,13 +19,13 @@ async function loadSharp() {
   return sharpImport;
 }
 const fitMap = {
-  fill: 'fill',
-  contain: 'inside',
-  cover: 'cover',
-  none: 'outside',
-  'scale-down': 'inside',
-  outside: 'outside',
-  inside: 'inside',
+  fill: "fill",
+  contain: "inside",
+  cover: "cover",
+  none: "outside",
+  "scale-down": "inside",
+  outside: "outside",
+  inside: "inside"
 };
 const sharpService = {
   validateOptions: baseService.validateOptions,
@@ -37,36 +37,36 @@ const sharpService = {
     if (!sharp) sharp = await loadSharp();
     const transform = transformOptions;
     const kernel = config.service.config.kernel;
-    if (transform.format === 'svg') return { data: inputBuffer, format: 'svg' };
+    if (transform.format === "svg") return { data: inputBuffer, format: "svg" };
     const result = sharp(inputBuffer, {
       failOnError: false,
       pages: -1,
-      limitInputPixels: config.service.config.limitInputPixels,
+      limitInputPixels: config.service.config.limitInputPixels
     });
     result.rotate();
     const { format } = await result.metadata();
     const withoutEnlargement = Boolean(transform.fit);
     if (transform.width && transform.height && transform.fit) {
-      const fit = fitMap[transform.fit] ?? 'inside';
+      const fit = fitMap[transform.fit] ?? "inside";
       result.resize({
         width: Math.round(transform.width),
         height: Math.round(transform.height),
         kernel,
         fit,
         position: transform.position,
-        withoutEnlargement,
+        withoutEnlargement
       });
     } else if (transform.height && !transform.width) {
       result.resize({
         height: Math.round(transform.height),
         kernel,
-        withoutEnlargement,
+        withoutEnlargement
       });
     } else if (transform.width) {
       result.resize({
         width: Math.round(transform.width),
         kernel,
-        withoutEnlargement,
+        withoutEnlargement
       });
     }
     if (transform.background) {
@@ -76,25 +76,25 @@ const sharpService = {
       let quality = void 0;
       if (transform.quality) {
         const parsedQuality = parseQuality(transform.quality);
-        if (typeof parsedQuality === 'number') {
+        if (typeof parsedQuality === "number") {
           quality = parsedQuality;
         } else {
           quality = transform.quality in qualityTable ? qualityTable[transform.quality] : void 0;
         }
       }
-      if (transform.format === 'webp' && format === 'gif') {
-        result.webp({ quality: typeof quality === 'number' ? quality : void 0, loop: 0 });
+      if (transform.format === "webp" && format === "gif") {
+        result.webp({ quality: typeof quality === "number" ? quality : void 0, loop: 0 });
       } else {
         result.toFormat(transform.format, { quality });
       }
     }
     const { data, info } = await result.toBuffer({ resolveWithObject: true });
-    const needsCopy = 'buffer' in data && data.buffer instanceof SharedArrayBuffer;
+    const needsCopy = "buffer" in data && data.buffer instanceof SharedArrayBuffer;
     return {
       data: needsCopy ? new Uint8Array(data) : data,
-      format: info.format,
+      format: info.format
     };
-  },
+  }
 };
 var sharp_default = sharpService;
 

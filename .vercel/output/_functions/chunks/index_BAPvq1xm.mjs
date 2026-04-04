@@ -1,53 +1,50 @@
 function appendForwardSlash(path) {
-  return path.endsWith('/') ? path : path + '/';
+  return path.endsWith("/") ? path : path + "/";
 }
 function prependForwardSlash(path) {
-  return path[0] === '/' ? path : '/' + path;
+  return path[0] === "/" ? path : "/" + path;
 }
 const MANY_TRAILING_SLASHES = /\/{2,}$/g;
 function collapseDuplicateTrailingSlashes(path, trailingSlash) {
   if (!path) {
     return path;
   }
-  return path.replace(MANY_TRAILING_SLASHES, trailingSlash ? '/' : '') || '/';
+  return path.replace(MANY_TRAILING_SLASHES, trailingSlash ? "/" : "") || "/";
 }
 function removeTrailingForwardSlash(path) {
-  return path.endsWith('/') ? path.slice(0, path.length - 1) : path;
+  return path.endsWith("/") ? path.slice(0, path.length - 1) : path;
 }
 function removeLeadingForwardSlash(path) {
-  return path.startsWith('/') ? path.substring(1) : path;
+  return path.startsWith("/") ? path.substring(1) : path;
 }
 function trimSlashes(path) {
-  return path.replace(/^\/|\/$/g, '');
+  return path.replace(/^\/|\/$/g, "");
 }
 function isString(path) {
-  return typeof path === 'string' || path instanceof String;
+  return typeof path === "string" || path instanceof String;
 }
-const INTERNAL_PREFIXES = /* @__PURE__ */ new Set(['/_', '/@', '/.', '//']);
+const INTERNAL_PREFIXES = /* @__PURE__ */ new Set(["/_", "/@", "/.", "//"]);
 const JUST_SLASHES = /^\/{2,}$/;
 function isInternalPath(path) {
   return INTERNAL_PREFIXES.has(path.slice(0, 2)) && !JUST_SLASHES.test(path);
 }
 function joinPaths(...paths) {
-  return paths
-    .filter(isString)
-    .map((path, i) => {
-      if (i === 0) {
-        return removeTrailingForwardSlash(path);
-      } else if (i === paths.length - 1) {
-        return removeLeadingForwardSlash(path);
-      } else {
-        return trimSlashes(path);
-      }
-    })
-    .join('/');
+  return paths.filter(isString).map((path, i) => {
+    if (i === 0) {
+      return removeTrailingForwardSlash(path);
+    } else if (i === paths.length - 1) {
+      return removeLeadingForwardSlash(path);
+    } else {
+      return trimSlashes(path);
+    }
+  }).join("/");
 }
 function isRemotePath(src) {
   if (!src) return false;
   const trimmed = src.trim();
   if (!trimmed) return false;
   let decoded = trimmed;
-  let previousDecoded = '';
+  let previousDecoded = "";
   let maxIterations = 10;
   while (decoded !== previousDecoded && maxIterations > 0) {
     previousDecoded = decoded;
@@ -61,26 +58,26 @@ function isRemotePath(src) {
   if (/^[a-zA-Z]:/.test(decoded)) {
     return false;
   }
-  if (decoded[0] === '/' && decoded[1] !== '/' && decoded[1] !== '\\') {
+  if (decoded[0] === "/" && decoded[1] !== "/" && decoded[1] !== "\\") {
     return false;
   }
-  if (decoded[0] === '\\') {
+  if (decoded[0] === "\\") {
     return true;
   }
-  if (decoded.startsWith('//')) {
+  if (decoded.startsWith("//")) {
     return true;
   }
   try {
-    const url = new URL(decoded, 'http://n');
+    const url = new URL(decoded, "http://n");
     if (url.username || url.password) {
       return true;
     }
-    if (decoded.includes('@') && !url.pathname.includes('@') && !url.search.includes('@')) {
+    if (decoded.includes("@") && !url.pathname.includes("@") && !url.search.includes("@")) {
       return true;
     }
-    if (url.origin !== 'http://n') {
+    if (url.origin !== "http://n") {
       const protocol = url.protocol.toLowerCase();
-      if (protocol === 'file:') {
+      if (protocol === "file:") {
         return false;
       }
       return true;
@@ -94,11 +91,11 @@ function isRemotePath(src) {
   }
 }
 function slash(path) {
-  return path.replace(/\\/g, '/');
+  return path.replace(/\\/g, "/");
 }
 function fileExtension(path) {
-  const ext = path.split('.').pop();
-  return ext !== path ? `.${ext}` : '';
+  const ext = path.split(".").pop();
+  return ext !== path ? `.${ext}` : "";
 }
 const WITH_FILE_EXT = /\/[^/]+\.\w+$/;
 function hasFileExtension(path) {
@@ -106,12 +103,7 @@ function hasFileExtension(path) {
 }
 
 function matchPattern(url, remotePattern) {
-  return (
-    matchProtocol(url, remotePattern.protocol) &&
-    matchHostname(url, remotePattern.hostname, true) &&
-    matchPort(url, remotePattern.port) &&
-    matchPathname(url, remotePattern.pathname, true)
-  );
+  return matchProtocol(url, remotePattern.protocol) && matchHostname(url, remotePattern.hostname, true) && matchPort(url, remotePattern.port) && matchPathname(url, remotePattern.pathname, true);
 }
 function matchPort(url, port) {
   return !port || port === url.port;
@@ -122,61 +114,56 @@ function matchProtocol(url, protocol) {
 function matchHostname(url, hostname, allowWildcard = false) {
   if (!hostname) {
     return true;
-  } else if (!allowWildcard || !hostname.startsWith('*')) {
+  } else if (!allowWildcard || !hostname.startsWith("*")) {
     return hostname === url.hostname;
-  } else if (hostname.startsWith('**.')) {
+  } else if (hostname.startsWith("**.")) {
     const slicedHostname = hostname.slice(2);
     return slicedHostname !== url.hostname && url.hostname.endsWith(slicedHostname);
-  } else if (hostname.startsWith('*.')) {
+  } else if (hostname.startsWith("*.")) {
     const slicedHostname = hostname.slice(1);
     if (!url.hostname.endsWith(slicedHostname)) {
       return false;
     }
     const subdomainWithDot = url.hostname.slice(0, -(slicedHostname.length - 1));
-    return subdomainWithDot.endsWith('.') && !subdomainWithDot.slice(0, -1).includes('.');
+    return subdomainWithDot.endsWith(".") && !subdomainWithDot.slice(0, -1).includes(".");
   }
   return false;
 }
 function matchPathname(url, pathname, allowWildcard = false) {
   if (!pathname) {
     return true;
-  } else if (!allowWildcard || !pathname.endsWith('*')) {
+  } else if (!allowWildcard || !pathname.endsWith("*")) {
     return pathname === url.pathname;
-  } else if (pathname.endsWith('/**')) {
+  } else if (pathname.endsWith("/**")) {
     const slicedPathname = pathname.slice(0, -2);
     return slicedPathname !== url.pathname && url.pathname.startsWith(slicedPathname);
-  } else if (pathname.endsWith('/*')) {
+  } else if (pathname.endsWith("/*")) {
     const slicedPathname = pathname.slice(0, -1);
     if (!url.pathname.startsWith(slicedPathname)) {
       return false;
     }
-    const additionalPathChunks = url.pathname
-      .slice(slicedPathname.length)
-      .split('/')
-      .filter(Boolean);
+    const additionalPathChunks = url.pathname.slice(slicedPathname.length).split("/").filter(Boolean);
     return additionalPathChunks.length === 1;
   }
   return false;
 }
-function isRemoteAllowed(src, { domains, remotePatterns }) {
+function isRemoteAllowed(src, {
+  domains,
+  remotePatterns
+}) {
   if (!URL.canParse(src)) {
     return false;
   }
   const url = new URL(src);
-  if (!['http:', 'https:', 'data:'].includes(url.protocol)) {
+  if (!["http:", "https:", "data:"].includes(url.protocol)) {
     return false;
   }
-  return (
-    domains.some((domain) => matchHostname(url, domain)) ||
-    remotePatterns.some((remotePattern) => matchPattern(url, remotePattern))
-  );
+  return domains.some((domain) => matchHostname(url, domain)) || remotePatterns.some((remotePattern) => matchPattern(url, remotePattern));
 }
 
 const decoder = new TextDecoder();
-const toUTF8String = (input, start = 0, end = input.length) =>
-  decoder.decode(input.slice(start, end));
-const toHexString = (input, start = 0, end = input.length) =>
-  input.slice(start, end).reduce((memo, i) => memo + `0${i.toString(16)}`.slice(-2), '');
+const toUTF8String = (input, start = 0, end = input.length) => decoder.decode(input.slice(start, end));
+const toHexString = (input, start = 0, end = input.length) => input.slice(start, end).reduce((memo, i) => memo + `0${i.toString(16)}`.slice(-2), "");
 const getView = (input, offset) => new DataView(input.buffer, input.byteOffset + offset);
 const readInt16LE = (input, offset = 0) => getView(input, offset).getInt16(0, true);
 const readUInt16BE = (input, offset = 0) => getView(input, offset).getUint16(0, false);
@@ -188,16 +175,15 @@ const readUInt24LE = (input, offset = 0) => {
 const readInt32LE = (input, offset = 0) => getView(input, offset).getInt32(0, true);
 const readUInt32BE = (input, offset = 0) => getView(input, offset).getUint32(0, false);
 const readUInt32LE = (input, offset = 0) => getView(input, offset).getUint32(0, true);
-const readUInt64 = (input, offset, isBigEndian) =>
-  getView(input, offset).getBigUint64(0, !isBigEndian);
+const readUInt64 = (input, offset, isBigEndian) => getView(input, offset).getBigUint64(0, !isBigEndian);
 const methods = {
   readUInt16BE,
   readUInt16LE,
   readUInt32BE,
-  readUInt32LE,
+  readUInt32LE
 };
 function readUInt(input, bits, offset = 0, isBigEndian = false) {
-  const endian = isBigEndian ? 'BE' : 'LE';
+  const endian = isBigEndian ? "BE" : "LE";
   const methodName = `readUInt${bits}${endian}`;
   return methods[methodName](input, offset);
 }
@@ -208,7 +194,7 @@ function readBox(input, offset) {
   return {
     name: toUTF8String(input, 4 + offset, 8 + offset),
     offset,
-    size: boxSize,
+    size: boxSize
   };
 }
 function findBox(input, boxName, currentOffset) {
@@ -221,11 +207,11 @@ function findBox(input, boxName, currentOffset) {
 }
 
 const BMP = {
-  validate: (input) => toUTF8String(input, 0, 2) === 'BM',
+  validate: (input) => toUTF8String(input, 0, 2) === "BM",
   calculate: (input) => ({
     height: Math.abs(readInt32LE(input, 22)),
-    width: readUInt32LE(input, 18),
-  }),
+    width: readUInt32LE(input, 18)
+  })
 };
 
 const TYPE_ICON = 1;
@@ -239,7 +225,7 @@ function getImageSize$1(input, imageIndex) {
   const offset = SIZE_HEADER$1 + imageIndex * SIZE_IMAGE_ENTRY;
   return {
     height: getSizeFromOffset(input, offset + 1),
-    width: getSizeFromOffset(input, offset),
+    width: getSizeFromOffset(input, offset)
   };
 }
 const ICO = {
@@ -261,9 +247,9 @@ const ICO = {
     return {
       width: imageSize.width,
       height: imageSize.height,
-      images,
+      images
     };
-  },
+  }
 };
 
 const TYPE_CURSOR = 2;
@@ -275,15 +261,15 @@ const CUR = {
     const imageType = readUInt16LE(input, 2);
     return imageType === TYPE_CURSOR;
   },
-  calculate: (input) => ICO.calculate(input),
+  calculate: (input) => ICO.calculate(input)
 };
 
 const DDS = {
   validate: (input) => readUInt32LE(input, 0) === 542327876,
   calculate: (input) => ({
     height: readUInt32LE(input, 12),
-    width: readUInt32LE(input, 16),
-  }),
+    width: readUInt32LE(input, 16)
+  })
 };
 
 const gifRegexp = /^GIF8[79]a/;
@@ -291,22 +277,22 @@ const GIF = {
   validate: (input) => gifRegexp.test(toUTF8String(input, 0, 6)),
   calculate: (input) => ({
     height: readUInt16LE(input, 8),
-    width: readUInt16LE(input, 6),
-  }),
+    width: readUInt16LE(input, 6)
+  })
 };
 
 const brandMap = {
-  avif: 'avif',
-  avis: 'avif',
+  avif: "avif",
+  avis: "avif",
   // avif-sequence
-  mif1: 'heif',
-  msf1: 'heif',
+  mif1: "heif",
+  msf1: "heif",
   // heif-sequence
-  heic: 'heic',
-  heix: 'heic',
-  hevc: 'heic',
+  heic: "heic",
+  heix: "heic",
+  hevc: "heic",
   // heic-sequence
-  hevx: 'heic',
+  hevx: "heic"
   // heic-sequence
 };
 function detectType(input, start, end) {
@@ -315,40 +301,39 @@ function detectType(input, start, end) {
   let hasHeif = false;
   for (let i = start; i <= end; i += 4) {
     const brand = toUTF8String(input, i, i + 4);
-    if (brand === 'avif' || brand === 'avis') hasAvif = true;
-    else if (brand === 'heic' || brand === 'heix' || brand === 'hevc' || brand === 'hevx')
-      hasHeic = true;
-    else if (brand === 'mif1' || brand === 'msf1') hasHeif = true;
+    if (brand === "avif" || brand === "avis") hasAvif = true;
+    else if (brand === "heic" || brand === "heix" || brand === "hevc" || brand === "hevx") hasHeic = true;
+    else if (brand === "mif1" || brand === "msf1") hasHeif = true;
   }
-  if (hasAvif) return 'avif';
-  if (hasHeic) return 'heic';
-  if (hasHeif) return 'heif';
+  if (hasAvif) return "avif";
+  if (hasHeic) return "heic";
+  if (hasHeif) return "heif";
 }
 const HEIF = {
   validate(input) {
     const boxType = toUTF8String(input, 4, 8);
-    if (boxType !== 'ftyp') return false;
-    const ftypBox = findBox(input, 'ftyp', 0);
+    if (boxType !== "ftyp") return false;
+    const ftypBox = findBox(input, "ftyp", 0);
     if (!ftypBox) return false;
     const brand = toUTF8String(input, ftypBox.offset + 8, ftypBox.offset + 12);
     return brand in brandMap;
   },
   calculate(input) {
-    const metaBox = findBox(input, 'meta', 0);
-    const iprpBox = metaBox && findBox(input, 'iprp', metaBox.offset + 12);
-    const ipcoBox = iprpBox && findBox(input, 'ipco', iprpBox.offset + 8);
+    const metaBox = findBox(input, "meta", 0);
+    const iprpBox = metaBox && findBox(input, "iprp", metaBox.offset + 12);
+    const ipcoBox = iprpBox && findBox(input, "ipco", iprpBox.offset + 8);
     if (!ipcoBox) {
-      throw new TypeError('Invalid HEIF, no ipco box found');
+      throw new TypeError("Invalid HEIF, no ipco box found");
     }
     const type = detectType(input, 8, metaBox.offset);
     const images = [];
     let currentOffset = ipcoBox.offset + 8;
     while (currentOffset < ipcoBox.offset + ipcoBox.size) {
-      const ispeBox = findBox(input, 'ispe', currentOffset);
+      const ispeBox = findBox(input, "ispe", currentOffset);
       if (!ispeBox) break;
       const rawWidth = readUInt32BE(input, ispeBox.offset + 12);
       const rawHeight = readUInt32BE(input, ispeBox.offset + 16);
-      const clapBox = findBox(input, 'clap', currentOffset);
+      const clapBox = findBox(input, "clap", currentOffset);
       let width = rawWidth;
       let height = rawHeight;
       if (clapBox && clapBox.offset < ipcoBox.offset + ipcoBox.size) {
@@ -359,15 +344,15 @@ const HEIF = {
       currentOffset = ispeBox.offset + ispeBox.size;
     }
     if (images.length === 0) {
-      throw new TypeError('Invalid HEIF, no sizes found');
+      throw new TypeError("Invalid HEIF, no sizes found");
     }
     return {
       width: images[0].width,
       height: images[0].height,
       type,
-      ...(images.length > 1 ? { images } : {}),
+      ...images.length > 1 ? { images } : {}
     };
-  },
+  }
 };
 
 const SIZE_HEADER = 4 + 4;
@@ -375,13 +360,13 @@ const FILE_LENGTH_OFFSET = 4;
 const ENTRY_LENGTH_OFFSET = 4;
 const ICON_TYPE_SIZE = {
   ICON: 32,
-  'ICN#': 32,
+  "ICN#": 32,
   // m => 16 x 16
-  'icm#': 16,
+  "icm#": 16,
   icm4: 16,
   icm8: 16,
   // s => 16 x 16
-  'ics#': 16,
+  "ics#": 16,
   ics4: 16,
   ics8: 16,
   is32: 16,
@@ -413,13 +398,13 @@ const ICON_TYPE_SIZE = {
   ic09: 512,
   ic14: 512,
   // . => 1024 x 1024
-  ic10: 1024,
+  ic10: 1024
 };
 function readImageHeader(input, imageOffset) {
   const imageLengthOffset = imageOffset + ENTRY_LENGTH_OFFSET;
   return [
     toUTF8String(input, imageOffset, imageLengthOffset),
-    readUInt32BE(input, imageLengthOffset),
+    readUInt32BE(input, imageLengthOffset)
   ];
 }
 function getImageSize(type) {
@@ -427,7 +412,7 @@ function getImageSize(type) {
   return { width: size, height: size, type };
 }
 const ICNS = {
-  validate: (input) => toUTF8String(input, 0, 4) === 'icns',
+  validate: (input) => toUTF8String(input, 0, 4) === "icns",
   calculate(input) {
     const inputLength = input.length;
     const fileLength = readUInt32BE(input, FILE_LENGTH_OFFSET);
@@ -440,14 +425,14 @@ const ICNS = {
       imageOffset += imageHeader[1];
     }
     if (images.length === 0) {
-      throw new TypeError('Invalid ICNS, no sizes found');
+      throw new TypeError("Invalid ICNS, no sizes found");
     }
     return {
       width: images[0].width,
       height: images[0].height,
-      ...(images.length > 1 ? { images } : {}),
+      ...images.length > 1 ? { images } : {}
     };
-  },
+  }
 };
 
 const J2C = {
@@ -455,38 +440,38 @@ const J2C = {
   validate: (input) => readUInt32BE(input, 0) === 4283432785,
   calculate: (input) => ({
     height: readUInt32BE(input, 12),
-    width: readUInt32BE(input, 8),
-  }),
+    width: readUInt32BE(input, 8)
+  })
 };
 
 const JP2 = {
   validate(input) {
     const boxType = toUTF8String(input, 4, 8);
-    if (boxType !== 'jP  ') return false;
-    const ftypBox = findBox(input, 'ftyp', 0);
+    if (boxType !== "jP  ") return false;
+    const ftypBox = findBox(input, "ftyp", 0);
     if (!ftypBox) return false;
     const brand = toUTF8String(input, ftypBox.offset + 8, ftypBox.offset + 12);
-    return brand === 'jp2 ';
+    return brand === "jp2 ";
   },
   calculate(input) {
-    const jp2hBox = findBox(input, 'jp2h', 0);
-    const ihdrBox = jp2hBox && findBox(input, 'ihdr', jp2hBox.offset + 8);
+    const jp2hBox = findBox(input, "jp2h", 0);
+    const ihdrBox = jp2hBox && findBox(input, "ihdr", jp2hBox.offset + 8);
     if (ihdrBox) {
       return {
         height: readUInt32BE(input, ihdrBox.offset + 8),
-        width: readUInt32BE(input, ihdrBox.offset + 12),
+        width: readUInt32BE(input, ihdrBox.offset + 12)
       };
     }
-    throw new TypeError('Unsupported JPEG 2000 format');
-  },
+    throw new TypeError("Unsupported JPEG 2000 format");
+  }
 };
 
-const EXIF_MARKER = '45786966';
+const EXIF_MARKER = "45786966";
 const APP1_DATA_SIZE_BYTES = 2;
 const EXIF_HEADER_BYTES = 6;
 const TIFF_BYTE_ALIGN_BYTES = 2;
-const BIG_ENDIAN_BYTE_ALIGN = '4d4d';
-const LITTLE_ENDIAN_BYTE_ALIGN = '4949';
+const BIG_ENDIAN_BYTE_ALIGN = "4d4d";
+const LITTLE_ENDIAN_BYTE_ALIGN = "4949";
 const IDF_ENTRY_BYTES = 12;
 const NUM_DIRECTORY_ENTRIES_BYTES = 2;
 function isEXIF(input) {
@@ -495,18 +480,14 @@ function isEXIF(input) {
 function extractSize(input, index) {
   return {
     height: readUInt16BE(input, index),
-    width: readUInt16BE(input, index + 2),
+    width: readUInt16BE(input, index + 2)
   };
 }
 function extractOrientation(exifBlock, isBigEndian) {
   const idfOffset = 8;
   const offset = EXIF_HEADER_BYTES + idfOffset;
   const idfDirectoryEntries = readUInt(exifBlock, 16, offset, isBigEndian);
-  for (
-    let directoryEntryNumber = 0;
-    directoryEntryNumber < idfDirectoryEntries;
-    directoryEntryNumber++
-  ) {
+  for (let directoryEntryNumber = 0; directoryEntryNumber < idfDirectoryEntries; directoryEntryNumber++) {
     const start = offset + NUM_DIRECTORY_ENTRIES_BYTES + directoryEntryNumber * IDF_ENTRY_BYTES;
     const end = start + IDF_ENTRY_BYTES;
     if (start > exifBlock.length) {
@@ -542,11 +523,11 @@ function validateExifBlock(input, index) {
 }
 function validateInput(input, index) {
   if (index > input.length) {
-    throw new TypeError('Corrupt JPG, exceeded buffer limits');
+    throw new TypeError("Corrupt JPG, exceeded buffer limits");
   }
 }
 const JPG = {
-  validate: (input) => toHexString(input, 0, 2) === 'ffd8',
+  validate: (input) => toHexString(input, 0, 2) === "ffd8",
   calculate(_input) {
     let input = _input.slice(4);
     let orientation;
@@ -570,13 +551,13 @@ const JPG = {
         return {
           height: size.height,
           orientation,
-          width: size.width,
+          width: size.width
         };
       }
       input = input.slice(i + 2);
     }
-    throw new TypeError('Invalid JPG, no size found');
-  },
+    throw new TypeError("Invalid JPG, no size found");
+  }
 };
 
 class BitReader {
@@ -593,19 +574,19 @@ class BitReader {
     let bitsRead = 0;
     while (bitsRead < length) {
       if (this.byteOffset >= this.input.length) {
-        throw new Error('Reached end of input');
+        throw new Error("Reached end of input");
       }
       const currentByte = this.input[this.byteOffset];
       const bitsLeft = 8 - this.bitOffset;
       const bitsToRead = Math.min(length - bitsRead, bitsLeft);
-      if (this.endianness === 'little-endian') {
+      if (this.endianness === "little-endian") {
         const mask = (1 << bitsToRead) - 1;
-        const bits = (currentByte >> this.bitOffset) & mask;
+        const bits = currentByte >> this.bitOffset & mask;
         result |= bits << bitsRead;
       } else {
-        const mask = ((1 << bitsToRead) - 1) << (8 - this.bitOffset - bitsToRead);
-        const bits = (currentByte & mask) >> (8 - this.bitOffset - bitsToRead);
-        result = (result << bitsToRead) | bits;
+        const mask = (1 << bitsToRead) - 1 << 8 - this.bitOffset - bitsToRead;
+        const bits = (currentByte & mask) >> 8 - this.bitOffset - bitsToRead;
+        result = result << bitsToRead | bits;
       }
       bitsRead += bitsToRead;
       this.bitOffset += bitsToRead;
@@ -638,20 +619,20 @@ function calculateImageWidth(reader, isSmallImage, widthMode, height) {
 }
 const JXLStream = {
   validate: (input) => {
-    return toHexString(input, 0, 2) === 'ff0a';
+    return toHexString(input, 0, 2) === "ff0a";
   },
   calculate(input) {
-    const reader = new BitReader(input, 'little-endian');
+    const reader = new BitReader(input, "little-endian");
     const isSmallImage = reader.getBits(1) === 1;
     const height = calculateImageDimension(reader, isSmallImage);
     const widthMode = reader.getBits(3);
     const width = calculateImageWidth(reader, isSmallImage, widthMode, height);
     return { width, height };
-  },
+  }
 };
 
 function extractCodestream(input) {
-  const jxlcBox = findBox(input, 'jxlc', 0);
+  const jxlcBox = findBox(input, "jxlc", 0);
   if (jxlcBox) {
     return input.slice(jxlcBox.offset + 8, jxlcBox.offset + jxlcBox.size);
   }
@@ -665,15 +646,20 @@ function extractPartialStreams(input) {
   const partialStreams = [];
   let offset = 0;
   while (offset < input.length) {
-    const jxlpBox = findBox(input, 'jxlp', offset);
+    const jxlpBox = findBox(input, "jxlp", offset);
     if (!jxlpBox) break;
-    partialStreams.push(input.slice(jxlpBox.offset + 12, jxlpBox.offset + jxlpBox.size));
+    partialStreams.push(
+      input.slice(jxlpBox.offset + 12, jxlpBox.offset + jxlpBox.size)
+    );
     offset = jxlpBox.offset + jxlpBox.size;
   }
   return partialStreams;
 }
 function concatenateCodestreams(partialCodestreams) {
-  const totalLength = partialCodestreams.reduce((acc, curr) => acc + curr.length, 0);
+  const totalLength = partialCodestreams.reduce(
+    (acc, curr) => acc + curr.length,
+    0
+  );
   const codestream = new Uint8Array(totalLength);
   let position = 0;
   for (const partial of partialCodestreams) {
@@ -685,38 +671,38 @@ function concatenateCodestreams(partialCodestreams) {
 const JXL = {
   validate: (input) => {
     const boxType = toUTF8String(input, 4, 8);
-    if (boxType !== 'JXL ') return false;
-    const ftypBox = findBox(input, 'ftyp', 0);
+    if (boxType !== "JXL ") return false;
+    const ftypBox = findBox(input, "ftyp", 0);
     if (!ftypBox) return false;
     const brand = toUTF8String(input, ftypBox.offset + 8, ftypBox.offset + 12);
-    return brand === 'jxl ';
+    return brand === "jxl ";
   },
   calculate(input) {
     const codestream = extractCodestream(input);
     if (codestream) return JXLStream.calculate(codestream);
-    throw new Error('No codestream found in JXL container');
-  },
+    throw new Error("No codestream found in JXL container");
+  }
 };
 
 const KTX = {
   validate: (input) => {
     const signature = toUTF8String(input, 1, 7);
-    return ['KTX 11', 'KTX 20'].includes(signature);
+    return ["KTX 11", "KTX 20"].includes(signature);
   },
   calculate: (input) => {
-    const type = input[5] === 49 ? 'ktx' : 'ktx2';
-    const offset = type === 'ktx' ? 36 : 20;
+    const type = input[5] === 49 ? "ktx" : "ktx2";
+    const offset = type === "ktx" ? 36 : 20;
     return {
       height: readUInt32LE(input, offset + 4),
       width: readUInt32LE(input, offset),
-      type,
+      type
     };
-  },
+  }
 };
 
-const pngSignature = 'PNG\r\n\n';
-const pngImageHeaderChunkName = 'IHDR';
-const pngFriedChunkName = 'CgBI';
+const pngSignature = "PNG\r\n\n";
+const pngImageHeaderChunkName = "IHDR";
+const pngFriedChunkName = "CgBI";
 const PNG = {
   validate(input) {
     if (pngSignature === toUTF8String(input, 1, 8)) {
@@ -725,7 +711,7 @@ const PNG = {
         chunkName = toUTF8String(input, 28, 32);
       }
       if (chunkName !== pngImageHeaderChunkName) {
-        throw new TypeError('Invalid PNG');
+        throw new TypeError("Invalid PNG");
       }
       return true;
     }
@@ -735,44 +721,44 @@ const PNG = {
     if (toUTF8String(input, 12, 16) === pngFriedChunkName) {
       return {
         height: readUInt32BE(input, 36),
-        width: readUInt32BE(input, 32),
+        width: readUInt32BE(input, 32)
       };
     }
     return {
       height: readUInt32BE(input, 20),
-      width: readUInt32BE(input, 16),
+      width: readUInt32BE(input, 16)
     };
-  },
+  }
 };
 
 const PNMTypes = {
-  P1: 'pbm/ascii',
-  P2: 'pgm/ascii',
-  P3: 'ppm/ascii',
-  P4: 'pbm',
-  P5: 'pgm',
-  P6: 'ppm',
-  P7: 'pam',
-  PF: 'pfm',
+  P1: "pbm/ascii",
+  P2: "pgm/ascii",
+  P3: "ppm/ascii",
+  P4: "pbm",
+  P5: "pgm",
+  P6: "ppm",
+  P7: "pam",
+  PF: "pfm"
 };
 const handlers = {
   default: (lines) => {
     let dimensions = [];
     while (lines.length > 0) {
       const line = lines.shift();
-      if (line[0] === '#') {
+      if (line[0] === "#") {
         continue;
       }
-      dimensions = line.split(' ');
+      dimensions = line.split(" ");
       break;
     }
     if (dimensions.length === 2) {
       return {
         height: Number.parseInt(dimensions[1], 10),
-        width: Number.parseInt(dimensions[0], 10),
+        width: Number.parseInt(dimensions[0], 10)
       };
     }
-    throw new TypeError('Invalid PNM');
+    throw new TypeError("Invalid PNM");
   },
   pam: (lines) => {
     const size = {};
@@ -781,7 +767,7 @@ const handlers = {
       if (line.length > 16 || line.charCodeAt(0) > 128) {
         continue;
       }
-      const [key, value] = line.split(' ');
+      const [key, value] = line.split(" ");
       if (key && value) {
         size[key.toLowerCase()] = Number.parseInt(value, 10);
       }
@@ -792,11 +778,11 @@ const handlers = {
     if (size.height && size.width) {
       return {
         height: size.height,
-        width: size.width,
+        width: size.width
       };
     }
-    throw new TypeError('Invalid PAM');
-  },
+    throw new TypeError("Invalid PAM");
+  }
 };
 const PNM = {
   validate: (input) => toUTF8String(input, 0, 2) in PNMTypes,
@@ -806,15 +792,15 @@ const PNM = {
     const lines = toUTF8String(input, 3).split(/[\r\n]+/);
     const handler = handlers[type] || handlers.default;
     return handler(lines);
-  },
+  }
 };
 
 const PSD = {
-  validate: (input) => toUTF8String(input, 0, 4) === '8BPS',
+  validate: (input) => toUTF8String(input, 0, 4) === "8BPS",
   calculate: (input) => ({
     height: readUInt32BE(input, 14),
-    width: readUInt32BE(input, 18),
-  }),
+    width: readUInt32BE(input, 18)
+  })
 };
 
 const svgReg = /<svg\s([^>"']|"[^"]*"|'[^']*')*>/;
@@ -822,7 +808,7 @@ const extractorRegExps = {
   height: /\sheight=(['"])([^%]+?)\1/,
   root: svgReg,
   viewbox: /\sviewBox=(['"])(.+?)\1/i,
-  width: /\swidth=(['"])([^%]+?)\1/,
+  width: /\swidth=(['"])([^%]+?)\1/
 };
 const INCH_CM = 2.54;
 const units = {
@@ -830,13 +816,15 @@ const units = {
   cm: 96 / INCH_CM,
   em: 16,
   ex: 8,
-  m: (96 / INCH_CM) * 100,
+  m: 96 / INCH_CM * 100,
   mm: 96 / INCH_CM / 10,
   pc: 96 / 72 / 12,
   pt: 96 / 72,
-  px: 1,
+  px: 1
 };
-const unitsReg = new RegExp(`^([0-9.]+(?:e\\d+)?)(${Object.keys(units).join('|')})?$`);
+const unitsReg = new RegExp(
+  `^([0-9.]+(?:e\\d+)?)(${Object.keys(units).join("|")})?$`
+);
 function parseLength(len) {
   const m = unitsReg.exec(len);
   if (!m) {
@@ -845,10 +833,10 @@ function parseLength(len) {
   return Math.round(Number(m[1]) * (units[m[2]] || 1));
 }
 function parseViewbox(viewbox) {
-  const bounds = viewbox.split(' ');
+  const bounds = viewbox.split(" ");
   return {
     height: parseLength(bounds[3]),
-    width: parseLength(bounds[2]),
+    width: parseLength(bounds[2])
   };
 }
 function parseAttributes(root) {
@@ -858,13 +846,13 @@ function parseAttributes(root) {
   return {
     height: height && parseLength(height[2]),
     viewbox: viewbox && parseViewbox(viewbox[2]),
-    width: width && parseLength(width[2]),
+    width: width && parseLength(width[2])
   };
 }
 function calculateByDimensions(attrs) {
   return {
     height: attrs.height,
-    width: attrs.width,
+    width: attrs.width
   };
 }
 function calculateByViewbox(attrs, viewbox) {
@@ -872,18 +860,18 @@ function calculateByViewbox(attrs, viewbox) {
   if (attrs.width) {
     return {
       height: Math.floor(attrs.width / ratio),
-      width: attrs.width,
+      width: attrs.width
     };
   }
   if (attrs.height) {
     return {
       height: attrs.height,
-      width: Math.floor(attrs.height * ratio),
+      width: Math.floor(attrs.height * ratio)
     };
   }
   return {
     height: viewbox.height,
-    width: viewbox.width,
+    width: viewbox.width
   };
 }
 const SVG = {
@@ -900,8 +888,8 @@ const SVG = {
         return calculateByViewbox(attrs, attrs.viewbox);
       }
     }
-    throw new TypeError('Invalid SVG');
-  },
+    throw new TypeError("Invalid SVG");
+  }
 };
 
 const TGA = {
@@ -911,35 +899,33 @@ const TGA = {
   calculate(input) {
     return {
       height: readUInt16LE(input, 14),
-      width: readUInt16LE(input, 12),
+      width: readUInt16LE(input, 12)
     };
-  },
+  }
 };
 
 const CONSTANTS = {
   TAG: {
     WIDTH: 256,
     HEIGHT: 257,
-    COMPRESSION: 259,
+    COMPRESSION: 259
   },
   TYPE: {
     SHORT: 3,
     LONG: 4,
-    LONG8: 16,
+    LONG8: 16
   },
   ENTRY_SIZE: {
     STANDARD: 12,
-    BIG: 20,
+    BIG: 20
   },
   COUNT_SIZE: {
     STANDARD: 2,
-    BIG: 8,
-  },
+    BIG: 8
+  }
 };
 function readIFD(input, { isBigEndian, isBigTiff }) {
-  const ifdOffset = isBigTiff
-    ? Number(readUInt64(input, 8, isBigEndian))
-    : readUInt(input, 32, 4, isBigEndian);
+  const ifdOffset = isBigTiff ? Number(readUInt64(input, 8, isBigEndian)) : readUInt(input, 32, 4, isBigEndian);
   const entryCountSize = isBigTiff ? CONSTANTS.COUNT_SIZE.BIG : CONSTANTS.COUNT_SIZE.STANDARD;
   return input.slice(ifdOffset + entryCountSize);
 }
@@ -952,7 +938,7 @@ function readTagValue(input, type, offset, isBigEndian) {
     case CONSTANTS.TYPE.LONG8: {
       const value = Number(readUInt64(input, offset, isBigEndian));
       if (value > Number.MAX_SAFE_INTEGER) {
-        throw new TypeError('Value too large');
+        throw new TypeError("Value too large");
       }
       return value;
     }
@@ -972,16 +958,9 @@ function extractTags(input, { isBigEndian, isBigTiff }) {
   while (temp?.length) {
     const code = readUInt(temp, 16, 0, isBigEndian);
     const type = readUInt(temp, 16, 2, isBigEndian);
-    const length = isBigTiff
-      ? Number(readUInt64(temp, 4, isBigEndian))
-      : readUInt(temp, 32, 4, isBigEndian);
+    const length = isBigTiff ? Number(readUInt64(temp, 4, isBigEndian)) : readUInt(temp, 32, 4, isBigEndian);
     if (code === 0) break;
-    if (
-      length === 1 &&
-      (type === CONSTANTS.TYPE.SHORT ||
-        type === CONSTANTS.TYPE.LONG ||
-        (isBigTiff && type === CONSTANTS.TYPE.LONG8))
-    ) {
+    if (length === 1 && (type === CONSTANTS.TYPE.SHORT || type === CONSTANTS.TYPE.LONG || isBigTiff && type === CONSTANTS.TYPE.LONG8)) {
       const valueOffset = isBigTiff ? 12 : 8;
       tags[code] = readTagValue(temp, type, valueOffset, isBigEndian);
     }
@@ -991,27 +970,27 @@ function extractTags(input, { isBigEndian, isBigTiff }) {
 }
 function determineFormat(input) {
   const signature = toUTF8String(input, 0, 2);
-  const version = readUInt(input, 16, 2, signature === 'MM');
+  const version = readUInt(input, 16, 2, signature === "MM");
   return {
-    isBigEndian: signature === 'MM',
-    isBigTiff: version === 43,
+    isBigEndian: signature === "MM",
+    isBigTiff: version === 43
   };
 }
 function validateBigTIFFHeader(input, isBigEndian) {
   const byteSize = readUInt(input, 16, 4, isBigEndian);
   const reserved = readUInt(input, 16, 6, isBigEndian);
   if (byteSize !== 8 || reserved !== 0) {
-    throw new TypeError('Invalid BigTIFF header');
+    throw new TypeError("Invalid BigTIFF header");
   }
 }
 const signatures = /* @__PURE__ */ new Set([
-  '49492a00',
+  "49492a00",
   // Little Endian
-  '4d4d002a',
+  "4d4d002a",
   // Big Endian
-  '49492b00',
+  "49492b00",
   // BigTIFF Little Endian
-  '4d4d002b',
+  "4d4d002b"
   // BigTIFF Big Endian
 ]);
 const TIFF = {
@@ -1029,104 +1008,88 @@ const TIFF = {
     const info = {
       height: tags[CONSTANTS.TAG.HEIGHT],
       width: tags[CONSTANTS.TAG.WIDTH],
-      type: format.isBigTiff ? 'bigtiff' : 'tiff',
+      type: format.isBigTiff ? "bigtiff" : "tiff"
     };
     if (tags[CONSTANTS.TAG.COMPRESSION]) {
       info.compression = tags[CONSTANTS.TAG.COMPRESSION];
     }
     if (!info.width || !info.height) {
-      throw new TypeError('Invalid Tiff. Missing tags');
+      throw new TypeError("Invalid Tiff. Missing tags");
     }
     return info;
-  },
+  }
 };
 
 function calculateExtended(input) {
   return {
     height: 1 + readUInt24LE(input, 7),
-    width: 1 + readUInt24LE(input, 4),
+    width: 1 + readUInt24LE(input, 4)
   };
 }
 function calculateLossless(input) {
   return {
-    height: 1 + (((input[4] & 15) << 10) | (input[3] << 2) | ((input[2] & 192) >> 6)),
-    width: 1 + (((input[2] & 63) << 8) | input[1]),
+    height: 1 + ((input[4] & 15) << 10 | input[3] << 2 | (input[2] & 192) >> 6),
+    width: 1 + ((input[2] & 63) << 8 | input[1])
   };
 }
 function calculateLossy(input) {
   return {
     height: readInt16LE(input, 8) & 16383,
-    width: readInt16LE(input, 6) & 16383,
+    width: readInt16LE(input, 6) & 16383
   };
 }
 const WEBP = {
   validate(input) {
-    const riffHeader = 'RIFF' === toUTF8String(input, 0, 4);
-    const webpHeader = 'WEBP' === toUTF8String(input, 8, 12);
-    const vp8Header = 'VP8' === toUTF8String(input, 12, 15);
+    const riffHeader = "RIFF" === toUTF8String(input, 0, 4);
+    const webpHeader = "WEBP" === toUTF8String(input, 8, 12);
+    const vp8Header = "VP8" === toUTF8String(input, 12, 15);
     return riffHeader && webpHeader && vp8Header;
   },
   calculate(_input) {
     const chunkHeader = toUTF8String(_input, 12, 16);
     const input = _input.slice(20, 30);
-    if (chunkHeader === 'VP8X') {
+    if (chunkHeader === "VP8X") {
       const extendedHeader = input[0];
       const validStart = (extendedHeader & 192) === 0;
       const validEnd = (extendedHeader & 1) === 0;
       if (validStart && validEnd) {
         return calculateExtended(input);
       }
-      throw new TypeError('Invalid WebP');
+      throw new TypeError("Invalid WebP");
     }
-    if (chunkHeader === 'VP8 ' && input[0] !== 47) {
+    if (chunkHeader === "VP8 " && input[0] !== 47) {
       return calculateLossy(input);
     }
     const signature = toHexString(input, 3, 6);
-    if (chunkHeader === 'VP8L' && signature !== '9d012a') {
+    if (chunkHeader === "VP8L" && signature !== "9d012a") {
       return calculateLossless(input);
     }
-    throw new TypeError('Invalid WebP');
-  },
+    throw new TypeError("Invalid WebP");
+  }
 };
 
 const typeHandlers = /* @__PURE__ */ new Map([
-  ['bmp', BMP],
-  ['cur', CUR],
-  ['dds', DDS],
-  ['gif', GIF],
-  ['heif', HEIF],
-  ['icns', ICNS],
-  ['ico', ICO],
-  ['j2c', J2C],
-  ['jp2', JP2],
-  ['jpg', JPG],
-  ['jxl', JXL],
-  ['jxl-stream', JXLStream],
-  ['ktx', KTX],
-  ['png', PNG],
-  ['pnm', PNM],
-  ['psd', PSD],
-  ['svg', SVG],
-  ['tga', TGA],
-  ['tiff', TIFF],
-  ['webp', WEBP],
+  ["bmp", BMP],
+  ["cur", CUR],
+  ["dds", DDS],
+  ["gif", GIF],
+  ["heif", HEIF],
+  ["icns", ICNS],
+  ["ico", ICO],
+  ["j2c", J2C],
+  ["jp2", JP2],
+  ["jpg", JPG],
+  ["jxl", JXL],
+  ["jxl-stream", JXLStream],
+  ["ktx", KTX],
+  ["png", PNG],
+  ["pnm", PNM],
+  ["psd", PSD],
+  ["svg", SVG],
+  ["tga", TGA],
+  ["tiff", TIFF],
+  ["webp", WEBP]
 ]);
 const types = Array.from(typeHandlers.keys());
 
-export {
-  isRemotePath as a,
-  types as b,
-  appendForwardSlash as c,
-  trimSlashes as d,
-  isInternalPath as e,
-  fileExtension as f,
-  collapseDuplicateTrailingSlashes as g,
-  hasFileExtension as h,
-  isRemoteAllowed as i,
-  joinPaths as j,
-  matchPattern as m,
-  prependForwardSlash as p,
-  removeTrailingForwardSlash as r,
-  slash as s,
-  typeHandlers as t,
-};
+export { isRemotePath as a, types as b, appendForwardSlash as c, trimSlashes as d, isInternalPath as e, fileExtension as f, collapseDuplicateTrailingSlashes as g, hasFileExtension as h, isRemoteAllowed as i, joinPaths as j, matchPattern as m, prependForwardSlash as p, removeTrailingForwardSlash as r, slash as s, typeHandlers as t };

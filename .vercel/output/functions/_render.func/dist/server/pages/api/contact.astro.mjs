@@ -10,15 +10,9 @@ const POST = async ({ request }) => {
         headers: { "Content-Type": "application/json" }
       });
     }
-    const resendApiKey = undefined                              ;
-    const contactEmail = undefined                              || "gomezukalil@gmail.com";
-    if (!resendApiKey) {
-      console.error("RESEND_API_KEY not configured");
-      return new Response(JSON.stringify({ error: "Email service not configured" }), {
-        status: 500,
-        headers: { "Content-Type": "application/json" }
-      });
-    }
+    const resendApiKey = "re_8TJ6HyWM_QKdz2QrstfSYCL3oP1fNDq9C";
+    const contactEmail = "gomezukalil@gmail.com";
+    if (!resendApiKey) ;
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
