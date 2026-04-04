@@ -1,16 +1,20 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { skills } from '../data/skills';
 
 interface SkillBarProps {
   name: string;
   level: number;
   index: number;
+  isTabVisible: boolean;
 }
 
-function SkillBar({ name, level, index }: SkillBarProps) {
+function SkillBar({ name, level, index, isTabVisible }: SkillBarProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: false, amount: 0.5 });
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" ref={ref}>
       <div className="flex justify-between text-sm">
         <span className="text-text-primary">{name}</span>
         <span className="text-text-secondary">{level}%</span>
@@ -18,9 +22,8 @@ function SkillBar({ name, level, index }: SkillBarProps) {
       <div className="h-2 bg-surface-2 rounded-full overflow-hidden">
         <motion.div
           initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
+          animate={isInView && isTabVisible ? { width: `${level}%` } : { width: 0 }}
           transition={{ duration: 0.8, delay: index * 0.1 }}
-          viewport={{ once: true }}
           className="h-full bg-gradient-to-r from-accent to-accent-cyan rounded-full"
         />
       </div>
@@ -72,7 +75,7 @@ export default function Skills() {
                 whileHover={{ y: -4 }}
                 className="glass-panel border border-border rounded-xl p-4 hover-lift"
               >
-                <SkillBar {...skill} index={index} />
+                <SkillBar {...skill} index={index} isTabVisible={true} />
               </motion.div>
             ))}
           </motion.div>

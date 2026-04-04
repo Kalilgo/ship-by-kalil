@@ -4,6 +4,12 @@ import { projects } from '../data/projects';
 
 const allTags = Array.from(new Set(projects.flatMap((p) => p.tags)));
 
+const typeColors: Record<string, string> = {
+  Freelance: 'bg-accent/20 text-accent',
+  Personal: 'bg-accent-cyan/20 text-accent-cyan',
+  Trabajo: 'bg-purple-500/20 text-purple-400',
+};
+
 export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('Todos');
 
@@ -52,6 +58,8 @@ export default function Projects() {
                 initial={{ opacity: 0, y: 24, scale: 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.96 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.45, delay: index * 0.06, type: 'spring', stiffness: 120 }}
                 whileHover={{ y: -8 }}
                 className="glass-panel bg-surface-2/90 border border-border rounded-xl p-6 hover:border-accent-cyan transition-colors group"
@@ -60,9 +68,7 @@ export default function Projects() {
                   <span className="text-sm text-text-secondary">{project.year}</span>
                   <span
                     className={`px-2 py-1 rounded text-xs font-medium ${
-                      project.type === 'Freelance'
-                        ? 'bg-accent/20 text-accent'
-                        : 'bg-accent-cyan/20 text-accent-cyan'
+                      typeColors[project.type] || 'bg-surface text-text-secondary'
                     }`}
                   >
                     {project.type}
@@ -89,12 +95,30 @@ export default function Projects() {
                 </div>
 
                 <div className="flex gap-4">
-                  <button className="text-accent-cyan text-sm font-medium hover:underline">
-                    Ver demo
-                  </button>
-                  <button className="text-text-secondary text-sm font-medium hover:text-text-primary">
-                    Ver código
-                  </button>
+                  {project.demoUrl ? (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-accent-cyan text-sm font-medium hover:underline"
+                    >
+                      Ver demo
+                    </a>
+                  ) : (
+                    <span className="text-text-secondary text-sm">Demo pronto</span>
+                  )}
+                  {project.repoUrl ? (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-text-secondary text-sm font-medium hover:text-text-primary"
+                    >
+                      Ver código
+                    </a>
+                  ) : (
+                    <span className="text-text-secondary text-sm">Código privado</span>
+                  )}
                 </div>
               </motion.article>
             ))}

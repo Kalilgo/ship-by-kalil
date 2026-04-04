@@ -3,40 +3,43 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
-  type: 'Freelance' | 'Personal';
+  type: 'Freelance' | 'Personal' | 'Trabajo';
   year: string;
   featured: boolean;
+  demoUrl?: string;
+  repoUrl?: string;
 }
 
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Sistema de Gestión Financiera',
+    title: 'Landing Page Astro',
     description:
-      'Aplicación web para gestión de créditos y cobranzas para una financiera. Panel de control con métricas en tiempo real, gestión de clientes y generación de reportes.',
-    tags: ['React', 'C#', '.NET', 'SQL Server', 'AWS'],
+      'Landing page de alto rendimiento creada con Astro para una empresa de tecnología. Optimizada para SEO, con load time inferior a 1 segundo y diseño responsivo.',
+    tags: ['Astro', 'React', 'Tailwind', 'TypeScript'],
     type: 'Freelance',
-    year: '2024',
+    year: '2025',
     featured: true,
   },
   {
     id: 2,
-    title: 'Portal Inmobiliario',
+    title: 'FinanzasArgy',
     description:
-      'Plataforma web para listado y búsqueda de propiedades con filtros avanzados, galería de imágenes y formulario de contacto integrado.',
-    tags: ['Astro', 'React', 'PostgreSQL', 'Vercel'],
-    type: 'Freelance',
-    year: '2024',
+      'Plataforma financiera líder en Argentina con más de 298K seguidores. Muestra cotizaciones del dólar, criptomonedas, bonos y noticias financieras en tiempo real. Actualización automática cada 5 minutos con más de 50K visitas mensuales.',
+    tags: ['Next.js', 'React', 'Tailwind', 'Vercel'],
+    type: 'Personal',
+    year: '2020',
     featured: true,
+    demoUrl: 'https://www.finanzasargy.com/',
   },
   {
     id: 3,
-    title: 'API REST de Inventario',
+    title: 'PropI',
     description:
-      'Backend RESTful para manejo de inventario con autenticación JWT, roles de usuario y documentación automática con Swagger.',
-    tags: ['C#', '.NET Core', 'SQL Server', 'Railway'],
-    type: 'Personal',
-    year: '2023',
-    featured: false,
+      'Sistema inmobiliario completo con gestión de propiedades, clientes, alquileres y ventas. Panel de administración con métricas y reportes automáticos.',
+    tags: ['React', '.NET', 'SQL Server', 'AWS'],
+    type: 'Freelance',
+    year: '2024',
+    featured: true,
   },
 ];

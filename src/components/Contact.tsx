@@ -62,7 +62,9 @@ export default function Contact() {
             </p>
 
             <div className="glass-panel border border-border rounded-xl p-4 mb-8">
-              <p className="text-xs uppercase tracking-wide text-accent-cyan mb-1">Respuesta rápida</p>
+              <p className="text-xs uppercase tracking-wide text-accent-cyan mb-1">
+                Respuesta rápida
+              </p>
               <p className="text-sm text-text-secondary">
                 Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.
               </p>

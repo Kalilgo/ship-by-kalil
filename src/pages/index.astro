@@ -15,8 +15,8 @@ import Footer from '../components/Footer.astro';
   <main>
     <Hero />
     <About />
-    <Skills client:only="react" />
-    <Projects client:only="react" />
+    <Skills client:visible />
+    <Projects client:visible />
     <Experience />
     <Contact client:only="react" />
   </main>
