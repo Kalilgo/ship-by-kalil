@@ -1,0 +1,260 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+const cvContent = {
+  name: 'Matías Kalil Gómez',
+  title: 'Desarrollador Web Full Stack',
+  location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires',
+  phone: '+54 9 11 6137-5359',
+  email: 'gomezukalil@gmail.com',
+  email2: 'Matias_gomezu@hotmail.com',
+  
+  profile: `Desarrollador web Full Stack con experiencia en proyectos freelance de desarrollo de aplicaciones para el sector financiero e inmobiliario. Proactivo, resolutivo y con fuerte capacidad de aprendizaje autónomo. Con conocimiento de herramientas modernas de desarrollo asistido por inteligencia artificial. Orientado a la entrega de soluciones de calidad, con capacidad para el trabajo en equipo y la gestión eficiente de proyectos bajo metodologías ágiles.`,
+
+  experience: [
+    {
+      period: '2024 – Actualidad',
+      role: 'Desarrollador Web Full Stack (Freelance)',
+      company: 'Equipo de desarrollo independiente',
+      description: 'Desarrollo de aplicaciones web para empresas del sector financiero e inmobiliario.',
+      highlights: [
+        'Implementación de interfaces modernas con React y Astro',
+        'Desarrollo de APIs y servicios backend con .NET Core',
+        'Gestión de bases de datos relacionales con SQL Server y PostgreSQL',
+        'Despliegue y administración de infraestructura en AWS, Vercel y Railway',
+        'Uso de herramientas de desarrollo asistidas por IA: Cursor y Claude AI',
+        'Colaboración en equipo con flujo de trabajo basado en Git y GitHub'
+      ]
+    }
+  ],
+
+  education: [
+    {
+      degree: 'Licenciatura en Sistemas',
+      institution: 'Universidad Nacional de General Sarmiento',
+      location: 'Malvinas Argentinas',
+      period: 'Agosto 2019 – Presente',
+      status: 'En curso'
+    },
+    {
+      degree: 'Diplomatura en Programación .NET',
+      institution: 'Universidad Tecnológica Nacional',
+      location: 'Modalidad a distancia',
+      period: 'Julio 2021 – Presente',
+      status: 'En curso'
+    },
+    {
+      degree: 'Bachiller en Ciencias Sociales',
+      institution: 'Escuela Nuestra Señora Del Valle',
+      location: 'San Miguel',
+      period: '2011 – 2016',
+      status: 'Completado'
+    }
+  ],
+
+  skills: {
+    frontend: ['React', 'Astro', 'Tailwind CSS', 'TypeScript', 'Next.js'],
+    backend: ['.NET Core', 'C#', 'Node.js', 'SQL Server', 'PostgreSQL'],
+    cloud: ['AWS', 'Vercel', 'Railway'],
+    tools: ['Git', 'GitHub', 'Cursor', 'Claude AI', 'Figma']
+  },
+
+  aptitudes: [
+    'Proactivo, perseverante y resolutivo ante situaciones nuevas y complejas',
+    'Organizado, diligente y con atención al detalle',
+    'Fuerte capacidad para el trabajo en equipo y comunicación efectiva',
+    'Aprendizaje continuo y adaptación rápida a nuevas tecnologías',
+    'Pensamiento analítico orientado a la resolución de problemas'
+  ],
+
+  personal: {
+    birth: '22/05/1999',
+    dni: '41.874.133',
+    nationality: 'Argentina',
+    status: 'Soltero'
+  }
+};
+---
+
+<Layout title="CV - Matías Kalil Gómez">
+  <Navbar />
+  
+  <main class="min-h-screen bg-surface py-12">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="flex justify-end mb-8">
+        <a
+          href="/CV.docx"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-4 py-2 bg-accent-cyan text-background rounded-lg text-sm font-medium hover:bg-accent-cyan/80 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Descargar CV
+        </a>
+      </div>
+
+      <header class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-2">
+          {cvContent.name}
+        </h1>
+        <p class="text-xl text-accent-cyan mb-4">{cvContent.title}</p>
+        <div class="flex flex-wrap justify-center gap-4 text-text-secondary text-sm">
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            {cvContent.location}
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            {cvContent.phone}
+          </span>
+          <span class="flex items-center gap-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            {cvContent.email}
+          </span>
+        </div>
+      </header>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">01</span>
+          Perfil Profesional
+        </h2>
+        <p class="text-text-secondary leading-relaxed bg-surface-2/50 border border-border rounded-xl p-6">
+          {cvContent.profile}
+        </p>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">02</span>
+          Experiencia Profesional
+        </h2>
+        {cvContent.experience.map((exp) => (
+          <div class="bg-surface-2/50 border border-border rounded-xl p-6 mb-4">
+            <div class="flex flex-wrap justify-between items-start mb-4">
+              <div>
+                <h3 class="text-xl font-bold text-text-primary">{exp.role}</h3>
+                <p class="text-accent-cyan">{exp.company}</p>
+              </div>
+              <span class="px-3 py-1 bg-accent/20 text-accent text-sm rounded-full">{exp.period}</span>
+            </div>
+            <ul class="space-y-2">
+              {exp.highlights.map((h) => (
+                <li class="flex items-start gap-2 text-text-secondary">
+                  <span class="text-accent-cyan mt-1">▹</span>
+                  {h}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">03</span>
+          Habilidades Técnicas
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          {Object.entries(cvContent.skills).map(([category, items]) => (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-5">
+              <h3 class="text-lg font-bold text-text-primary capitalize mb-3">{category}</h3>
+              <div class="flex flex-wrap gap-2">
+                {items.map((item) => (
+                  <span class="px-3 py-1 bg-background text-text-secondary text-sm rounded-lg border border-border">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">04</span>
+          Educación
+        </h2>
+        <div class="space-y-4">
+          {cvContent.education.map((edu) => (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-5 flex flex-wrap justify-between items-center">
+              <div>
+                <h3 class="text-lg font-bold text-text-primary">{edu.degree}</h3>
+                <p class="text-text-secondary">{edu.institution} • {edu.location}</p>
+              </div>
+              <div class="text-right">
+                <p class="text-accent-cyan text-sm">{edu.period}</p>
+                <span class="px-2 py-0.5 bg-accent/10 text-accent text-xs rounded">{edu.status}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">05</span>
+          Aptitudes
+        </h2>
+        <div class="grid md:grid-cols-2 gap-3">
+          {cvContent.aptitudes.map((apt) => (
+            <div class="flex items-center gap-2 text-text-secondary bg-surface-2/30 border border-border/50 rounded-lg p-3">
+              <span class="text-accent-cyan">✓</span>
+              {apt}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">06</span>
+          Datos Personales
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+            <p class="text-xs text-text-secondary mb-1">Fecha de nacimiento</p>
+            <p class="text-text-primary font-medium">{cvContent.personal.birth}</p>
+          </div>
+          <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+            <p class="text-xs text-text-secondary mb-1">DNI</p>
+            <p class="text-text-primary font-medium">{cvContent.personal.dni}</p>
+          </div>
+          <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+            <p class="text-xs text-text-secondary mb-1">Nacionalidad</p>
+            <p class="text-text-primary font-medium">{cvContent.personal.nationality}</p>
+          </div>
+          <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+            <p class="text-xs text-text-secondary mb-1">Estado civil</p>
+            <p class="text-text-primary font-medium">{cvContent.personal.status}</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="flex justify-center pt-8 border-t border-border">
+        <a
+          href="/CV.docx"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-6 py-3 bg-accent-cyan text-background rounded-lg font-medium hover:bg-accent-cyan/80 transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Descargar CV
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

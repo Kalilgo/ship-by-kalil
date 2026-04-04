@@ -5,6 +5,7 @@ const navLinks = [
   { label: 'Proyectos', href: '#proyectos' },
   { label: 'Experiencia', href: '#experiencia' },
   { label: 'Contacto', href: '#contacto' },
+  { label: 'CV', href: '/cv', primary: true },
 ];
 ---
 
@@ -15,7 +16,7 @@ const navLinks = [
     </a>
 
     <div class="hidden md:flex items-center gap-8">
-      {navLinks.map((link) => (
+      {navLinks.slice(0, 5).map((link) => (
         <a
           href={link.href}
           class="text-text-secondary hover:text-text-primary transition-colors"
@@ -24,11 +25,10 @@ const navLinks = [
         </a>
       ))}
       <a
-        href="/cv-matias-kalil.pdf"
-        download
-        class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+        href="/cv"
+        class="px-4 py-2 bg-accent-cyan text-background rounded-lg hover:bg-accent-cyan/80 transition-colors font-medium"
       >
-        Descargar CV
+        Ver CV
       </a>
     </div>
 
@@ -45,22 +45,21 @@ const navLinks = [
     </button>
   </div>
 
-  <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
-    <div class="px-6 py-4 flex flex-col gap-4">
-      {navLinks.map((link) => (
-        <a href={link.href} class="text-text-secondary hover:text-text-primary py-2">
-          {link.label}
+    <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
+      <div class="px-6 py-4 flex flex-col gap-4">
+        {navLinks.slice(0, 5).map((link) => (
+          <a href={link.href} class="text-text-secondary hover:text-text-primary py-2">
+            {link.label}
+          </a>
+        ))}
+        <a
+          href="/cv"
+          class="px-4 py-2 bg-accent-cyan text-background rounded-lg text-center font-medium"
+        >
+          Ver CV
         </a>
-      ))}
-      <a
-        href="/cv-matias-kalil.pdf"
-        download
-        class="px-4 py-2 bg-accent text-white rounded-lg text-center"
-      >
-        Descargar CV
-      </a>
+      </div>
     </div>
-  </div>
 </nav>
 
 <script>
