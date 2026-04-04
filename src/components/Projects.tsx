@@ -45,15 +45,16 @@ export default function Projects() {
 
         <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence>
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project, index) => (
               <motion.article
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="bg-surface-2 border border-border rounded-xl p-6 hover:border-accent-cyan transition-colors group"
+                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.96 }}
+                transition={{ duration: 0.45, delay: index * 0.06, type: 'spring', stiffness: 120 }}
+                whileHover={{ y: -8 }}
+                className="glass-panel bg-surface-2/90 border border-border rounded-xl p-6 hover:border-accent-cyan transition-colors group"
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm text-text-secondary">{project.year}</span>

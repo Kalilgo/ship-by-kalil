@@ -1,42 +1,69 @@
 ---
+import { projects } from '../data/projects';
+import { experience } from '../data/experience';
+
+const featuredProjects = projects.filter((project) => project.featured).length;
+const currentExperience = experience.filter((item) => item.current).length;
 ---
 
-<section class="min-h-screen flex items-center pt-20">
+<section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+  <div class="absolute top-28 -left-24 w-72 h-72 bg-accent/15 blur-3xl rounded-full pointer-events-none"></div>
+  <div class="absolute bottom-8 -right-24 w-72 h-72 bg-accent-cyan/20 blur-3xl rounded-full pointer-events-none"></div>
+
   <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    <div class="space-y-6">
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2 rounded-full">
+    <div class="space-y-6 reveal" style="--reveal-delay: 80ms;">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2/80 border border-border rounded-full">
         <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-        <span class="text-text-secondary">Disponible para proyectos</span>
+        <span class="text-text-secondary text-sm">Disponible para trabajo full-time o freelance</span>
       </div>
 
       <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-text-primary leading-tight">
-        Matías Kalil<br />
-        <span class="text-accent">Gómez</span>
+        Matías Kalil
+        <span class="block text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-cyan">
+          Gómez
+        </span>
       </h1>
 
-      <p class="text-xl text-text-secondary">Desarrollador Web Full Stack</p>
-
-      <p class="text-lg text-text-secondary max-w-lg">
-        Construyo aplicaciones web modernas para el sector financiero e inmobiliario.
-        Especializado en React, Astro, .NET y AWS.
+      <p class="text-xl text-text-secondary">
+        Full Stack Developer que construye productos rápidos, escalables y listos para negocio.
       </p>
+
+      <p class="text-lg text-text-secondary max-w-xl">
+        Ayudo equipos a lanzar experiencias web modernas con foco en performance, conversión y
+        resultados reales para usuarios.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-xl">
+        <div class="glass-panel border border-border rounded-xl p-4">
+          <p class="text-2xl font-heading text-text-primary">{featuredProjects}+</p>
+          <p class="text-sm text-text-secondary">Proyectos destacados</p>
+        </div>
+        <div class="glass-panel border border-border rounded-xl p-4">
+          <p class="text-2xl font-heading text-text-primary">{currentExperience}+</p>
+          <p class="text-sm text-text-secondary">Roles actuales</p>
+        </div>
+        <div class="glass-panel border border-border rounded-xl p-4 col-span-2 sm:col-span-1">
+          <p class="text-2xl font-heading text-text-primary">24h</p>
+          <p class="text-sm text-text-secondary">Tiempo de respuesta</p>
+        </div>
+      </div>
 
       <div class="flex flex-wrap gap-4">
         <a
           href="#proyectos"
           class="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
         >
-          Ver proyectos
+          Ver casos reales
         </a>
         <a
           href="#contacto"
           class="px-6 py-3 border border-border text-text-primary rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-colors"
         >
-          Contactarme
+          Coordinar entrevista
         </a>
       </div>
 
-      <div class="flex items-center gap-4 pt-4">
+      <div class="flex items-center gap-4 pt-2">
         <a
           href="https://github.com/matiaskalil"
           target="_blank"
@@ -72,9 +99,9 @@
       </div>
     </div>
 
-    <div class="hidden md:block relative">
+    <div class="hidden md:block relative animate-float reveal" style="--reveal-delay: 240ms;">
       <div class="absolute inset-0 bg-gradient-to-r from-accent/20 to-accent-cyan/20 blur-3xl"></div>
-      <div class="relative bg-surface-2 border border-border rounded-xl p-6 font-mono text-sm">
+      <div class="relative glass-panel bg-surface-2/90 border border-border rounded-xl p-6 font-mono text-sm">
         <div class="flex gap-2 mb-4">
           <span class="w-3 h-3 rounded-full bg-red-500"></span>
           <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
@@ -82,8 +109,10 @@
         </div>
         <pre class="text-accent-cyan overflow-x-auto"><code><span class="text-text-secondary">{"const"}</span> developer = {"{"}
   name: <span class="text-accent">"Matías Kalil Gómez"</span>,
-  stack: [<span class="text-accent">"React"</span>, <span class="text-accent">"Astro"</span>, <span class="text-accent">".NET"</span>],
-  passion: <span class="text-accent">"building products that work"</span>
+  role: <span class="text-accent">"Full Stack Developer"</span>,
+  stack: [<span class="text-accent">"React"</span>, <span class="text-accent">"Astro"</span>, <span class="text-accent">".NET"</span>, <span class="text-accent">"AWS"</span>],
+  mission: <span class="text-accent">"ship products people love using"</span>,
+  status: <span class="text-accent">"open to work"</span>
 {"}"};</code></pre>
       </div>
     </div>

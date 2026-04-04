@@ -64,7 +64,16 @@ export default function Skills() {
             className="grid sm:grid-cols-2 gap-6"
           >
             {skills[activeTab].skills.map((skill, index) => (
-              <SkillBar key={skill.name} {...skill} index={index} />
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.45, delay: index * 0.07, type: 'spring', stiffness: 130 }}
+                whileHover={{ y: -4 }}
+                className="glass-panel border border-border rounded-xl p-4 hover-lift"
+              >
+                <SkillBar {...skill} index={index} />
+              </motion.div>
             ))}
           </motion.div>
         </AnimatePresence>

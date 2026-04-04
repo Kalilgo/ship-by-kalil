@@ -61,6 +61,13 @@ export default function Contact() {
               posible.
             </p>
 
+            <div className="glass-panel border border-border rounded-xl p-4 mb-8">
+              <p className="text-xs uppercase tracking-wide text-accent-cyan mb-1">Respuesta rápida</p>
+              <p className="text-sm text-text-secondary">
+                Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.
+              </p>
+            </div>
+
             <div className="space-y-4">
               <a
                 href="mailto:gomezukalil@gmail.com"
@@ -90,7 +97,10 @@ export default function Contact() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 glass-panel border border-border rounded-xl p-5"
+          >
             <div>
               <label htmlFor="name" className="block text-sm text-text-secondary mb-2">
                 Nombre
