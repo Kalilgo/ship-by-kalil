@@ -22,7 +22,8 @@ export const projects: Project[] = [
     type: 'Freelance',
     year: '2025',
     featured: true,
-    demoUrl: 'https://cerquetech.com/', 
+    demoUrl: 'https://cerquetech.com/',
+    image: '🚀',
   },
   {
     id: 2,
@@ -34,6 +35,7 @@ export const projects: Project[] = [
     year: '2020',
     featured: true,
     demoUrl: 'https://www.finanzasargy.com/',
+    image: '📈',
   },
   {
     id: 3,
@@ -45,5 +47,6 @@ export const projects: Project[] = [
     year: '2024',
     featured: true,
     demoUrl: 'https://app.somospropi.com/',
+    image: '🏠',
   },
 ];
