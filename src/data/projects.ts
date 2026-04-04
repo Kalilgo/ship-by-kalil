@@ -27,7 +27,7 @@ export const projects: Project[] = [
     description:
       'Plataforma financiera líder en Argentina con más de 298K seguidores. Muestra cotizaciones del dólar, criptomonedas, bonos y noticias financieras en tiempo real. Actualización automática cada 5 minutos con más de 50K visitas mensuales.',
     tags: ['Next.js', 'React', 'Tailwind', 'Vercel'],
-    type: 'Personal',
+    type: 'Freelance',
     year: '2020',
     featured: true,
     demoUrl: 'https://www.finanzasargy.com/',
@@ -41,5 +41,6 @@ export const projects: Project[] = [
     type: 'Freelance',
     year: '2024',
     featured: true,
+    demoUrl: 'https://app.somospropi.com/',
   },
 ];

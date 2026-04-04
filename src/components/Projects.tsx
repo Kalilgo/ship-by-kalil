@@ -102,10 +102,10 @@ export default function Projects() {
                       rel="noopener noreferrer"
                       className="text-accent-cyan text-sm font-medium hover:underline"
                     >
-                      Ver demo
+                      Ver
                     </a>
                   ) : (
-                    <span className="text-text-secondary text-sm">Demo pronto</span>
+                    <span className="text-text-secondary text-sm">Ver Demo</span>
                   )}
                   {project.repoUrl ? (
                     <a
