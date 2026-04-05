@@ -22,8 +22,22 @@ const skills = [
 
     <div class="grid md:grid-cols-2 gap-12 items-start">
       <div class="flex flex-col items-center reveal" style="--reveal-delay: 100ms;">
-        <div class="w-48 h-48 rounded-full glass-panel bg-surface-2 border-2 border-accent-cyan flex items-center justify-center text-4xl font-heading text-accent-cyan animate-float">
-          MKG
+        <div class="relative w-full max-w-[280px] mx-auto animate-float">
+          <div
+            class="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent-cyan/25 via-accent/10 to-transparent blur-2xl opacity-70 pointer-events-none"
+            aria-hidden="true"
+          />
+          <div class="relative rounded-3xl border border-border/60 bg-surface-2/50 p-3 shadow-2xl shadow-black/30">
+            <img
+              src="/images/matias-kalil-portrait.png"
+              alt="Retrato de Matías Kalil Gómez, desarrollador web full stack"
+              width="280"
+              height="320"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-auto rounded-2xl object-cover object-top"
+            />
+          </div>
         </div>
         <div class="mt-6 text-center">
           <h3 class="text-xl font-bold text-text-primary">Matías Kalil Gómez</h3>
