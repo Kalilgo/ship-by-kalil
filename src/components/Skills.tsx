@@ -9,6 +9,17 @@ interface SkillBarProps {
   isTabVisible: boolean;
 }
 
+const translations = {
+  es: {
+    title: 'Skills & ',
+    titleHighlight: 'Tecnologías',
+  },
+  en: {
+    title: 'Skills & ',
+    titleHighlight: 'Technologies',
+  },
+};
+
 function SkillBar({ name, level, index, isTabVisible }: SkillBarProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, amount: 0.5 });
@@ -31,14 +42,21 @@ function SkillBar({ name, level, index, isTabVisible }: SkillBarProps) {
   );
 }
 
-export default function Skills() {
+interface SkillsProps {
+  locale?: 'es' | 'en';
+}
+
+export default function Skills({ locale = 'es' }: SkillsProps) {
   const [activeTab, setActiveTab] = useState(0);
+
+  const t = translations[locale];
 
   return (
     <section id="skills" className="py-20">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-          Skills & <span className="text-accent-cyan">Technologies</span>
+          {t.title}
+          <span className="text-accent-cyan">{t.titleHighlight}</span>
         </h2>
 
         <div className="flex flex-wrap gap-2 mb-8">

@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "about": "About me",
+    "skills": "Skills",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact",
+    "downloadCV": "Download CV",
+    "available": "Available for full-time or freelance work",
+    "language": "Change language"
+  },
+  "hero": {
+    "title": "Gómez",
+    "subtitle": "Full Stack Developer building fast, scalable, business-ready products.",
+    "description": "I help teams launch modern web experiences focused on performance, conversion, and real results for users.",
+    "projectsLabel": "Featured projects",
+    "currentRole": "Current role",
+    "responseTime": "Response time",
+    "viewCases": "View case studies",
+    "scheduleInterview": "Schedule interview"
+  },
+  "about": {
+    "title": "About <span>me</span>",
+    "location": "San Miguel, Buenos Aires",
+    "education": "Systems Degree — UNGS",
+    "birthday": "05/22/1999",
+    "status": "Freelance · Available",
+    "description": "Full Stack web developer with experience in freelance projects for the financial and real estate sectors. Proactive, resourceful, and capable of self-directed learning. I use modern AI-assisted development tools to increase productivity and code quality.",
+    "howIWork": "How I work",
+    "howIWorkDesc": "I prioritize clear communication, frequent deliveries, and technically sound decisions oriented to business impact.",
+    "valueToTeam": "Value to your team",
+    "valueToTeamDesc": "I bridge product + development so ideas reach production fast with quality and good UX.",
+    "techStack": "Tech Stack",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "cloud": "Cloud",
+    "aiTools": "AI Tools"
+  },
+  "experience": {
+    "title": "Experience",
+    "subtitle": "My professional journey"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have a project in mind? Let's talk!",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "sending": "Sending...",
+    "success": "Message sent! I'll get back to you soon.",
+    "error": "Error sending message. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "downloadCV": "Download CV"
+  },
+  "counter": {
+    "projects": "Featured projects",
+    "role": "Current role",
+    "response": "Response time"
+  }
+}

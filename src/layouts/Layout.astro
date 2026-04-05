@@ -5,17 +5,19 @@ interface Props {
   title?: string;
   description?: string;
   canonicalUrl?: string;
+  locale?: string;
 }
 
 const {
   title = 'Matías Kalil Gómez — Full Stack Developer',
   description = 'Desarrollador Web Full Stack especializado en React, Astro, .NET y AWS. Disponible para proyectos freelance.',
   canonicalUrl = Astro.url.href,
+  locale = 'es',
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,6 +36,28 @@ const {
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      (function () {
+        var path = window.location.pathname;
+        var isEn = path === '/en' || path.startsWith('/en/');
+        var stored = localStorage.getItem('locale');
+
+        // Preferencia guardada: misma URL en próximas visitas (p. ej. entrar a / y volver a /en/)
+        if (stored === 'en' && !isEn) {
+          window.location.replace('/en/');
+          return;
+        }
+        if (stored === 'es' && isEn) {
+          window.location.replace('/');
+          return;
+        }
+
+        // Primera visita sin preferencia: alinear storage con la URL actual
+        if (!stored) {
+          localStorage.setItem('locale', isEn ? 'en' : 'es');
+        }
+      })();
+    </script>
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
     <slot />

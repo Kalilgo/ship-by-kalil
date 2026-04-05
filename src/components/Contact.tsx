@@ -12,7 +12,67 @@ interface FormData {
   message: string;
 }
 
-export default function Contact() {
+const translations = {
+  es: {
+    title: 'Contact',
+    titleHighlight: 'o',
+    subtitle:
+      '¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo lo antes posible.',
+    quickResponse: 'Respuesta rápida',
+    quickResponseDesc: 'Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.',
+    name: 'Nombre',
+    namePlaceholder: 'Tu nombre',
+    email: 'Email',
+    emailPlaceholder: 'tu@email.com',
+    subject: 'Asunto',
+    subjectPlaceholder: '¿De qué se trata?',
+    message: 'Mensaje',
+    messagePlaceholder: 'Tu mensaje...',
+    nameRequired: 'Nombre es requerido',
+    emailRequired: 'Email es requerido',
+    emailInvalid: 'Email inválido',
+    subjectRequired: 'Asunto es requerido',
+    messageRequired: 'Mensaje es requerido',
+    send: 'Enviar mensaje',
+    sending: 'Enviando...',
+    sent: 'Enviado!',
+    successMessage: '¡Mensaje enviado! Te responderé pronto.',
+    errorMessage: 'Error al enviar. Escribime directamente a gomezukalil@gmail.com',
+  },
+  en: {
+    title: 'Contact',
+    titleHighlight: '',
+    subtitle:
+      "Have a project in mind? Want to work together? Write to me and I'll respond as soon as possible.",
+    quickResponse: 'Quick response',
+    quickResponseDesc: 'I usually respond within 24 hours with a proposal for next steps.',
+    name: 'Name',
+    namePlaceholder: 'Your name',
+    email: 'Email',
+    emailPlaceholder: 'your@email.com',
+    subject: 'Subject',
+    subjectPlaceholder: "What's it about?",
+    message: 'Message',
+    messagePlaceholder: 'Your message...',
+    nameRequired: 'Name is required',
+    emailRequired: 'Email is required',
+    emailInvalid: 'Invalid email',
+    subjectRequired: 'Subject is required',
+    messageRequired: 'Message is required',
+    send: 'Send message',
+    sending: 'Sending...',
+    sent: 'Sent!',
+    successMessage: 'Message sent! I will respond soon.',
+    errorMessage: 'Error sending. Email me directly at gomezukalil@gmail.com',
+  },
+};
+
+interface ContactProps {
+  locale?: 'es' | 'en';
+}
+
+export default function Contact({ locale = 'es' }: ContactProps) {
+  const t = translations[locale];
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -43,7 +103,7 @@ export default function Contact() {
     } catch (error) {
       console.error('Contact form error:', error);
       setStatus('error');
-      setErrorMessage('Failed to send message. Please try again or email directly.');
+      setErrorMessage(t.errorMessage);
     }
   };
 
@@ -51,23 +111,19 @@ export default function Contact() {
     <section id="contacto" className="py-20 bg-surface">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-          Contact<span className="text-accent-cyan">o</span>
+          {t.title}
+          <span className="text-accent-cyan">{t.titleHighlight}</span>
         </h2>
 
         <div className="grid md:grid-cols-2 gap-12">
           <div>
-            <p className="text-lg text-text-secondary mb-8">
-              ¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo lo antes
-              posible.
-            </p>
+            <p className="text-lg text-text-secondary mb-8">{t.subtitle}</p>
 
             <div className="glass-panel border border-border rounded-xl p-4 mb-8">
               <p className="text-xs uppercase tracking-wide text-accent-cyan mb-1">
-                Respuesta rápida
+                {t.quickResponse}
               </p>
-              <p className="text-sm text-text-secondary">
-                Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.
-              </p>
+              <p className="text-sm text-text-secondary">{t.quickResponseDesc}</p>
             </div>
 
             <div className="space-y-4">
@@ -105,16 +161,16 @@ export default function Contact() {
           >
             <div>
               <label htmlFor="name" className="block text-sm text-text-secondary mb-2">
-                Nombre
+                {t.name}
               </label>
               <input
-                {...register('name', { required: 'Nombre es requerido' })}
+                {...register('name', { required: t.nameRequired })}
                 type="text"
                 id="name"
                 aria-invalid={errors.name ? 'true' : 'false'}
                 aria-describedby={errors.name ? 'name-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
-                placeholder="Tu nombre"
+                placeholder={t.namePlaceholder}
               />
               {errors.name && (
                 <span id="name-error" className="text-red-500 text-sm" role="alert">
@@ -125,14 +181,14 @@ export default function Contact() {
 
             <div>
               <label htmlFor="email" className="block text-sm text-text-secondary mb-2">
-                Email
+                {t.email}
               </label>
               <input
                 {...register('email', {
-                  required: 'Email es requerido',
+                  required: t.emailRequired,
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Email inválido',
+                    message: t.emailInvalid,
                   },
                 })}
                 type="email"
@@ -140,7 +196,7 @@ export default function Contact() {
                 aria-invalid={errors.email ? 'true' : 'false'}
                 aria-describedby={errors.email ? 'email-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
-                placeholder="tu@email.com"
+                placeholder={t.emailPlaceholder}
               />
               {errors.email && (
                 <span id="email-error" className="text-red-500 text-sm" role="alert">
@@ -151,16 +207,16 @@ export default function Contact() {
 
             <div>
               <label htmlFor="subject" className="block text-sm text-text-secondary mb-2">
-                Asunto
+                {t.subject}
               </label>
               <input
-                {...register('subject', { required: 'Asunto es requerido' })}
+                {...register('subject', { required: t.subjectRequired })}
                 type="text"
                 id="subject"
                 aria-invalid={errors.subject ? 'true' : 'false'}
                 aria-describedby={errors.subject ? 'subject-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
-                placeholder="¿De qué se trata?"
+                placeholder={t.subjectPlaceholder}
               />
               {errors.subject && (
                 <span id="subject-error" className="text-red-500 text-sm" role="alert">
@@ -171,16 +227,16 @@ export default function Contact() {
 
             <div>
               <label htmlFor="message" className="block text-sm text-text-secondary mb-2">
-                Mensaje
+                {t.message}
               </label>
               <textarea
-                {...register('message', { required: 'Mensaje es requerido' })}
+                {...register('message', { required: t.messageRequired })}
                 id="message"
                 aria-invalid={errors.message ? 'true' : 'false'}
                 aria-describedby={errors.message ? 'message-error' : undefined}
                 rows={5}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors resize-none"
-                placeholder="Tu mensaje..."
+                placeholder={t.messagePlaceholder}
               />
               {errors.message && (
                 <span id="message-error" className="text-red-500 text-sm" role="alert">
@@ -196,11 +252,7 @@ export default function Contact() {
             >
               {status === 'loading' && <Loader2 className="w-5 h-5 animate-spin" />}
               {status === 'success' && <Check className="w-5 h-5" />}
-              {status === 'loading'
-                ? 'Enviando...'
-                : status === 'success'
-                  ? 'Enviado!'
-                  : 'Enviar mensaje'}
+              {status === 'loading' ? t.sending : status === 'success' ? t.sent : t.send}
             </button>
 
             {status === 'error' && (
@@ -219,7 +271,7 @@ export default function Contact() {
                 animate={{ opacity: 1 }}
                 className="p-3 bg-green-500/20 border border-green-500 rounded-lg text-green-500 text-sm"
               >
-                ¡Mensaje enviado! Te responderé pronto.
+                {t.successMessage}
               </motion.div>
             )}
           </form>

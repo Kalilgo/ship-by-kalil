@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import Skills from '../../components/Skills';
+import Projects from '../../components/Projects';
+import Experience from '../../components/Experience.astro';
+import Contact from '../../components/Contact';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout locale="en">
+  <Navbar locale="en" />
+  <main>
+    <Hero locale="en" />
+    <About locale="en" />
+    <Skills client:visible locale="en" />
+    <Projects client:visible locale="en" />
+    <Experience locale="en" />
+    <Contact client:only="react" locale="en" />
+  </main>
+  <Footer locale="en" />
+</Layout>

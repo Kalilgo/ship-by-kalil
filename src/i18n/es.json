@@ -1,0 +1,63 @@
+{
+  "nav": {
+    "about": "Sobre mí",
+    "skills": "Skills",
+    "projects": "Proyectos",
+    "experience": "Experiencia",
+    "contact": "Contacto",
+    "downloadCV": "Descargar CV",
+    "available": "Disponible para trabajo full-time o freelance",
+    "language": "Cambiar idioma"
+  },
+  "hero": {
+    "title": "Gómez",
+    "subtitle": "Full Stack Developer que construye productos rápidos, escalables y listos para negocio.",
+    "description": "Ayudo equipos a lanzar experiencias web modernas con foco en performance, conversión y resultados reales para usuarios.",
+    "projectsLabel": "Proyectos destacados",
+    "currentRole": "Rol actual",
+    "responseTime": "Tiempo de respuesta",
+    "viewCases": "Ver casos reales",
+    "scheduleInterview": "Coordinar entrevista"
+  },
+  "about": {
+    "title": "Sobre <span>mí</span>",
+    "location": "San Miguel, Buenos Aires",
+    "education": "Lic. Sistemas — UNGS",
+    "birthday": "22/05/1999",
+    "status": "Freelance · Disponible",
+    "description": "Desarrollador web Full Stack con experiencia en proyectos freelance para el sector financiero e inmobiliario. Proactivo, resolutivo y con capacidad de aprendizaje autónomo. Manejo herramientas modernas de desarrollo asistido por inteligencia artificial para aumentar productividad y calidad del código.",
+    "howIWork": "Cómo trabajo",
+    "howIWorkDesc": "Priorizo comunicación clara, entregas frecuentes y decisiones técnicas orientadas a impacto de negocio.",
+    "valueToTeam": "Valor para tu equipo",
+    "valueToTeamDesc": "Conecto producto + desarrollo para que las ideas lleguen rápido a producción con calidad y buena UX.",
+    "techStack": "Stack Tecnológico",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "cloud": "Cloud",
+    "aiTools": "IA Tools"
+  },
+  "experience": {
+    "title": "Experiencia",
+    "subtitle": "Mi trayectoria profesional"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "name": "Nombre",
+    "email": "Email",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado! Te contactaré pronto.",
+    "error": "Error al enviar el mensaje. Intenta de nuevo."
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "downloadCV": "Descargar CV"
+  },
+  "counter": {
+    "projects": "Proyectos destacados",
+    "role": "Rol actual",
+    "response": "Tiempo de respuesta"
+  }
+}

@@ -1,11 +1,20 @@
 ---
 import { experience } from '../data/experience';
+import es from '../i18n/es.json';
+import en from '../i18n/en.json';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale = 'es' } = Astro.props;
+const t = locale === 'en' ? en : es;
 ---
 
 <section id="experiencia" class="py-20">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-      Experiencia & <span class="text-accent-cyan">Formación</span>
+      {t.experience.title} & <span class="text-accent-cyan">Formación</span>
     </h2>
 
     <div class="relative">

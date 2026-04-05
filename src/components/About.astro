@@ -1,55 +1,69 @@
 ---
+import es from '../i18n/es.json';
+import en from '../i18n/en.json';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale = 'es' } = Astro.props;
+const t = locale === 'en' ? en : es;
+
 const highlights = [
-  { icon: '📍', text: 'San Miguel, Buenos Aires' },
-  { icon: '🎓', text: 'Lic. Sistemas — UNGS' },
-  { icon: '🎂', text: '22/05/1999' },
-  { icon: '💼', text: 'Freelance · Disponible' },
+  { icon: '📍', text: t.about.location },
+  { icon: '🎓', text: t.about.education },
+  { icon: '🎂', text: t.about.birthday },
+  { icon: '💼', text: t.about.status },
 ];
 
 const skills = [
-  { icon: '⚡', title: 'Frontend', items: ['React', 'Astro', 'Tailwind', 'TypeScript'] },
-  { icon: '🔧', title: 'Backend', items: ['.NET Core', 'C#', 'Node.js', 'SQL Server'] },
-  { icon: '☁️', title: 'Cloud', items: ['AWS', 'Vercel', 'Railway'] },
-  { icon: '🤖', title: 'IA Tools', items: ['Cursor', 'Claude AI'] },
+  { icon: '⚡', title: t.about.frontend, items: ['React', 'Astro', 'Tailwind', 'TypeScript'] },
+  { icon: '🔧', title: t.about.backend, items: ['.NET Core', 'C#', 'Node.js', 'SQL Server'] },
+  { icon: '☁️', title: t.about.cloud, items: ['AWS', 'Vercel', 'Railway'] },
+  { icon: '🤖', title: t.about.aiTools, items: ['Cursor', 'Claude AI'] },
 ];
 ---
 
 <section id="sobre-mi" class="py-20 bg-surface">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-      Sobre <span class="text-accent-cyan">mí</span>
-    </h2>
+    <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12" set:html={t.about.title} />
 
-    <div class="grid md:grid-cols-2 gap-12 items-start">
-      <div class="flex flex-col items-center reveal" style="--reveal-delay: 100ms;">
-        <div class="relative w-full max-w-[280px] mx-auto animate-float">
+    <div class="grid md:grid-cols-2 gap-10 lg:gap-14 items-center">
+      <figure
+        class="flex flex-col items-center justify-center mx-auto w-full max-w-md md:max-w-none reveal md:justify-self-center"
+        style="--reveal-delay: 100ms;"
+      >
+        <div class="relative w-full max-w-[300px] sm:max-w-[320px] animate-float">
           <div
             class="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent-cyan/25 via-accent/10 to-transparent blur-2xl opacity-70 pointer-events-none"
             aria-hidden="true"
           />
-          <div class="relative rounded-3xl border border-border/60 bg-surface-2/50 p-3 shadow-2xl shadow-black/30">
-            <img
-              src="/images/matias-kalil-portrait.png"
-              alt="Retrato de Matías Kalil Gómez, desarrollador web full stack"
-              width="280"
-              height="320"
-              loading="lazy"
-              decoding="async"
-              class="w-full h-auto rounded-2xl object-cover object-top"
-            />
+          <div class="relative rounded-3xl border border-border/60 bg-surface-2/50 p-3 sm:p-4 shadow-2xl shadow-black/30">
+            <!-- Caja con proporción fija: la foto centrada (evita “aire” raro con object-cover) -->
+            <div
+              class="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-gradient-to-b from-surface-2 to-background flex items-center justify-center"
+            >
+              <img
+                src="/images/matias-kalil-portrait.png"
+                alt="Retrato de Matías Kalil Gómez, desarrollador web full stack"
+                width="320"
+                height="400"
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-contain object-center select-none"
+              />
+            </div>
           </div>
         </div>
-        <div class="mt-6 text-center">
+        <figcaption class="mt-6 max-w-sm text-center px-2">
           <h3 class="text-xl font-bold text-text-primary">Matías Kalil Gómez</h3>
-          <p class="text-accent-cyan text-sm">Desarrollador Web Full Stack</p>
-        </div>
-      </div>
+          <p class="text-accent-cyan text-sm mt-1">Desarrollador Web Full Stack</p>
+        </figcaption>
+      </figure>
 
-      <div class="space-y-6 reveal" style="--reveal-delay: 180ms;">
+      <div class="space-y-6 reveal md:min-w-0" style="--reveal-delay: 180ms;">
         <p class="text-lg text-text-secondary leading-relaxed">
-          Desarrollador web Full Stack con experiencia en proyectos freelance para el sector financiero e inmobiliario. 
-          Proactivo, resolutivo y con capacidad de aprendizaje autónomo. Manejo herramientas modernas de desarrollo 
-          asistido por inteligencia artificial para aumentar productividad y calidad del código.
+          {t.about.description}
         </p>
 
         <div class="grid sm:grid-cols-2 gap-4 pt-2">
@@ -66,15 +80,15 @@ const skills = [
 
         <div class="grid sm:grid-cols-2 gap-4 pt-2">
           <article class="glass-panel border border-border rounded-xl p-5 hover-lift reveal" style="--reveal-delay: 380ms;">
-            <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">Cómo trabajo</p>
+            <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">{t.about.howIWork}</p>
             <p class="text-text-secondary text-sm">
-              Priorizo comunicación clara, entregas frecuentes y decisiones técnicas orientadas a impacto de negocio.
+              {t.about.howIWorkDesc}
             </p>
           </article>
           <article class="glass-panel border border-border rounded-xl p-5 hover-lift reveal" style="--reveal-delay: 460ms;">
-            <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">Valor para tu equipo</p>
+            <p class="text-xs uppercase tracking-wide text-accent-cyan mb-2">{t.about.valueToTeam}</p>
             <p class="text-text-secondary text-sm">
-              Conecto producto + desarrollo para que las ideas lleguen rápido a producción con calidad y buena UX.
+              {t.about.valueToTeamDesc}
             </p>
           </article>
         </div>
@@ -82,9 +96,7 @@ const skills = [
     </div>
 
     <div class="mt-16">
-      <h3 class="text-2xl font-bold font-heading text-text-primary mb-8 text-center">
-        Stack <span class="text-accent-cyan">Tecnológico</span>
-      </h3>
+      <h3 class="text-2xl font-bold font-heading text-text-primary mb-8 text-center" set:html={t.about.techStack} />
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {skills.map((skill, index) => (
           <div

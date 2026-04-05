@@ -1,5 +1,14 @@
 ---
 import Counter from './ui/Counter';
+import es from '../i18n/es.json';
+import en from '../i18n/en.json';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale = 'es' } = Astro.props;
+const t = locale === 'en' ? en : es;
 ---
 
 <section class="relative min-h-screen flex items-center pt-20 overflow-hidden">
@@ -10,29 +19,28 @@ import Counter from './ui/Counter';
     <div class="space-y-6 reveal" style="--reveal-delay: 80ms;">
       <div class="inline-flex items-center gap-2 px-4 py-2 bg-surface-2/80 border border-border rounded-full">
         <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-        <span class="text-text-secondary text-sm">Disponible para trabajo full-time o freelance</span>
+        <span class="text-text-secondary text-sm">{t.nav.available}</span>
       </div>
 
       <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold font-heading text-text-primary leading-tight">
         Matías Kalil
         <span class="block text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-cyan">
-          Gómez
+          {t.hero.title}
         </span>
       </h1>
 
       <p class="text-xl text-text-secondary">
-        Full Stack Developer que construye productos rápidos, escalables y listos para negocio.
+        {t.hero.subtitle}
       </p>
 
       <p class="text-lg text-text-secondary max-w-xl">
-        Ayudo equipos a lanzar experiencias web modernas con foco en performance, conversión y
-        resultados reales para usuarios.
+        {t.hero.description}
       </p>
 
       <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-xl">
-        <Counter client:visible end={3} label="Proyectos destacados" />
-        <Counter client:visible end={1} label="Rol actual" />
-        <Counter client:visible end={24} suffix="h" label="Tiempo de respuesta" />
+        <Counter client:visible end={3} label={t.counter.projects} />
+        <Counter client:visible end={1} label={t.counter.role} />
+        <Counter client:visible end={24} suffix="h" label={t.counter.response} />
       </div>
 
       <div class="flex flex-wrap gap-4">
@@ -40,13 +48,13 @@ import Counter from './ui/Counter';
           href="#proyectos"
           class="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
         >
-          Ver casos reales
+          {t.hero.viewCases}
         </a>
         <a
           href="#contacto"
           class="px-6 py-3 border border-border text-text-primary rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-colors"
         >
-          Coordinar entrevista
+          {t.hero.scheduleInterview}
         </a>
       </div>
 

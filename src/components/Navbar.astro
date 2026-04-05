@@ -1,17 +1,31 @@
 ---
+import { languages } from '../i18n';
+import es from '../i18n/es.json';
+import en from '../i18n/en.json';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale = 'es' } = Astro.props;
+const t = locale === 'en' ? en : es;
+
+/** Prefijo para anclas: en inglés hay que quedarse bajo /en/ */
+const basePath = locale === 'en' ? '/en' : '';
+
 const navLinks = [
-  { label: 'Sobre mí', href: '/#sobre-mi' },
-  { label: 'Skills', href: '/#skills' },
-  { label: 'Proyectos', href: '/#proyectos' },
-  { label: 'Experiencia', href: '/#experiencia' },
-  { label: 'Contacto', href: '/#contacto' },
+  { label: t.nav.about, href: `${basePath}/#sobre-mi` },
+  { label: t.nav.skills, href: `${basePath}/#skills` },
+  { label: t.nav.projects, href: `${basePath}/#proyectos` },
+  { label: t.nav.experience, href: `${basePath}/#experiencia` },
+  { label: t.nav.contact, href: `${basePath}/#contacto` },
 ];
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
     <a
-      href="/"
+      href={locale === 'en' ? '/en/' : '/'}
       class="group flex items-baseline gap-0 font-heading font-bold tracking-tight text-lg md:text-xl"
       aria-label="kalil.dev — inicio"
     >
@@ -44,8 +58,36 @@ const navLinks = [
         download="Matias-Kalil-Gomez-CV.pdf"
         class="px-4 py-2 bg-accent-cyan text-background rounded-lg hover:bg-accent-cyan/80 transition-colors font-medium"
       >
-        Descargar CV
+        {t.nav.downloadCV}
       </a>
+      <div class="relative group" id="lang-switcher">
+        <button
+          class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-surface-2 hover:border-accent-cyan hover:text-accent-cyan transition-all"
+          aria-label={t.nav.language}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="uppercase text-xs font-semibold">{locale}</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:rotate-180">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+        <div class="absolute right-0 mt-2 w-40 bg-surface-2 border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50">
+          {Object.entries(languages).map(([code, name]) => (
+            <a
+              href={code === 'es' ? '/' : `/${code}/`}
+              data-set-locale={code}
+              class={`flex items-center gap-2 px-4 py-3 text-sm transition-colors first:rounded-t-lg last:rounded-b-lg ${locale === code ? 'bg-accent-cyan/10 text-accent-cyan font-medium' : 'text-text-secondary hover:bg-surface hover:text-text-primary'}`}
+            >
+              <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[10px] font-bold">{code.toUpperCase()}</span>
+              {name}
+            </a>
+          ))}
+        </div>
+      </div>
     </div>
 
     <button
@@ -73,8 +115,20 @@ const navLinks = [
           download="Matias-Kalil-Gomez-CV.pdf"
           class="px-4 py-2 bg-accent-cyan text-background rounded-lg text-center font-medium"
         >
-          Descargar CV
+          {t.nav.downloadCV}
         </a>
+        <div class="flex gap-2 pt-2">
+          {Object.entries(languages).map(([code, name]) => (
+            <a
+              href={code === 'es' ? '/' : `/${code}/`}
+              data-set-locale={code}
+              class={`flex-1 flex items-center justify-center gap-2 px-3 py-2 text-center text-sm rounded-lg transition-colors ${locale === code ? 'bg-accent-cyan/20 text-accent-cyan font-medium border border-accent-cyan/30' : 'text-text-secondary hover:bg-surface-2 border border-border'}`}
+            >
+              <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[10px] font-bold">{code.toUpperCase()}</span>
+              {name}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
 </nav>
@@ -86,4 +140,21 @@ const navLinks = [
   toggle?.addEventListener('click', () => {
     menu?.classList.toggle('hidden');
   });
+
+  function persistLocaleChoice() {
+    document.querySelectorAll('[data-set-locale]').forEach((el) => {
+      el.addEventListener('click', () => {
+        const value = el.getAttribute('data-set-locale');
+        if (value === 'es' || value === 'en') {
+          localStorage.setItem('locale', value);
+        }
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', persistLocaleChoice);
+  } else {
+    persistLocaleChoice();
+  }
 </script>

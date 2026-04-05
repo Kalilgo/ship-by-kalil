@@ -1,11 +1,21 @@
 ---
+import es from '../i18n/es.json';
+import en from '../i18n/en.json';
+
+interface Props {
+  locale?: 'es' | 'en';
+}
+
+const { locale = 'es' } = Astro.props;
+const t = locale === 'en' ? en : es;
+
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="py-8 border-t border-border">
   <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
     <p class="text-text-secondary text-sm">
-      © {currentYear} Matías Kalil Gómez. Todos los derechos reservados.
+      © {currentYear} Matías Kalil Gómez. {t.footer.rights}
     </p>
     <div class="flex items-center gap-4">
       <a
@@ -19,7 +29,7 @@ const currentYear = new Date().getFullYear();
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
         </svg>
-        Descargar CV
+        {t.footer.downloadCV}
       </a>
       <a
         href="https://github.com/matiaskalil"
