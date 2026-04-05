@@ -2,10 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { projects } from '../data/projects';
 
-interface ProjectsProps {
-  locale?: 'es' | 'en';
-}
-
 const translations = {
   es: {
     title: 'Proyectos ',
@@ -30,6 +26,13 @@ const translations = {
     code: 'Code',
   },
 };
+
+function getLocaleFromUrl(): 'es' | 'en' {
+  if (typeof window === 'undefined') return 'es';
+  const path = window.location.pathname;
+  if (path.startsWith('/en')) return 'en';
+  return 'es';
+}
 
 function SkeletonCard() {
   return (
@@ -65,10 +68,16 @@ const typeColors: Record<string, string> = {
 
 const featuredProjects = projects.filter((p) => p.featured);
 
-export default function Projects({ locale = 'es' }: ProjectsProps) {
+export default function Projects() {
+  const [locale, setLocale] = useState<'es' | 'en'>('es');
   const t = translations[locale];
-  const [activeFilter, setActiveFilter] = useState(locale === 'es' ? 'Destacados' : 'Featured');
+  const [activeFilter, setActiveFilter] = useState('Destacados');
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setLocale(getLocaleFromUrl());
+    setActiveFilter(getLocaleFromUrl() === 'es' ? 'Destacados' : 'Featured');
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 800);

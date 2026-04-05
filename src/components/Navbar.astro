@@ -10,7 +10,6 @@ interface Props {
 const { locale = 'es' } = Astro.props;
 const t = locale === 'en' ? en : es;
 
-/** Prefijo para anclas: en inglés hay que quedarse bajo /en/ */
 const basePath = locale === 'en' ? '/en' : '';
 
 const navLinks = [
@@ -23,114 +22,116 @@ const navLinks = [
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+  <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
     <a
       href={locale === 'en' ? '/en/' : '/'}
       class="group flex items-baseline gap-0 font-heading font-bold tracking-tight text-lg md:text-xl"
       aria-label="kalil.dev — inicio"
     >
-      <span
-        class="lowercase text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-cyan-400 to-accent"
-      >
+      <span class="lowercase text-transparent bg-clip-text bg-gradient-to-r from-accent-cyan via-cyan-400 to-accent">
         kalil
       </span>
-      <span class="text-text-secondary/45 font-mono text-sm font-medium px-1 select-none" aria-hidden="true">
-        &nbsp;.&nbsp;
-      </span>
-      <span
-        class="lowercase font-mono text-sm font-semibold text-accent-cyan/90 group-hover:text-accent-cyan transition-colors"
-      >
+      <span class="text-text-secondary/45 font-mono text-sm font-medium px-1 select-none" aria-hidden="true">&nbsp;.&nbsp;</span>
+      <span class="lowercase font-mono text-sm font-semibold text-accent-cyan/90 group-hover:text-accent-cyan transition-colors">
         dev
       </span>
     </a>
 
-    <div class="hidden md:flex items-center gap-8">
+    <div class="hidden lg:flex items-center gap-1">
       {navLinks.slice(0, 5).map((link) => (
-        <a
-          href={link.href}
-          class="text-text-secondary hover:text-text-primary transition-colors"
+        <a href={link.href} class="px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors">
+          {link.label}
+        </a>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a
+        href="/CV.pdf"
+        download="Matias-Kalil-Gomez-CV.pdf"
+        class="hidden sm:flex items-center gap-2 px-4 py-2 bg-accent-cyan text-background rounded-lg hover:bg-accent-cyan/80 transition-colors font-medium text-sm"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>{t.nav.downloadCV}</span>
+      </a>
+      
+      <div class="relative group" id="lang-switcher">
+        <button
+          class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-surface-2 hover:border-accent-cyan hover:text-accent-cyan transition-all text-sm"
+          aria-label={t.nav.language}
         >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="uppercase text-xs font-bold">{locale}</span>
+        </button>
+        <div class="absolute right-0 mt-2 w-36 bg-surface-2 border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+          {Object.entries(languages).map(([code, name]) => (
+            <a
+              href={code === 'es' ? '/' : `/${code}/`}
+              data-set-locale={code}
+              class={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors first:rounded-t-lg last:rounded-b-lg ${locale === code ? 'bg-accent-cyan/10 text-accent-cyan font-medium' : 'text-text-secondary hover:bg-surface hover:text-text-primary'}`}
+            >
+              <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[9px] font-bold">{code.toUpperCase()}</span>
+              {name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <button
+        id="mobile-menu-toggle"
+        class="lg:hidden p-2 text-text-primary hover:bg-surface-2 rounded-lg"
+        aria-label="Toggle menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="hidden lg:hidden bg-surface border-t border-border">
+    <div class="px-4 py-4 flex flex-col gap-2">
+      {navLinks.slice(0, 5).map((link) => (
+        <a href={link.href} class="text-text-secondary hover:text-text-primary py-3 px-2 hover:bg-surface-2 rounded-lg">
           {link.label}
         </a>
       ))}
       <a
         href="/CV.pdf"
         download="Matias-Kalil-Gomez-CV.pdf"
-        class="px-4 py-2 bg-accent-cyan text-background rounded-lg hover:bg-accent-cyan/80 transition-colors font-medium"
+        class="flex items-center justify-center gap-2 px-4 py-3 bg-accent-cyan text-background rounded-lg text-center font-medium"
       >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
         {t.nav.downloadCV}
       </a>
-      <div class="relative group" id="lang-switcher">
-        <button
-          class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-surface-2 hover:border-accent-cyan hover:text-accent-cyan transition-all"
-          aria-label={t.nav.language}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="2" y1="12" x2="22" y2="12"></line>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-          </svg>
-          <span class="uppercase text-xs font-semibold">{locale}</span>
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:rotate-180">
-            <path d="m6 9 6 6 6-6"/>
-          </svg>
-        </button>
-        <div class="absolute right-0 mt-2 w-40 bg-surface-2 border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top-right z-50">
-          {Object.entries(languages).map(([code, name]) => (
-            <a
-              href={code === 'es' ? '/' : `/${code}/`}
-              data-set-locale={code}
-              class={`flex items-center gap-2 px-4 py-3 text-sm transition-colors first:rounded-t-lg last:rounded-b-lg ${locale === code ? 'bg-accent-cyan/10 text-accent-cyan font-medium' : 'text-text-secondary hover:bg-surface hover:text-text-primary'}`}
-            >
-              <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[10px] font-bold">{code.toUpperCase()}</span>
-              {name}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <button
-      id="mobile-menu-toggle"
-      class="md:hidden p-2 text-text-primary"
-      aria-label="Toggle menu"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-  </div>
-
-    <div id="mobile-menu" class="hidden md:hidden bg-surface border-t border-border">
-      <div class="px-6 py-4 flex flex-col gap-4">
-        {navLinks.slice(0, 5).map((link) => (
-          <a href={link.href} class="text-text-secondary hover:text-text-primary py-2">
-            {link.label}
+      <div class="flex gap-2 pt-3 border-t border-border mt-2">
+        {Object.entries(languages).map(([code, name]) => (
+          <a
+            href={code === 'es' ? '/' : `/${code}/`}
+            data-set-locale={code}
+            class={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 text-center text-sm rounded-lg transition-colors ${locale === code ? 'bg-accent-cyan/20 text-accent-cyan font-medium border border-accent-cyan/30' : 'text-text-secondary hover:bg-surface-2 border border-border'}`}
+          >
+            <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[9px] font-bold">{code.toUpperCase()}</span>
+            {name}
           </a>
         ))}
-        <a
-          href="/CV.pdf"
-          download="Matias-Kalil-Gomez-CV.pdf"
-          class="px-4 py-2 bg-accent-cyan text-background rounded-lg text-center font-medium"
-        >
-          {t.nav.downloadCV}
-        </a>
-        <div class="flex gap-2 pt-2">
-          {Object.entries(languages).map(([code, name]) => (
-            <a
-              href={code === 'es' ? '/' : `/${code}/`}
-              data-set-locale={code}
-              class={`flex-1 flex items-center justify-center gap-2 px-3 py-2 text-center text-sm rounded-lg transition-colors ${locale === code ? 'bg-accent-cyan/20 text-accent-cyan font-medium border border-accent-cyan/30' : 'text-text-secondary hover:bg-surface-2 border border-border'}`}
-            >
-              <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[10px] font-bold">{code.toUpperCase()}</span>
-              {name}
-            </a>
-          ))}
-        </div>
       </div>
     </div>
+  </div>
 </nav>
 
 <script>
