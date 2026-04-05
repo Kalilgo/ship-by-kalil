@@ -1,0 +1,60 @@
+.floating-whatsapp-input {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+.floating-whatsapp-input::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+.floating-whatsapp-input:focus {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+input.floating-whatsapp-input,
+input[class*='input'],
+input[placeholder*='Escribe'] {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+input::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+.floating-whatsapp-input {
+  color: #111827 !important;
+  -webkit-text-fill-color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+.floating-whatsapp-input:focus::placeholder {
+  color: #9ca3af !important;
+}
+
+.floating-whatsapp-message-content {
+  color: #111827 !important;
+  background-color: #ffffff !important;
+}
+
+.floating-whatsapp-header {
+  background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%) !important;
+}
+
+.floating-whatsapp-chat-header {
+  background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%) !important;
+}
+
+.floating-whatsapp-message-sent {
+  color: #111827 !important;
+  background-color: #e0f2fe !important;
+}

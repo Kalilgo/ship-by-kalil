@@ -8,6 +8,7 @@ import Projects from '../../components/Projects';
 import Experience from '../../components/Experience.astro';
 import Contact from '../../components/Contact';
 import Footer from '../../components/Footer.astro';
+import WhatsAppButton from '../../components/WhatsAppButton';
 ---
 
 <Layout locale="en">
@@ -15,10 +16,11 @@ import Footer from '../../components/Footer.astro';
   <main>
     <Hero locale="en" />
     <About locale="en" />
-    <Skills client:visible locale="en" />
-    <Projects client:visible locale="en" />
+    <Skills client:visible />
+    <Projects client:visible />
     <Experience locale="en" />
-    <Contact client:only="react" locale="en" />
+    <Contact client:only="react" />
   </main>
   <Footer locale="en" />
+  <WhatsAppButton client:only="react" />
 </Layout>
