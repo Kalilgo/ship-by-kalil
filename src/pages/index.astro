@@ -19,10 +19,10 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
   <main>
     <Hero locale={locale} />
     <About locale={locale} />
-    <Skills client:visible />
+    <Skills client:visible locale={locale} />
     <Projects client:visible />
     <Experience locale={locale} />
-    <Contact client:only="react" />
+    <Contact client:only="react" locale={locale} />
   </main>
   <Footer locale={locale} />
   <WhatsAppButton client:only="react" />
