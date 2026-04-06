@@ -9,19 +9,20 @@ interface Props {
 
 const { locale = 'es' } = Astro.props;
 const t = locale === 'en' ? en : es;
+const tExperience = t.experienceData;
 ---
 
 <section id="experiencia" class="py-20">
   <div class="max-w-6xl mx-auto px-6">
     <h2 class="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-      {t.experience.title} & <span class="text-accent-cyan">Formación</span>
+      {t.experience.title} & <span class="text-accent-cyan">{locale === 'en' ? 'Training' : 'Formación'}</span>
     </h2>
 
     <div class="relative">
       <div class="absolute left-4 top-0 bottom-0 w-px bg-border md:left-1/2"></div>
 
       <div class="space-y-12">
-        {experience.map((item, index) => (
+        {tExperience.map((item: { period: string; role: string; company: string; description: string; current?: boolean }, index: number) => (
           <div class={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
             <div class="absolute left-4 md:left-1/2 w-3 h-3 bg-accent-cyan rounded-full transform -translate-x-1/2 mt-6"></div>
 
@@ -31,7 +32,7 @@ const t = locale === 'en' ? en : es;
             >
               <div class="flex items-center gap-2 mb-2">
                 {item.current && (
-                  <span class="px-2 py-1 bg-accent/20 text-accent text-xs rounded">Actual</span>
+                  <span class="px-2 py-1 bg-accent/20 text-accent text-xs rounded">{locale === 'en' ? 'Current' : 'Actual'}</span>
                 )}
               </div>
 
@@ -40,14 +41,6 @@ const t = locale === 'en' ? en : es;
               </h3>
               <p class="text-accent-cyan text-sm mb-2">{item.company}</p>
               <p class="text-text-secondary text-sm mb-4">{item.description}</p>
-
-              <div class="flex flex-wrap gap-2">
-                {item.tech.map((tech) => (
-                  <span class="px-2 py-1 bg-background text-text-secondary text-xs rounded">
-                    {tech}
-                  </span>
-                ))}
-              </div>
 
               <p class="text-text-secondary text-sm mt-4 font-medium">{item.period}</p>
             </div>

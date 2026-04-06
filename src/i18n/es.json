@@ -19,8 +19,33 @@
     "viewCases": "Ver casos reales",
     "scheduleInterview": "Coordinar entrevista"
   },
+  "experienceData": [
+    {
+      "period": "2024 — Presente",
+      "role": "Desarrollador Web Full Stack",
+      "company": "Equipo Freelance Independiente",
+      "description": "Desarrollo de aplicaciones web para el sector financiero e inmobiliario. Trabajo en equipo con metodologías ágiles.",
+      "current": true
+    },
+    {
+      "period": "2021 — Presente",
+      "role": "Diplomatura en Programación .NET",
+      "company": "Universidad Tecnológica Nacional",
+      "description": "Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.",
+      "current": false
+    },
+    {
+      "period": "2019 — Presente",
+      "role": "Lic. en Sistemas (en curso)",
+      "company": "Universidad Nacional de General Sarmiento",
+      "description": "Carrera universitaria orientada al desarrollo de software y sistemas de información.",
+      "current": false
+    }
+  ],
   "about": {
     "title": "Sobre <span>mí</span>",
+    "name": "Matías Kalil Gómez",
+    "role": "Desarrollador Web Full Stack",
     "location": "San Miguel, Buenos Aires",
     "education": "Lic. Sistemas — UNGS",
     "birthday": "22/05/1999",
@@ -38,7 +63,9 @@
   },
   "experience": {
     "title": "Experiencia",
-    "subtitle": "Mi trayectoria profesional"
+    "subtitle": "Mi trayectoria profesional",
+    "current": "Actual",
+    "training": "Formación"
   },
   "contact": {
     "title": "Contacto",

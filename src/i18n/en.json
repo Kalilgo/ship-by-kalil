@@ -19,8 +19,67 @@
     "viewCases": "View case studies",
     "scheduleInterview": "Schedule interview"
   },
+  "skills": {
+    "Frontend": "Frontend",
+    "Backend": "Backend",
+    "Bases de Datos": "Databases",
+    "Cloud & DevOps": "Cloud & DevOps",
+    "Herramientas IA": "AI Tools"
+  },
+  "experienceData": [
+    {
+      "period": "2024 — Present",
+      "role": "Full Stack Web Developer",
+      "company": "Independent Freelance Team",
+      "description": "Web application development for the financial and real estate sectors. Teamwork with agile methodologies."
+    },
+    {
+      "period": "2021 — Present",
+      "role": ".NET Programming Diploma",
+      "company": "Universidad Tecnológica Nacional",
+      "description": "Training in .NET Core development, C#, MVC, and SQL Server.",
+      "current": false
+    },
+    {
+      "period": "2019 — Present",
+      "role": "Systems Degree (in progress)",
+      "company": "Universidad Nacional de General Sarmiento",
+      "description": "University degree focused on software development and information systems."
+    }
+  ],
+  "projectsData": [
+    {
+      "title": "Cerquetech Landing Page",
+      "description": "High-performance landing page created with Astro for a technology company. Optimized for SEO, with load time under 1 second and responsive design.",
+      "tags": ["Astro", "React", "Tailwind", "TypeScript"],
+      "type": "Freelance",
+      "year": "2025",
+      "featured": true,
+      "demoUrl": "https://cerquetech/"
+    },
+    {
+      "title": "FinanzasArgy",
+      "description": "Leading financial platform in Argentina with more than 298K followers. Shows dollar, cryptocurrency, bonds and financial news in real time. Automatic update every 5 minutes with more than 50K monthly visits.",
+      "tags": ["Next.js", "React", "Tailwind", "Vercel"],
+      "type": "Freelance",
+      "year": "2020",
+      "featured": true,
+      "demoUrl": "https://www.finanzasargy.com/"
+    },
+    {
+      "title": "PropI",
+      "description": "Complete real estate system with property, client, rental and sales management. Administration panel with metrics and automatic reports.",
+      "tags": ["React", ".NET", "SQL Server", "AWS"],
+      "type": "Freelance",
+      "year": "2024",
+      "featured": true,
+      "demoUrl": "https://app.somospropi.com/"
+    }
+  ],
   "about": {
     "title": "About <span>me</span>",
+    "name": "Matías Kalil Gómez",
+    "role": "Full Stack Web Developer",
     "location": "San Miguel, Buenos Aires",
     "education": "Systems Degree — UNGS",
     "birthday": "05/22/1999",

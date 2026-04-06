@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { projects } from '../data/projects';
 
 const translations = {
   es: {
@@ -13,6 +12,38 @@ const translations = {
     view: 'Ver',
     private: 'Privado',
     code: 'Código',
+    projects: [
+      {
+        title: 'Cerquetech Landing Page',
+        description:
+          'Landing page de alto rendimiento creada con Astro para una empresa de tecnología. Optimizada para SEO, con load time inferior a 1 segundo y diseño responsivo.',
+        tags: ['Astro', 'React', 'Tailwind', 'TypeScript'],
+        type: 'Freelance',
+        year: '2025',
+        featured: true,
+        demoUrl: 'https://cerquetech.com/',
+      },
+      {
+        title: 'FinanzasArgy',
+        description:
+          'Plataforma financiera líder en Argentina con más de 298K seguidores. Muestra cotizaciones del dólar, criptomonedas, bonos y noticias financieras en tiempo real.',
+        tags: ['Next.js', 'React', 'Tailwind', 'Vercel'],
+        type: 'Freelance',
+        year: '2020',
+        featured: true,
+        demoUrl: 'https://www.finanzasargy.com/',
+      },
+      {
+        title: 'PropI',
+        description:
+          'Sistema inmobiliario completo con gestión de propiedades, clientes, alquileres y ventas. Panel de administración con métricas y reportes automáticos.',
+        tags: ['React', '.NET', 'SQL Server', 'AWS'],
+        type: 'Freelance',
+        year: '2024',
+        featured: true,
+        demoUrl: 'https://app.somospropi.com/',
+      },
+    ],
   },
   en: {
     title: 'Featured ',
@@ -24,6 +55,38 @@ const translations = {
     view: 'View',
     private: 'Private',
     code: 'Code',
+    projects: [
+      {
+        title: 'Cerquetech Landing Page',
+        description:
+          'High-performance landing page created with Astro for a technology company. Optimized for SEO, with load time under 1 second and responsive design.',
+        tags: ['Astro', 'React', 'Tailwind', 'TypeScript'],
+        type: 'Freelance',
+        year: '2025',
+        featured: true,
+        demoUrl: 'https://cerquetech.com/',
+      },
+      {
+        title: 'FinanzasArgy',
+        description:
+          'Leading financial platform in Argentina with more than 298K followers. Shows dollar, cryptocurrency, bonds and financial news in real time.',
+        tags: ['Next.js', 'React', 'Tailwind', 'Vercel'],
+        type: 'Freelance',
+        year: '2020',
+        featured: true,
+        demoUrl: 'https://www.finanzasargy.com/',
+      },
+      {
+        title: 'PropI',
+        description:
+          'Complete real estate system with property, client, rental and sales management. Administration panel with metrics and automatic reports.',
+        tags: ['React', '.NET', 'SQL Server', 'AWS'],
+        type: 'Freelance',
+        year: '2024',
+        featured: true,
+        demoUrl: 'https://app.somospropi.com/',
+      },
+    ],
   },
 };
 
@@ -66,7 +129,18 @@ const typeColors: Record<string, string> = {
   Trabajo: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
 };
 
-const featuredProjects = projects.filter((p) => p.featured);
+interface ProjectData {
+  id?: number;
+  title: string;
+  description: string;
+  tags: string[];
+  type: string;
+  year: string;
+  featured: boolean;
+  demoUrl?: string;
+  repoUrl?: string;
+  image?: string;
+}
 
 export default function Projects() {
   const [locale, setLocale] = useState<'es' | 'en'>('es');
@@ -91,14 +165,17 @@ export default function Projects() {
   const filterKey = locale === 'es' ? 'Destacados' : 'Featured';
   const allKey = locale === 'es' ? 'Todos' : 'All';
 
+  const projects: ProjectData[] = t.projects;
+  const featuredProjects = projects.filter((p) => p.featured);
+
   const filteredProjects =
     activeFilter === allKey
       ? projects
       : activeFilter === filterKey
         ? featuredProjects
-        : projects.filter((p) => p.tags.includes(activeFilter));
+        : projects.filter((p: ProjectData) => p.tags.includes(activeFilter));
 
-  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags)));
+  const allTags = Array.from(new Set(projects.flatMap((p: ProjectData) => p.tags)));
 
   return (
     <section id="proyectos" className="py-20 bg-surface">
@@ -130,7 +207,7 @@ export default function Projects() {
           >
             {t.all}
           </button>
-          {allTags.slice(0, 6).map((tag) => (
+          {allTags.slice(0, 6).map((tag: string) => (
             <button
               key={tag}
               onClick={() => setActiveFilter(tag)}
