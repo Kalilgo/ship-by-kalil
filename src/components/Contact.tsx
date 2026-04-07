@@ -135,7 +135,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 <span>gomezukalil@gmail.com</span>
               </a>
               <a
-                href="https://linkedin.com/in/matiaskalil"
+                href="https://www.linkedin.com/in/matias-gomez-19a1912a5/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-text-secondary hover:text-text-primary transition-colors"
