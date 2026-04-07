@@ -43,16 +43,16 @@ const t = locale === 'en' ? en : es;
         <Counter client:visible end={24} suffix="h" label={t.counter.response} />
       </div>
 
-      <div class="flex flex-wrap gap-4">
+      <div class="flex flex-wrap gap-3">
         <a
           href="#proyectos"
-          class="px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors"
+          class="flex-1 sm:flex-none px-5 py-2.5 sm:px-6 sm:py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors text-center text-sm sm:text-base"
         >
           {t.hero.viewCases}
         </a>
         <a
           href="#contacto"
-          class="px-6 py-3 border border-border text-text-primary rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-colors"
+          class="flex-1 sm:flex-none px-5 py-2.5 sm:px-6 sm:py-3 border border-border text-text-primary rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-colors text-center text-sm sm:text-base"
         >
           {t.hero.scheduleInterview}
         </a>
