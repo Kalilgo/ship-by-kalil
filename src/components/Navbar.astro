@@ -135,6 +135,8 @@ const navLinks = [
 </nav>
 
 <script>
+  import { setStoredLocale, STORAGE_KEY } from '../i18n';
+
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
 
@@ -142,20 +144,20 @@ const navLinks = [
     menu?.classList.toggle('hidden');
   });
 
-  function persistLocaleChoice() {
+  function handleLocaleSelection() {
     document.querySelectorAll('[data-set-locale]').forEach((el) => {
       el.addEventListener('click', () => {
         const value = el.getAttribute('data-set-locale');
         if (value === 'es' || value === 'en') {
-          localStorage.setItem('locale', value);
+          setStoredLocale(value);
         }
       });
     });
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', persistLocaleChoice);
+    document.addEventListener('DOMContentLoaded', handleLocaleSelection);
   } else {
-    persistLocaleChoice();
+    handleLocaleSelection();
   }
 </script>
