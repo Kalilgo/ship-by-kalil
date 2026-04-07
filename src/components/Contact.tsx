@@ -144,7 +144,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 <span>LinkedIn</span>
               </a>
               <a
-                href="https://github.com/matiaskalil"
+                href="https://github.com/Kalilgo"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-text-secondary hover:text-text-primary transition-colors"
