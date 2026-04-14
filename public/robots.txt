@@ -1,0 +1,5 @@
+# Sitemap URL must match astro.config site / PUBLIC_SITE_URL
+User-agent: *
+Allow: /
+
+Sitemap: https://kalil.dev/sitemap-index.xml

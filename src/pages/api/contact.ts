@@ -1,6 +1,17 @@
 import type { APIRoute } from 'astro';
 
+import { siteFixture } from '../../fixtures/site.fixture';
+
 export const prerender = false;
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -13,6 +24,24 @@ export const POST: APIRoute = async ({ request }) => {
         headers: { 'Content-Type': 'application/json' },
       });
     }
+
+    const { maxLengths } = siteFixture.contact;
+    if (
+      String(name).length > maxLengths.name ||
+      String(email).length > maxLengths.email ||
+      String(subject).length > maxLengths.subject ||
+      String(message).length > maxLengths.message
+    ) {
+      return new Response(JSON.stringify({ error: 'Payload too large' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const safeName = escapeHtml(String(name));
+    const safeEmail = escapeHtml(String(email));
+    const safeSubject = escapeHtml(String(subject));
+    const safeMessage = escapeHtml(String(message));
 
     const resendApiKey = import.meta.env.RESEND_API_KEY;
     const contactEmail = import.meta.env.CONTACT_EMAIL || 'gomezukalil@gmail.com';
@@ -37,11 +66,11 @@ export const POST: APIRoute = async ({ request }) => {
         subject: `Portfolio: ${subject}`,
         html: `
           <h2>Nuevo mensaje desde el portfolio</h2>
-          <p><strong>Nombre:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Asunto:</strong> ${subject}</p>
+          <p><strong>Nombre:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Asunto:</strong> ${safeSubject}</p>
           <p><strong>Mensaje:</strong></p>
-          <p>${message}</p>
+          <p>${safeMessage.replace(/\n/g, '<br/>')}</p>
         `,
       }),
     });
