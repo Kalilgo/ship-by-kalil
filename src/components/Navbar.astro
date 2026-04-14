@@ -144,6 +144,31 @@ const navLinks = [
     menu?.classList.toggle('hidden');
   });
 
+  function closeMobileMenu() {
+    if (!menu) return;
+    menu.classList.add('hidden');
+  }
+
+  // Cerrar menú móvil al seleccionar una opción
+  menu?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    const link = target?.closest('a');
+    if (!link) return;
+    closeMobileMenu();
+  });
+
+  // Cerrar si cambia el hash (navegación in-page) o al tocar fuera
+  window.addEventListener('hashchange', closeMobileMenu);
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    if (!menu || !toggle || !target) return;
+    const isOpen = !menu.classList.contains('hidden');
+    if (!isOpen) return;
+    const clickedInsideMenu = menu.contains(target);
+    const clickedToggle = toggle.contains(target);
+    if (!clickedInsideMenu && !clickedToggle) closeMobileMenu();
+  });
+
   function handleLocaleSelection() {
     document.querySelectorAll('[data-set-locale]').forEach((el) => {
       el.addEventListener('click', () => {
