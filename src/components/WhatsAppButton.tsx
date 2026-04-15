@@ -2,6 +2,10 @@
 
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
 import { useEffect, useState } from 'react';
+
+import { getLocaleFromUrl } from '../i18n';
+import type { Locale } from '../i18n';
+
 import './WhatsAppButton.css';
 
 const translations = {
@@ -19,19 +23,12 @@ const translations = {
   },
 };
 
-function getLocaleFromUrl(): 'es' | 'en' {
-  if (typeof window === 'undefined') return 'es';
-  const path = window.location.pathname;
-  if (path.startsWith('/en')) return 'en';
-  return 'es';
-}
-
 export default function WhatsAppButton() {
-  const [locale, setLocale] = useState<'es' | 'en'>('es');
+  const [locale, setLocale] = useState<Locale>('es');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setLocale(getLocaleFromUrl());
+    setLocale(getLocaleFromUrl(window.location.pathname));
     setMounted(true);
   }, []);
 

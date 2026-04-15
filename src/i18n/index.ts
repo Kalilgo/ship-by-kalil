@@ -31,19 +31,16 @@ export function setStoredLocale(locale: Locale): void {
   }
 }
 
+/**
+ * Idioma según la ruta (fuente de verdad para SSR y primer paint).
+ * `/en` y `/en/*` → inglés; el resto (incl. `/`, `/cv`) → español por defecto.
+ * La preferencia en localStorage la aplica el script inline de `Layout` redirigiendo a la URL correcta.
+ */
 export function getLocaleFromUrl(pathname: string): Locale {
-  const storedLocale = getStoredLocale();
-  if (storedLocale) {
-    return storedLocale;
+  const path = pathname.split('?')[0] ?? pathname;
+  if (path === '/en' || path.startsWith('/en/')) {
+    return 'en';
   }
-
-  const segments = pathname.split('/').filter(Boolean);
-  const potentialLocale = segments[0];
-
-  if (potentialLocale && (potentialLocale === 'es' || potentialLocale === 'en')) {
-    return potentialLocale as Locale;
-  }
-
   return defaultLocale;
 }
 
