@@ -16,7 +16,6 @@ export const siteFixture = {
     homeEs: '/',
     homeEn: '/en/',
     cv: '/cv/',
-    camera: '/camera/',
     notFound: '/404.html',
   },
 
