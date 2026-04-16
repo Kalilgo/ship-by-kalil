@@ -16,7 +16,7 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
 
 <Layout locale={locale}>
   <Navbar locale={locale} />
-  <main>
+  <main class="relative z-10">
     <Hero locale={locale} />
     <About locale={locale} />
     <Skills client:visible locale={locale} />

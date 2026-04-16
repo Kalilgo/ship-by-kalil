@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Check, Loader2, Mail, Linkedin, Github } from 'lucide-react';
 
 interface FormData {
@@ -73,6 +73,7 @@ interface ContactProps {
 
 export default function Contact({ locale = 'es' }: ContactProps) {
   const t = translations[locale];
+  const prefersReducedMotion = useReducedMotion();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -108,8 +109,12 @@ export default function Contact({ locale = 'es' }: ContactProps) {
   };
 
   return (
-    <section id="contacto" className="py-20 bg-surface">
-      <div className="max-w-6xl mx-auto px-6">
+    <section id="contacto" className="py-20 bg-surface relative overflow-hidden">
+      <div
+        className="pointer-events-none absolute -top-24 right-0 h-72 w-72 rounded-full bg-accent/10 blur-3xl"
+        aria-hidden
+      />
+      <div className="max-w-6xl mx-auto px-6 relative">
         <h2 className="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
           {t.title}
           <span className="text-accent-cyan">{t.titleHighlight}</span>
@@ -169,7 +174,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 id="name"
                 aria-invalid={errors.name ? 'true' : 'false'}
                 aria-describedby={errors.name ? 'name-error' : undefined}
-                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
+                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
                 placeholder={t.namePlaceholder}
               />
               {errors.name && (
@@ -195,7 +200,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 id="email"
                 aria-invalid={errors.email ? 'true' : 'false'}
                 aria-describedby={errors.email ? 'email-error' : undefined}
-                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
+                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
                 placeholder={t.emailPlaceholder}
               />
               {errors.email && (
@@ -215,7 +220,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 id="subject"
                 aria-invalid={errors.subject ? 'true' : 'false'}
                 aria-describedby={errors.subject ? 'subject-error' : undefined}
-                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors"
+                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
                 placeholder={t.subjectPlaceholder}
               />
               {errors.subject && (
@@ -235,7 +240,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 aria-invalid={errors.message ? 'true' : 'false'}
                 aria-describedby={errors.message ? 'message-error' : undefined}
                 rows={5}
-                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none transition-colors resize-none"
+                className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors resize-none"
                 placeholder={t.messagePlaceholder}
               />
               {errors.message && (
@@ -248,7 +253,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
             <button
               type="submit"
               disabled={status === 'loading' || status === 'success'}
-              className="w-full px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full px-6 py-3 bg-accent text-white rounded-xl font-medium shadow-[0_0_0_1px_rgba(37,99,235,0.35),0_14px_40px_-12px_rgba(37,99,235,0.45)] hover:bg-accent/90 hover:shadow-[0_0_0_1px_rgba(6,182,212,0.25),0_18px_44px_-12px_rgba(6,182,212,0.3)] transition-[transform,box-shadow,background-color] duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
             >
               {status === 'loading' && <Loader2 className="w-5 h-5 animate-spin" />}
               {status === 'success' && <Check className="w-5 h-5" />}
@@ -257,8 +262,9 @@ export default function Contact({ locale = 'es' }: ContactProps) {
 
             {status === 'error' && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
                 className="p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-500 text-sm"
               >
                 {errorMessage}
@@ -267,8 +273,9 @@ export default function Contact({ locale = 'es' }: ContactProps) {
 
             {status === 'success' && (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
                 className="p-3 bg-green-500/20 border border-green-500 rounded-lg text-green-500 text-sm"
               >
                 {t.successMessage}

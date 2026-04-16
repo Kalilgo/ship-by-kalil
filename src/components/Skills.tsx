@@ -1,12 +1,14 @@
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import { skills } from '../data/skills';
+import { staggerDelay } from '../lib/motion';
 
 interface SkillBarProps {
   name: string;
   level: number;
   index: number;
   isTabVisible: boolean;
+  reducedMotion: boolean | null;
 }
 
 const translations = {
@@ -20,7 +22,7 @@ const translations = {
   },
 };
 
-function SkillBar({ name, level, index, isTabVisible }: SkillBarProps) {
+function SkillBar({ name, level, index, isTabVisible, reducedMotion }: SkillBarProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, amount: 0.5 });
 
@@ -34,8 +36,11 @@ function SkillBar({ name, level, index, isTabVisible }: SkillBarProps) {
         <motion.div
           initial={{ width: 0 }}
           animate={isInView && isTabVisible ? { width: `${level}%` } : { width: 0 }}
-          transition={{ duration: 0.8, delay: index * 0.1 }}
-          className="h-full bg-gradient-to-r from-accent to-accent-cyan rounded-full"
+          transition={{
+            duration: reducedMotion ? 0.2 : 0.8,
+            delay: staggerDelay(index, 0.1, reducedMotion),
+          }}
+          className="h-full bg-gradient-to-r from-accent to-accent-cyan rounded-full shadow-[0_0_12px_-4px_rgba(6,182,212,0.4)]"
         />
       </div>
     </div>
@@ -48,6 +53,7 @@ interface SkillsProps {
 
 export default function Skills({ locale = 'es' }: SkillsProps) {
   const [activeTab, setActiveTab] = useState(0);
+  const prefersReducedMotion = useReducedMotion();
 
   const t = translations[locale];
 
@@ -62,12 +68,13 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
         <div className="flex flex-wrap gap-2 mb-8">
           {skills.map((category, index) => (
             <button
+              type="button"
               key={category.name}
               onClick={() => setActiveTab(index)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 activeTab === index
-                  ? 'bg-accent text-white'
-                  : 'bg-surface-2 text-text-secondary hover:text-text-primary'
+                  ? 'bg-accent text-white shadow-[0_0_28px_-10px_rgba(37,99,235,0.65)]'
+                  : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
               }`}
             >
               {category.name}
@@ -78,27 +85,31 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: prefersReducedMotion ? 6 : 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            exit={{ opacity: 0, y: prefersReducedMotion ? -6 : -20 }}
+            transition={{ duration: prefersReducedMotion ? 0.15 : 0.3 }}
             className="grid sm:grid-cols-2 gap-6"
           >
             {skills[activeTab].skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                initial={{ opacity: 0, y: prefersReducedMotion ? 8 : 20, scale: prefersReducedMotion ? 1 : 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{
-                  duration: 0.45,
-                  delay: index * 0.07,
-                  type: 'spring',
-                  stiffness: 130,
-                }}
-                whileHover={{ y: -4 }}
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.2 }
+                    : {
+                        duration: 0.45,
+                        delay: staggerDelay(index, 0.07, prefersReducedMotion),
+                        type: 'spring',
+                        stiffness: 130,
+                      }
+                }
+                whileHover={prefersReducedMotion ? undefined : { y: -4 }}
                 className="glass-panel border border-border rounded-xl p-4 hover-lift"
               >
-                <SkillBar {...skill} index={index} isTabVisible={true} />
+                <SkillBar {...skill} index={index} isTabVisible={true} reducedMotion={prefersReducedMotion} />
               </motion.div>
             ))}
           </motion.div>

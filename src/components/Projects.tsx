@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 import { projects as projectsSource } from '../data/projects';
+import { staggerDelay } from '../lib/motion';
 import { getLocaleFromUrl } from '../i18n';
 import type { Locale } from '../i18n';
 
@@ -65,6 +66,7 @@ export default function Projects() {
   const [locale, setLocale] = useState<Locale>('es');
   const t = translations[locale];
   const [activeFilter, setActiveFilter] = useState('Destacados');
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     const pathLocale = getLocaleFromUrl(window.location.pathname);
@@ -109,33 +111,36 @@ export default function Projects() {
 
         <div className="flex flex-wrap gap-2 mb-8">
           <button
+            type="button"
             onClick={() => setActiveFilter(filterKey)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
               activeFilter === filterKey
-                ? 'bg-accent-cyan text-background'
-                : 'bg-surface-2 text-text-secondary hover:text-text-primary'
+                ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
+                : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
             }`}
           >
             {t.featured}
           </button>
           <button
+            type="button"
             onClick={() => setActiveFilter(allKey)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
               activeFilter === allKey
-                ? 'bg-accent-cyan text-background'
-                : 'bg-surface-2 text-text-secondary hover:text-text-primary'
+                ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
+                : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
             }`}
           >
             {t.all}
           </button>
           {allTags.slice(0, 6).map((tag: string) => (
             <button
+              type="button"
               key={tag}
               onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
                 activeFilter === tag
-                  ? 'bg-accent-cyan text-background'
-                  : 'bg-surface-2 text-text-secondary hover:text-text-primary'
+                  ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
+                  : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
               }`}
             >
               {tag}
@@ -148,22 +153,26 @@ export default function Projects() {
             {filteredProjects.map((project, index) => (
               <motion.article
                 key={project.id}
-                layout
-                initial={{ opacity: 0, y: 24, scale: 0.96 }}
+                layout={!prefersReducedMotion}
+                initial={{ opacity: 0, y: prefersReducedMotion ? 8 : 24, scale: prefersReducedMotion ? 1 : 0.96 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.96 }}
+                exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.96 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: false, amount: 0.2 }}
-                transition={{
-                  duration: 0.45,
-                  delay: index * 0.06,
-                  type: 'spring',
-                  stiffness: 120,
-                }}
-                whileHover={{ y: -8 }}
-                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface-2 to-background border border-border hover:border-accent-cyan transition-all duration-300"
+                transition={
+                  prefersReducedMotion
+                    ? { duration: 0.2 }
+                    : {
+                        duration: 0.45,
+                        delay: staggerDelay(index, 0.06, prefersReducedMotion),
+                        type: 'spring',
+                        stiffness: 120,
+                      }
+                }
+                whileHover={prefersReducedMotion ? undefined : { y: -8 }}
+                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface-2 to-background border border-border hover:border-accent-cyan/90 transition-all duration-300 shadow-[0_0_0_0_rgba(6,182,212,0)] hover:shadow-[0_20px_50px_-24px_rgba(6,182,212,0.25)]"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/8 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div className="relative p-6">
                   <div className="flex items-center justify-between mb-4">
