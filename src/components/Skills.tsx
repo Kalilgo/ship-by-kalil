@@ -1,20 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { skills } from '../data/skills';
-
-function SkeletonCard() {
-  return (
-    <div className="glass-panel border border-border rounded-xl p-4 animate-pulse">
-      <div className="flex justify-between mb-2">
-        <div className="w-20 h-4 bg-surface rounded" />
-        <div className="w-10 h-4 bg-surface rounded" />
-      </div>
-      <div className="h-2 bg-surface rounded-full overflow-hidden">
-        <div className="h-full w-2/3 bg-surface rounded-full" />
-      </div>
-    </div>
-  );
-}
 
 interface SkillBarProps {
   name: string;
@@ -62,14 +48,8 @@ interface SkillsProps {
 
 export default function Skills({ locale = 'es' }: SkillsProps) {
   const [activeTab, setActiveTab] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
 
   const t = translations[locale];
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 600);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <section id="skills" className="py-20">
@@ -104,32 +84,23 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
             transition={{ duration: 0.3 }}
             className="grid sm:grid-cols-2 gap-6"
           >
-            {isLoading ? (
-              <>
-                <SkeletonCard />
-                <SkeletonCard />
-                <SkeletonCard />
-                <SkeletonCard />
-              </>
-            ) : (
-              skills[activeTab].skills.map((skill, index) => (
-                <motion.div
-                  key={skill.name}
-                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{
-                    duration: 0.45,
-                    delay: index * 0.07,
-                    type: 'spring',
-                    stiffness: 130,
-                  }}
-                  whileHover={{ y: -4 }}
-                  className="glass-panel border border-border rounded-xl p-4 hover-lift"
-                >
-                  <SkillBar {...skill} index={index} isTabVisible={true} />
-                </motion.div>
-              ))
-            )}
+            {skills[activeTab].skills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{
+                  duration: 0.45,
+                  delay: index * 0.07,
+                  type: 'spring',
+                  stiffness: 130,
+                }}
+                whileHover={{ y: -4 }}
+                className="glass-panel border border-border rounded-xl p-4 hover-lift"
+              >
+                <SkillBar {...skill} index={index} isTabVisible={true} />
+              </motion.div>
+            ))}
           </motion.div>
         </AnimatePresence>
       </div>
