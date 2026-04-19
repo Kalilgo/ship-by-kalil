@@ -37,7 +37,7 @@ const translations = {
     sending: 'Enviando...',
     sent: 'Enviado!',
     successMessage: '¡Mensaje enviado! Te responderé pronto.',
-    errorMessage: 'Error al enviar. Escribime directamente a hello@kalil.dev',
+    errorMessage: 'Error al enviar. Escribime directamente a gomezukalil@gmail.com',
   },
   en: {
     title: 'Contact',
@@ -63,7 +63,7 @@ const translations = {
     sending: 'Sending...',
     sent: 'Sent!',
     successMessage: 'Message sent! I will respond soon.',
-    errorMessage: 'Error sending. Email me directly at hello@kalil.dev',
+    errorMessage: 'Error sending. Email me directly at gomezukalil@gmail.com',
   },
 };
 
@@ -74,7 +74,8 @@ interface ContactProps {
 
 export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
   const t = translations[locale];
-  const displayEmail = contactEmail || (locale === 'es' ? 'hello@kalil.dev' : 'hello@kalil.dev');
+  const displayEmail =
+    contactEmail || (locale === 'es' ? 'gomezukalil@gmail.com' : 'gomezukalil@gmail.com');
   const prefersReducedMotion = useReducedMotion();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');

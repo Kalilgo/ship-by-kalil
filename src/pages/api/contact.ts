@@ -89,7 +89,7 @@ export const POST: APIRoute = async ({ request }) => {
     const safeMessage = escapeHtml(String(message));
 
     const resendApiKey = import.meta.env.RESEND_API_KEY;
-    const contactEmail = import.meta.env.CONTACT_EMAIL || 'hello@kalil.dev';
+    const contactEmail = import.meta.env.CONTACT_EMAIL || 'gomezukalil@gmail.com';
 
     if (!resendApiKey) {
       console.error('RESEND_API_KEY not configured');
