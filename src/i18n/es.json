@@ -80,7 +80,11 @@
   },
   "footer": {
     "rights": "Todos los derechos reservados.",
-    "downloadCV": "Descargar CV"
+    "downloadCV": "Descargar CV",
+    "explore": "Explorar",
+    "getInTouch": "Contacto",
+    "connect": "Seguime",
+    "builtWith": "Hecho con Astro & React"
   },
   "counter": {
     "projects": "Proyectos destacados",

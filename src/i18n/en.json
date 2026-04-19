@@ -112,7 +112,11 @@
   },
   "footer": {
     "rights": "All rights reserved.",
-    "downloadCV": "Download CV"
+    "downloadCV": "Download CV",
+    "explore": "Explore",
+    "getInTouch": "Get in touch",
+    "connect": "Connect",
+    "builtWith": "Built with Astro & React"
   },
   "counter": {
     "projects": "Featured projects",
