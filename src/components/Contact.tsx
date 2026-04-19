@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Check, Loader2, Mail, Linkedin, Github } from 'lucide-react';
+import { Check, Loader2, Mail, Linkedin, Github, Calendar } from 'lucide-react';
 
 interface FormData {
   name: string;
@@ -284,6 +284,23 @@ export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
               </motion.div>
             )}
           </form>
+
+          <div className="mt-8 pt-6 border-t border-border">
+            <p className="text-sm text-text-secondary text-center mb-4">
+              {locale === 'es'
+                ? '¿Prefieres agendar directamente?'
+                : 'Prefer to schedule directly?'}
+            </p>
+            <a
+              href="https://cal.com/matias"
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              className="flex items-center justify-center gap-2 w-full px-4 py-3 border border-accent-cyan/40 text-accent-cyan rounded-lg hover:bg-accent-cyan/10 transition-colors font-medium text-sm"
+            >
+              <Calendar className="w-4 h-4" />
+              <span>{locale === 'es' ? 'Ver horarios disponibles' : 'View available times'}</span>
+            </a>
+          </div>
         </div>
       </div>
     </section>
