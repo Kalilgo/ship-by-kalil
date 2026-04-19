@@ -4,6 +4,10 @@ import { siteFixture } from '../../fixtures/site.fixture';
 
 export const prerender = false;
 
+const RATE_LIMIT_WINDOW = 60 * 1000;
+const RATE_LIMIT_MAX = 3;
+const rateLimitStore = new Map<string, { count: number; timestamp: number }>();
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, '&amp;')
@@ -13,13 +17,54 @@ function escapeHtml(s: string): string {
     .replace(/'/g, '&#39;');
 }
 
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitStore.get(ip);
+
+  if (!record || now - record.timestamp > RATE_LIMIT_WINDOW) {
+    rateLimitStore.set(ip, { count: 1, timestamp: now });
+    return true;
+  }
+
+  if (record.count >= RATE_LIMIT_MAX) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+}
+
+function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const clientIp =
+      request.headers.get('x-forwarded-for')?.split(',')[0] ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+
+    if (!checkRateLimit(clientIp)) {
+      return new Response(JSON.stringify({ error: 'Too many requests. Please try again later.' }), {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     const body = await request.json();
     const { name, email, subject, message } = body;
 
     if (!name || !email || !subject || !message) {
       return new Response(JSON.stringify({ error: 'All fields are required' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (!validateEmail(String(email))) {
+      return new Response(JSON.stringify({ error: 'Invalid email format' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
@@ -44,7 +89,7 @@ export const POST: APIRoute = async ({ request }) => {
     const safeMessage = escapeHtml(String(message));
 
     const resendApiKey = import.meta.env.RESEND_API_KEY;
-    const contactEmail = import.meta.env.CONTACT_EMAIL || 'gomezukalil@gmail.com';
+    const contactEmail = import.meta.env.CONTACT_EMAIL || 'hello@kalil.dev';
 
     if (!resendApiKey) {
       console.error('RESEND_API_KEY not configured');

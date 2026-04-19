@@ -37,7 +37,7 @@ const translations = {
     sending: 'Enviando...',
     sent: 'Enviado!',
     successMessage: '¡Mensaje enviado! Te responderé pronto.',
-    errorMessage: 'Error al enviar. Escribime directamente a gomezukalil@gmail.com',
+    errorMessage: 'Error al enviar. Escribime directamente a hello@kalil.dev',
   },
   en: {
     title: 'Contact',
@@ -63,16 +63,18 @@ const translations = {
     sending: 'Sending...',
     sent: 'Sent!',
     successMessage: 'Message sent! I will respond soon.',
-    errorMessage: 'Error sending. Email me directly at gomezukalil@gmail.com',
+    errorMessage: 'Error sending. Email me directly at hello@kalil.dev',
   },
 };
 
 interface ContactProps {
   locale?: 'es' | 'en';
+  contactEmail?: string;
 }
 
-export default function Contact({ locale = 'es' }: ContactProps) {
+export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
   const t = translations[locale];
+  const displayEmail = contactEmail || (locale === 'es' ? 'hello@kalil.dev' : 'hello@kalil.dev');
   const prefersReducedMotion = useReducedMotion();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -133,11 +135,11 @@ export default function Contact({ locale = 'es' }: ContactProps) {
 
             <div className="space-y-4">
               <a
-                href="mailto:gomezukalil@gmail.com"
+                href={`mailto:${displayEmail}`}
                 className="flex items-center gap-3 text-text-secondary hover:text-text-primary transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                <span>gomezukalil@gmail.com</span>
+                <span>{displayEmail}</span>
               </a>
               <a
                 href="https://www.linkedin.com/in/matias-gomez-19a1912a5/"

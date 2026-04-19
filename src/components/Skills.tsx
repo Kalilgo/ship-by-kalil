@@ -94,7 +94,11 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
             {skills[activeTab].skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, y: prefersReducedMotion ? 8 : 20, scale: prefersReducedMotion ? 1 : 0.98 }}
+                initial={{
+                  opacity: 0,
+                  y: prefersReducedMotion ? 8 : 20,
+                  scale: prefersReducedMotion ? 1 : 0.98,
+                }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={
                   prefersReducedMotion
@@ -109,7 +113,12 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
                 whileHover={prefersReducedMotion ? undefined : { y: -4 }}
                 className="glass-panel border border-border rounded-xl p-4 hover-lift"
               >
-                <SkillBar {...skill} index={index} isTabVisible={true} reducedMotion={prefersReducedMotion} />
+                <SkillBar
+                  {...skill}
+                  index={index}
+                  isTabVisible={true}
+                  reducedMotion={prefersReducedMotion}
+                />
               </motion.div>
             ))}
           </motion.div>

@@ -41,34 +41,14 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:site" content="@matiaskalil" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script is:inline>
-      (function () {
-        var path = window.location.pathname;
-        var isEn = path === '/en' || path.startsWith('/en/');
-        var stored = localStorage.getItem('locale');
-
-        // Preferencia guardada: misma URL en próximas visitas (p. ej. entrar a / y volver a /en/)
-        if (stored === 'en' && !isEn) {
-          window.location.replace('/en/');
-          return;
-        }
-        if (stored === 'es' && isEn) {
-          window.location.replace('/');
-          return;
-        }
-
-        // Primera visita sin preferencia: alinear storage con la URL actual
-        if (!stored) {
-          localStorage.setItem('locale', isEn ? 'en' : 'es');
-        }
-      })();
-    </script>
+    <meta name="theme-color" content="#0A0A0F" />
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
     <slot />

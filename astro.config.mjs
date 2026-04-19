@@ -5,8 +5,7 @@ import vercel from '@astrojs/vercel';
 import sitemap from '@astrojs/sitemap';
 
 /** Production URL (Open Graph, canonical, sitemap). Override with PUBLIC_SITE_URL in .env */
-const site =
-  process.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://kalil.dev';
+const site = process.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://kalil.dev';
 
 export default defineConfig({
   site,

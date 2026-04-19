@@ -154,7 +154,11 @@ export default function Projects() {
               <motion.article
                 key={project.id}
                 layout={!prefersReducedMotion}
-                initial={{ opacity: 0, y: prefersReducedMotion ? 8 : 24, scale: prefersReducedMotion ? 1 : 0.96 }}
+                initial={{
+                  opacity: 0,
+                  y: prefersReducedMotion ? 8 : 24,
+                  scale: prefersReducedMotion ? 1 : 0.96,
+                }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.96 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
