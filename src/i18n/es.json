@@ -83,8 +83,7 @@
     "downloadCV": "Descargar CV",
     "explore": "Explorar",
     "getInTouch": "Contacto",
-    "connect": "Seguime",
-    "builtWith": "Hecho con Astro & React"
+    "connect": "Seguime"
   },
   "counter": {
     "projects": "Proyectos destacados",
