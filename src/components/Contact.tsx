@@ -292,7 +292,7 @@ export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
                 : 'Prefer to schedule directly?'}
             </p>
             <a
-              href="https://cal.com/matias"
+              href="https://cal.com/matias-gomez-ugzqgi"
               target="_blank"
               rel="noopener noreferrer nofollow"
               className="flex items-center justify-center gap-2 w-full px-4 py-3 border border-accent-cyan/40 text-accent-cyan rounded-lg hover:bg-accent-cyan/10 transition-colors font-medium text-sm"

@@ -31,7 +31,7 @@ export default function BookingButton({
   size = 'sm',
 }: BookingButtonProps) {
   const t = translations[locale];
-  const CAL_URL = 'https://cal.com/matias';
+  const CAL_URL = 'https://cal.com/matias-gomez-ugzqgi';
 
   const baseClasses = {
     navbar:
@@ -85,7 +85,7 @@ export function BookingInline({
   className = '',
 }: BookingButtonProps & { className?: string }) {
   const t = translations[locale];
-  const CAL_URL = 'https://cal.com/matias';
+  const CAL_URL = 'https://cal.com/matias-gomez-ugzqgi';
 
   return (
     <div className={className}>
