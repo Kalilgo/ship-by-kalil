@@ -60,9 +60,11 @@ Agregar en "Añadir información de contacto":
 
 ---
 
-### 4. Acerca de (ABOUT) - SECCIÓN CRÍTICA
+### 4. Acerca de (ABOUT)
 
-Copiar y pegar este texto:
+**Dónde está:** Debajo del título, sección "Acerca de"
+
+**Copiar y pegar este texto:**
 
 ---
 
@@ -101,129 +103,183 @@ Oportunidades como Desarrollador Web Full Stack donde pueda aportar mi experienc
 
 ---
 
-### 5. Experiencia
+### 5. EXPERIENCIA - Click en "Añadir puesto"
 
-Agregar las siguientes entradas:
+Agregar 3 puestos:
 
 ---
 
-**Experiencia 1:**
+**Puesto 1:**
 
 - **Título**: Desarrollador Web Full Stack
 - **Empresa**: Freelance Independiente
 - **Ubicación**: Buenos Aires, Argentina
-- **Fecha**: enero 2024 - Actualidad (1 año 3 meses)
-- **Descripción**: Desarrollo de aplicaciones web para el sector financiero e inmobiliario. Trabajo en equipo con metodologías ágiles.
-- **Tech**: React, Astro, C#, .NET, AWS, PostgreSQL
+- **Fecha inicio**: enero 2024
+- **Fecha fin**: ☐ Actualidad (tildar este checkbox)
+- **Descripción**:
+
+```
+Desarrollo de aplicaciones web para el sector financiero e inmobiliario. Trabajo en equipo con metodologías ágiles.
+
+Tecnologías: React, Astro, TypeScript, Tailwind CSS, C#, .NET, AWS, PostgreSQL
+```
 
 ---
 
-**Experiencia 2:**
+**Puesto 2:**
 
 - **Título**: Diplomatura en Programación .NET
 - **Empresa**: Universidad Tecnológica Nacional (UTN)
 - **Ubicación**: Buenos Aires, Argentina
-- **Fecha**: marzo 2021 - Actualidad (4 años 2 meses)
-- **Descripción**: Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.
-- **Tech**: C#, .NET Core, SQL Server
+- **Fecha inicio**: marzo 2021
+- **Fecha fin**: ☐ Actualidad
+- **Descripción**:
+
+```
+Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.
+```
 
 ---
 
-**Experiencia 3:**
+**Puesto 3:**
 
 - **Título**: Lic. en Sistemas (en curso)
 - **Empresa**: Universidad Nacional de General Sarmiento (UNGS)
 - **Ubicación**: Buenos Aires, Argentina
-- **Fecha**: marzo 2019 - Actualidad (6 años 2 meses)
-- **Descripción**: Carrera universitaria orientada al desarrollo de software y sistemas de información.
+- **Fecha inicio**: marzo 2019
+- **Fecha fin**: ☐ Actualidad
+- **Descripción**:
+
+```
+Carrera universitaria orientada al desarrollo de software y sistemas de información.
+```
 
 ---
 
-### 6. Educación
+### 6. EDUCACIÓN - Click en "Añadir educación"
 
-Ya incluida arriba, pero verificar:
-
-| Título                           | Institución                               | Fecha           |
-| -------------------------------- | ----------------------------------------- | --------------- |
-| Lic. en Sistemas                 | Universidad Nacional de General Sarmiento | 2019 - Presente |
-| Diplomatura en Programación .NET | Universidad Tecnológica Nacional          | 2021 - Presente |
+Agregar 2 formaciones:
 
 ---
 
-### 7. Habilidades (SKILLS)
+**Educación 1:**
 
-Agregar estas habilidades en orden prioritario:
+- **Centro**: Universidad Nacional de General Sarmiento (UNGS)
+- **Título**: Lic. en Sistemas
+- **Fecha**: 2019 - Presente
 
-**Technicals:**
+---
+
+**Educación 2:**
+
+- **Centro**: Universidad Tecnológica Nacional (UTN)
+- **Título**: Diplomatura en Programación .NET
+- **Fecha**: 2021 - Presente
+
+---
+
+### 7. APTITUDES - Click en "Añadir aptitudes"
+
+**Esta sección aparece en dos lugares:**
+
+1. Debajo de Educación, sección "Aptitudes"
+2. Cuando agregás un puesto, LinkedIn sugiere añadir aptitudes
+
+**Las 5 APTITUDES PRINCIPALES** (obligatorias):
 
 1. React
 2. JavaScript
 3. TypeScript
-4. Astro
-5. Tailwind CSS
-6. C# / .NET Core
-7. REST APIs
-8. SQL Server
-9. PostgreSQL
-10. AWS
-11. Vercel
-12. Git / GitHub
+4. Desarrollo Web
+5. .NET
 
-**Herramientas:**
+**APTITUDES ADICIONALES** (opcionales):
 
-1. Cursor (AI coding)
-2. Claude AI
-3. Visual Studio Code
-
-**Soft Skills:**
-
-1. Resolución de problemas
-2. Trabajo en equipo
-3. Comunicación técnica
-4. Adaptabilidad
+- Astro
+- Tailwind CSS
+- C#
+- AWS
+- PostgreSQL
+- SQL Server
+- Vercel
+- Git
 
 ---
 
-### 8. Proyectos (recursos adicionales)
+### 8. PROYECTOS - Click en "Añadir proyectos"
 
-En la sección de proyectos (si está disponible) o agregar en experiencia:
+**Proyecto 1:**
 
-**Proyectos Destacados:**
+- **Nombre**: FinanzasArgy
+- **URL**: https://www.finanzasargy.com
+- **Descripción**: Plataforma financiera líder en Argentina con +50K visitas mensuales
+- **Fecha**: 2020 - Presente
 
-1. **FinanzasArgy** (https://www.finanzasargy.com)
-   - Plataforma financiera líder en Argentina
-   - +298K seguidores, +50K visitas mensuales
-   - Stack: Next.js, React, Tailwind, Vercel
+**Proyecto 2:**
 
-2. **PropI** (https://app.somospropi.com)
-   - Sistema integral de gestión inmobiliaria
-   - Stack: React, .NET, SQL Server, AWS
+- **Nombre**: PropI
+- **URL**: https://app.somospropi.com
+- **Descripción**: Sistema integral de gestión inmobiliaria con panel administrativo
+- **Fecha**: 2024
 
-3. **Kalil.dev** (https://kalil.dev)
-   - Portfolio profesional personal
-   - Stack: Astro, React, Tailwind, TypeScript
+**Proyecto 3:**
+
+- **Nombre**: Portfolio Kalil.dev
+- **URL**: https://kalil.dev
+- **Descripción**: Portfolio profesional desarrollado con Astro, React y Tailwind
+- **Fecha**: 2025
 
 ---
 
-### 9. Medios
+### 9. LICENCIAS Y CERTIFICACIONES - Click en "Añadir licencias y certificaciones"
+
+(Opcional - si tenés alguna certificación)
+
+---
+
+### 10. MEDIOS - Buscar "Sitio web" en información de contacto
 
 Agregar:
-
-| Medio         | URL                        |
+| Campo | URL |
 | ------------- | -------------------------- |
-| **Sitio web** | https://kalil.dev          |
-| **GitHub**    | https://github.com/Kalilgo |
-| **LinkedIn**  | (tu perfil)                |
+| **Sitio web** | https://kalil.dev |
 
 ---
 
-### 10. Configuración de Visibility
+## 📝 Dónde está cada cosa en tu LinkedIn
 
-Ir a "Recursos adicionales" → Configuración de perfil:
-
-- ✅ Permitir que los reclutadores te encuentren por título
-- ✅ Mostrar perfil en búsquedas de reclutadores
-- ✅ Notificaciones de ofertas de empleo activas
+```
+┌─────────────────────────────────────────────────────┐
+│  SECCIÓN DEL PERFIL                                 │
+├─────────────────────────────────────────────────────┤
+│  Foto                                               │
+│  Nombre                                             │
+│  Título (Headline)                                  │
+│  ■ Acerca de (ABOUT) - Click para editar           │
+├─────────────────────────────────────────────────────┤
+│  ▼ EXPERIENCIA           [Añadir puesto]           │
+│    Freelance - Full Stack                           │
+│    UTN - Diplomatura                                │
+│    UNGS - Licencia                                  │
+├─────────────────────────────────────────────────────┤
+│  ▼ EDUCACIÓN              [Añadir educación]       │
+│    UNGS                                           │
+│    UTN                                            │
+├─────────────────────────────────────────────────────┤
+│  ▼ APTITUDES              [Añadir aptitudes]       │
+│    React • JavaScript • TypeScript • ...          │
+├─────────────────────────────────────────────────────┤
+│  ▼ PROYECTOS              [Añadir proyectos]       │
+│    FinanzasArgy • PropI • Portfolio                │
+├─────────────────────────────────────────────────────┤
+│  ▼ LICENCIAS Y              [Añadir licencias      │
+│    CERTIFICACIONES          y certificaciones]     │
+├─────────────────────────────────────────────────────┤
+│  Información de contacto                            │
+│  📧 gomezukalil@gmail.com                          │
+│  🌐 kalil.dev                                      │
+└─────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -233,11 +289,10 @@ Ir a "Recursos adicionales" → Configuración de perfil:
 - [ ] Título optimizado con keywords
 - [ ] Información de contacto (web + email)
 - [ ] Acerca de completado (texto largo)
-- [ ] 3 experiencias agregadas
-- [ ] Educación agregada
-- [ ] 12+ habilidades técnicas
-- [ ] Proyectos destacados
-- [ ] URL de portfolio en medios
+- [ ] 3 puestos en Experiencia
+- [ ] 2 en Educación
+- [ ] 5+ aptitudes principales
+- [ ] 3 proyectos en Proyectos
 - [ ] Configuración de visibilidad activa
 
 ---
