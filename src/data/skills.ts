@@ -13,6 +13,7 @@ export const skills: SkillCategory[] = [
     name: 'Frontend',
     skills: [
       { name: 'React', level: 85 },
+      { name: 'Angular', level: 70 },
       { name: 'Astro', level: 80 },
       { name: 'TypeScript', level: 75 },
       { name: 'Tailwind CSS', level: 85 },
@@ -23,6 +24,7 @@ export const skills: SkillCategory[] = [
     name: 'Backend',
     skills: [
       { name: 'C# / .NET Core', level: 80 },
+      { name: 'Java', level: 95 },
       { name: 'MVC', level: 75 },
       { name: 'REST APIs', level: 80 },
     ],
@@ -32,6 +34,7 @@ export const skills: SkillCategory[] = [
     skills: [
       { name: 'SQL Server', level: 80 },
       { name: 'PostgreSQL', level: 70 },
+      { name: 'MongoDB (NoSQL)', level: 60 },
     ],
   },
   {
