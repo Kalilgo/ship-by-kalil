@@ -45,6 +45,7 @@ const navLinks = [
       {navLinks.slice(0, 5).map((link) => (
         <a
           href={link.href}
+          data-nav-link="true"
           class="px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           {link.label}
@@ -197,9 +198,43 @@ const navLinks = [
     });
   }
 
+  function initActiveSectionSpy() {
+    const sectionIds = ['sobre-mi', 'skills', 'proyectos', 'experiencia', 'contacto'];
+    const navLinkEls = document.querySelectorAll('[data-nav-link]');
+    if (!navLinkEls.length) return;
+
+    const setActive = (id: string) => {
+      navLinkEls.forEach((link) => {
+        const href = link.getAttribute('href') || '';
+        const isActive = href.includes(`#${id}`);
+        link.classList.toggle('nav-link-active', isActive);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: '-10% 0px -55% 0px' }
+    );
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleLocaleSelection);
+    document.addEventListener('DOMContentLoaded', () => {
+      handleLocaleSelection();
+      initActiveSectionSpy();
+    });
   } else {
     handleLocaleSelection();
+    initActiveSectionSpy();
   }
 </script>

@@ -12,15 +12,39 @@ const t = locale === 'en' ? en : es;
 const highlights = [
   { icon: '📍', text: t.about.location },
   { icon: '🎓', text: t.about.education },
-  { icon: '🎂', text: t.about.birthday },
   { icon: '💼', text: t.about.status },
+  { icon: '⚡', text: locale === 'en' ? 'React · Astro · .NET · AWS' : 'React · Astro · .NET · AWS' },
 ];
 
 const skills = [
-  { icon: '⚡', title: t.about.frontend, items: ['React', 'Astro', 'Tailwind', 'TypeScript'] },
-  { icon: '🔧', title: t.about.backend, items: ['.NET Core', 'C#', 'Node.js', 'SQL Server'] },
-  { icon: '☁️', title: t.about.cloud, items: ['AWS', 'Vercel', 'Railway'] },
-  { icon: '🤖', title: t.about.aiTools, items: ['Cursor', 'Claude AI'] },
+  {
+    icon: '⚡',
+    title: t.about.frontend,
+    items: ['React', 'Astro', 'Tailwind', 'TypeScript'],
+    accent: 'border-accent-cyan/30 hover:border-accent-cyan/60',
+    badgeColor: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20',
+  },
+  {
+    icon: '🔧',
+    title: t.about.backend,
+    items: ['.NET Core', 'C#', 'Node.js', 'SQL Server'],
+    accent: 'border-accent/30 hover:border-accent/60',
+    badgeColor: 'bg-accent/10 text-accent border-accent/20',
+  },
+  {
+    icon: '☁️',
+    title: t.about.cloud,
+    items: ['AWS', 'Vercel', 'Railway'],
+    accent: 'border-purple-500/30 hover:border-purple-500/60',
+    badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  },
+  {
+    icon: '🤖',
+    title: t.about.aiTools,
+    items: ['Cursor', 'Claude AI', 'Copilot'],
+    accent: 'border-green-500/30 hover:border-green-500/60',
+    badgeColor: 'bg-green-500/10 text-green-400 border-green-500/20',
+  },
 ];
 ---
 
@@ -100,7 +124,7 @@ const skills = [
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {skills.map((skill, index) => (
           <div
-            class="glass-panel border border-border rounded-xl p-5 hover-lift reveal"
+            class={`glass-panel border rounded-xl p-5 hover-lift reveal transition-colors duration-300 ${skill.accent}`}
             style={`--reveal-delay: ${index * 80}ms;`}
           >
             <div class="flex items-center gap-2 mb-3">
@@ -109,7 +133,7 @@ const skills = [
             </div>
             <div class="flex flex-wrap gap-2">
               {skill.items.map((item) => (
-                <span class="px-2 py-1 bg-background text-text-secondary text-xs rounded-md border border-border">
+                <span class={`px-2 py-1 text-xs rounded-md border font-mono ${skill.badgeColor}`}>
                   {item}
                 </span>
               ))}

@@ -51,6 +51,8 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     <meta name="theme-color" content="#0A0A0F" />
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
+    <div id="scroll-progress" aria-hidden="true"></div>
+
     <slot />
 
     <script is:inline>
@@ -102,10 +104,41 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
           revealItems.forEach((item) => observer.observe(item));
         };
 
+        const initScrollUI = () => {
+          const progressEl = document.getElementById('scroll-progress');
+          let ticking = false;
+
+          const update = () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (progressEl && docHeight > 0) {
+              progressEl.style.width = ((scrollTop / docHeight) * 100).toFixed(1) + '%';
+            }
+            ticking = false;
+          };
+
+          window.addEventListener(
+            'scroll',
+            () => {
+              if (!ticking) {
+                requestAnimationFrame(update);
+                ticking = true;
+              }
+            },
+            { passive: true }
+          );
+
+          update();
+        };
+
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initMotion, { once: true });
+          document.addEventListener('DOMContentLoaded', () => {
+            initMotion();
+            initScrollUI();
+          }, { once: true });
         } else {
           initMotion();
+          initScrollUI();
         }
       })();
     </script>
