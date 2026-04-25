@@ -1,8 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 import { projects as projectsSource } from '../data/projects';
-import { staggerDelay } from '../lib/motion';
 import { getLocaleFromUrl } from '../i18n';
 import type { Locale } from '../i18n';
 
@@ -12,11 +11,9 @@ const translations: Record<
     title: string;
     titleHighlight: string;
     subtitle: string;
-    featured: string;
-    all: string;
     view: string;
-    private: string;
-    code: string;
+    all: string;
+    filtersLabel: string;
   }
 > = {
   es: {
@@ -24,29 +21,19 @@ const translations: Record<
     titleHighlight: 'Destacados',
     subtitle:
       'Aplicaciones y sistemas desarrollados para clientes del sector financiero e inmobiliario.',
-    featured: 'Destacados',
-    all: 'Todos',
     view: 'Ver',
-    private: 'Privado',
-    code: 'Código',
+    all: 'Todos',
+    filtersLabel: 'Filtrar',
   },
   en: {
     title: 'Featured ',
     titleHighlight: 'Projects',
     subtitle:
       'Applications and systems developed for clients in the financial and real estate sectors.',
-    featured: 'Featured',
-    all: 'All',
     view: 'View',
-    private: 'Private',
-    code: 'Code',
+    all: 'All',
+    filtersLabel: 'Filter',
   },
-};
-
-const typeColors: Record<string, string> = {
-  Freelance: 'bg-accent/20 text-accent border-accent/30',
-  Personal: 'bg-accent-cyan/20 text-accent-cyan border-accent-cyan/30',
-  Trabajo: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
 };
 
 interface ProjectData {
@@ -57,29 +44,138 @@ interface ProjectData {
   type: string;
   year: string;
   featured: boolean;
+  previewImage?: string;
   demoUrl?: string;
   repoUrl?: string;
   image?: string;
 }
 
+function ProjectPreview({
+  title,
+  url,
+  emoji,
+  tags,
+  previewImage,
+}: {
+  title: string;
+  url?: string;
+  emoji?: string;
+  tags: string[];
+  previewImage?: string;
+}) {
+  const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'preview';
+  const Wrapper = url ? 'a' : 'div';
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-surface-2 to-background">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute -top-28 -right-28 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl" />
+        <div className="absolute -bottom-28 -left-28 h-80 w-80 rounded-full bg-accent/12 blur-3xl" />
+        <div className="absolute inset-0 opacity-40 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[length:56px_56px]" />
+      </div>
+
+      <div className="relative p-5">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="text-3xl shrink-0">{emoji ?? '💼'}</span>
+            <div className="min-w-0">
+              <p className="text-text-primary font-heading font-bold text-lg truncate">{title}</p>
+              <p className="text-text-secondary text-xs font-mono truncate">{host}</p>
+            </div>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5">
+            <span className="h-2 w-2 rounded-full bg-red-500/90" />
+            <span className="h-2 w-2 rounded-full bg-yellow-500/90" />
+            <span className="h-2 w-2 rounded-full bg-green-500/90" />
+          </div>
+        </div>
+
+        <div className="mt-4">
+          {previewImage ? (
+            <Wrapper
+              {...(url
+                ? {
+                    href: url,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    'aria-label': `Abrir ${title}`,
+                  }
+                : {})}
+              className={`group/preview relative block overflow-hidden rounded-xl border border-border/70 bg-background/20 ${
+                url ? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2' : ''
+              }`}
+            >
+              <img
+                src={previewImage}
+                alt={`Preview de ${title}`}
+                className="block w-full h-auto transition-transform duration-500 ease-out group-hover/preview:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+              <div
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent"
+                aria-hidden="true"
+              />
+              {url && (
+                <div className="pointer-events-none absolute right-3 top-3 inline-flex items-center gap-2 rounded-full border border-accent-cyan/25 bg-background/40 px-3 py-1 text-xs font-medium text-accent-cyan opacity-0 translate-y-1 transition-all duration-300 group-hover/preview:opacity-100 group-hover/preview:translate-y-0">
+                  Abrir
+                  <span aria-hidden="true">↗</span>
+                </div>
+              )}
+            </Wrapper>
+          ) : (
+            <Wrapper
+              {...(url
+                ? {
+                    href: url,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                    'aria-label': `Abrir ${title}`,
+                  }
+                : {})}
+              className={`group/preview block rounded-xl border border-border/70 bg-background/15 p-3 ${
+                url ? 'cursor-pointer hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 transition-colors' : ''
+              }`}
+            >
+              <div className="grid grid-cols-12 gap-2.5 transition-transform duration-500 ease-out group-hover/preview:scale-[1.01]">
+                <div className="col-span-7 h-24 rounded-xl border border-border/70 bg-background/25" />
+                <div className="col-span-5 h-24 rounded-xl border border-border/70 bg-background/25" />
+                <div className="col-span-5 h-20 rounded-xl border border-border/70 bg-background/25" />
+                <div className="col-span-7 h-20 rounded-xl border border-border/70 bg-background/25" />
+              </div>
+            </Wrapper>
+          )}
+        </div>
+
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {tags.slice(0, 6).map((tag) => (
+            <span
+              key={tag}
+              className="px-2 py-0.5 bg-background/40 text-text-secondary text-[11px] rounded border border-border/70 font-mono"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Projects() {
   const [locale, setLocale] = useState<Locale>('es');
   const t = translations[locale];
-  const [activeFilter, setActiveFilter] = useState('Destacados');
   const prefersReducedMotion = useReducedMotion();
+  const [activeFilter, setActiveFilter] = useState<string>(translations.es.all);
 
   useEffect(() => {
     const pathLocale = getLocaleFromUrl(window.location.pathname);
     setLocale(pathLocale);
-    setActiveFilter(pathLocale === 'es' ? 'Destacados' : 'Featured');
   }, []);
 
   useEffect(() => {
-    setActiveFilter(locale === 'es' ? 'Destacados' : 'Featured');
+    setActiveFilter(locale === 'en' ? translations.en.all : translations.es.all);
   }, [locale]);
-
-  const filterKey = locale === 'es' ? 'Destacados' : 'Featured';
-  const allKey = locale === 'es' ? 'Todos' : 'All';
 
   const projects: ProjectData[] = useMemo(
     () =>
@@ -89,16 +185,10 @@ export default function Projects() {
       })),
     [locale]
   );
-  const featuredProjects = projects.filter((p) => p.featured);
-
+  const allTags = Array.from(new Set(projects.flatMap((p) => p.tags)));
+  const filterChips = [t.all, ...allTags.slice(0, 6)];
   const filteredProjects =
-    activeFilter === allKey
-      ? projects
-      : activeFilter === filterKey
-        ? featuredProjects
-        : projects.filter((p: ProjectData) => p.tags.includes(activeFilter));
-
-  const allTags = Array.from(new Set(projects.flatMap((p: ProjectData) => p.tags)));
+    activeFilter === t.all ? projects : projects.filter((p) => p.tags.includes(activeFilter));
 
   return (
     <section id="proyectos" className="py-20 bg-surface">
@@ -109,169 +199,87 @@ export default function Projects() {
         </h2>
         <p className="text-text-secondary mb-8 max-w-2xl">{t.subtitle}</p>
 
-        <div className="flex flex-wrap gap-2 mb-8">
-          <button
-            type="button"
-            onClick={() => setActiveFilter(filterKey)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
-              activeFilter === filterKey
-                ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
-                : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
-            }`}
-          >
-            {t.featured}
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveFilter(allKey)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
-              activeFilter === allKey
-                ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
-                : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
-            }`}
-          >
-            {t.all}
-          </button>
-          {allTags.slice(0, 6).map((tag: string) => (
+        {/* Filters (como CerqueTech) */}
+        <div className="flex flex-wrap items-center gap-2 mb-10">
+          <span className="sr-only">{t.filtersLabel}</span>
+          {filterChips.map((chip) => (
             <button
+              key={chip}
               type="button"
-              key={tag}
-              onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
-                activeFilter === tag
+              onClick={() => setActiveFilter(chip)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface ${
+                activeFilter === chip
                   ? 'bg-accent-cyan text-background shadow-[0_0_24px_-8px_rgba(6,182,212,0.55)]'
                   : 'bg-surface-2 text-text-secondary hover:text-text-primary border border-transparent hover:border-border'
               }`}
             >
-              {tag}
+              {chip}
             </button>
           ))}
         </div>
 
-        <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence>
+        {/* Grid cards (como CerqueTech) */}
+        <motion.div
+          layout={!prefersReducedMotion}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
               <motion.article
                 key={project.id}
                 layout={!prefersReducedMotion}
                 initial={{
-                  opacity: 0,
-                  y: prefersReducedMotion ? 8 : 24,
-                  scale: prefersReducedMotion ? 1 : 0.96,
+                  opacity: prefersReducedMotion ? 1 : 0,
+                  y: prefersReducedMotion ? 0 : 18,
+                  scale: prefersReducedMotion ? 1 : 0.98,
                 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.96 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={
-                  prefersReducedMotion
-                    ? { duration: 0.2 }
-                    : {
-                        duration: 0.45,
-                        delay: staggerDelay(index, 0.06, prefersReducedMotion),
-                        type: 'spring',
-                        stiffness: 120,
-                      }
-                }
-                whileHover={prefersReducedMotion ? undefined : { y: -8 }}
-                className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-surface-2 to-background border border-border hover:border-accent-cyan/90 transition-all duration-300 shadow-[0_0_0_0_rgba(6,182,212,0)] hover:shadow-[0_20px_50px_-24px_rgba(6,182,212,0.25)]"
+                exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.98 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.28, delay: prefersReducedMotion ? 0 : index * 0.04 }}
+                className="group rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden hover:border-accent-cyan/45 transition-colors"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/8 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="p-4">
+                  <ProjectPreview
+                    title={project.title}
+                    url={project.demoUrl}
+                    emoji={project.image}
+                    tags={project.tags}
+                    previewImage={project.previewImage}
+                  />
+                </div>
 
-                <div className="relative p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-4xl">{project.image || '💼'}</span>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium border ${
-                        typeColors[project.type] || 'bg-surface text-text-secondary'
-                      }`}
-                    >
-                      {project.type}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-sm text-accent-cyan font-medium">{project.year}</span>
-                    {project.featured && (
-                      <span className="px-2 py-0.5 bg-accent-cyan/20 text-accent-cyan text-xs rounded-full">
-                        {t.featured}
-                      </span>
-                    )}
-                  </div>
-
-                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2 group-hover:text-accent-cyan transition-colors">
-                    {project.title}
-                  </h3>
-
-                  <p className="text-text-secondary text-sm mb-4 line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.slice(0, 4).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-background/50 text-text-secondary text-xs rounded-md border border-border"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="flex gap-4 pt-2 border-t border-border/50">
-                    {project.demoUrl ? (
+                <div className="px-5 pb-5">
+                  <div className="flex items-center justify-between gap-3 mt-1 mb-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
+                      <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+                      <span className="text-text-secondary text-xs font-mono truncate">{project.type}</span>
+                    </div>
+                    {project.demoUrl && (
                       <a
                         href={project.demoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-accent-cyan text-sm font-medium hover:underline"
+                        className="inline-flex items-center gap-2 text-accent-cyan text-sm font-medium hover:underline"
                       >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
                         {t.view}
+                        <span aria-hidden="true">↗</span>
                       </a>
-                    ) : (
-                      <span className="flex items-center gap-1 text-text-secondary text-sm">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                        {t.private}
-                      </span>
                     )}
-                    {project.repoUrl && (
-                      <a
-                        href={project.repoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-text-secondary text-sm font-medium hover:text-text-primary"
+                  </div>
+
+                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2">{project.title}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">{project.description}</p>
+
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {project.tags.slice(0, 5).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 bg-background/50 text-text-secondary text-xs rounded-full border border-border font-mono"
                       >
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-                        </svg>
-                        {t.code}
-                      </a>
-                    )}
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.article>

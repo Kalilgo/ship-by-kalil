@@ -8,6 +8,8 @@ export interface Project {
   featured: boolean;
   /** Emoji or short visual label shown on the project card */
   image?: string;
+  /** Optional real screenshot/preview image (path under /public) */
+  previewImage?: string;
   demoUrl?: string;
   repoUrl?: string;
 }
@@ -15,7 +17,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    title: 'Cerquetech Landing Page',
+    title: 'Cerquetech',
     description: {
       es: 'Landing page de alto rendimiento creada con Astro para una empresa de tecnología. Optimizada para SEO, con load time inferior a 1 segundo y diseño responsivo.',
       en: 'High-performance landing page created with Astro for a technology company. Optimized for SEO, with load time under 1 second and responsive design.',
@@ -26,6 +28,7 @@ export const projects: Project[] = [
     featured: true,
     demoUrl: 'https://cerquetech.com/',
     image: '🚀',
+    previewImage: '/projects/cerquetech-preview.png',
   },
   {
     id: 2,
@@ -40,6 +43,7 @@ export const projects: Project[] = [
     featured: true,
     demoUrl: 'https://www.finanzasargy.com/',
     image: '📈',
+    previewImage: '/projects/finanzasargy-preview.png',
   },
   {
     id: 3,
@@ -54,5 +58,6 @@ export const projects: Project[] = [
     featured: true,
     demoUrl: 'https://app.somospropi.com/',
     image: '🏠',
+    previewImage: '/projects/propi-preview.png',
   },
 ];
