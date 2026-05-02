@@ -17,7 +17,16 @@
     "currentRole": "Current role",
     "responseTime": "Response time",
     "viewCases": "View case studies",
-    "scheduleInterview": "Schedule interview"
+    "scheduleInterview": "Schedule interview",
+    "codeVariable": "developer",
+    "codeKeyName": "name",
+    "codeKeyRole": "role",
+    "codeKeyStack": "stack",
+    "codeKeyMission": "mission",
+    "codeKeyStatus": "status",
+    "codeMission": "ship products people love using",
+    "codeStatus": "open to work",
+    "codeTerminalReady": "ready"
   },
   "skills": {
     "Frontend": "Frontend",

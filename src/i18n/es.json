@@ -17,7 +17,16 @@
     "currentRole": "Rol actual",
     "responseTime": "Tiempo de respuesta",
     "viewCases": "Ver casos reales",
-    "scheduleInterview": "Coordinar entrevista"
+    "scheduleInterview": "Coordinar entrevista",
+    "codeVariable": "desarrollador",
+    "codeKeyName": "nombre",
+    "codeKeyRole": "rol",
+    "codeKeyStack": "tecnologías",
+    "codeKeyMission": "misión",
+    "codeKeyStatus": "estado",
+    "codeMission": "lanzar productos que la gente ama usar",
+    "codeStatus": "abierto a oportunidades",
+    "codeTerminalReady": "listo"
   },
   "experienceData": [
     {
