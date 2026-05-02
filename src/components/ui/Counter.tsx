@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
 
 interface CounterProps {
   end: number;
@@ -10,48 +9,58 @@ interface CounterProps {
 export default function Counter({ end, label, suffix = '' }: CounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.5 });
-  const previousIsInView = useRef(false);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (isInView && !previousIsInView.current) {
-      setCount(0);
+    if (!ref.current || hasAnimated.current) return;
 
-      const duration = 1500;
-      const steps = 60;
-      const stepTime = duration / steps;
-      const increment = end / steps;
-      let current = 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true;
+          setCount(0);
 
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(current));
+          const duration = 1500;
+          const steps = 60;
+          const stepTime = duration / steps;
+          const increment = end / steps;
+          let current = 0;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= end) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, stepTime);
+
+          return () => clearInterval(timer);
         }
-      }, stepTime);
+      },
+      { threshold: 0.5 }
+    );
 
-      return () => clearInterval(timer);
-    }
-
-    previousIsInView.current = isInView;
-  }, [isInView, end]);
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [end]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
       className="glass-panel border border-border rounded-xl p-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5 }}
+      style={{
+        opacity: hasAnimated.current ? 1 : 0,
+        transform: hasAnimated.current ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 0.5s ease, transform 0.5s ease',
+      }}
     >
       <p className="text-2xl font-heading text-text-primary">
         {count}
         {suffix}
       </p>
       <p className="text-sm text-text-secondary">{label}</p>
-    </motion.div>
+    </div>
   );
 }

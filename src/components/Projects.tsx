@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 import { projects as projectsSource } from '../data/projects';
 import { getLocaleFromUrl } from '../i18n';
@@ -102,7 +103,9 @@ function ProjectPreview({
                   }
                 : {})}
               className={`group/preview relative block overflow-hidden rounded-xl border border-border/70 bg-background/20 ${
-                url ? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2' : ''
+                url
+                  ? 'cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2'
+                  : ''
               }`}
             >
               <img
@@ -134,7 +137,9 @@ function ProjectPreview({
                   }
                 : {})}
               className={`group/preview block rounded-xl border border-border/70 bg-background/15 p-3 ${
-                url ? 'cursor-pointer hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 transition-colors' : ''
+                url
+                  ? 'cursor-pointer hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-2 transition-colors'
+                  : ''
               }`}
             >
               <div className="grid grid-cols-12 gap-2.5 transition-transform duration-500 ease-out group-hover/preview:scale-[1.01]">
@@ -235,7 +240,10 @@ export default function Projects() {
                 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.98 }}
-                transition={{ duration: prefersReducedMotion ? 0 : 0.28, delay: prefersReducedMotion ? 0 : index * 0.04 }}
+                transition={{
+                  duration: prefersReducedMotion ? 0 : 0.28,
+                  delay: prefersReducedMotion ? 0 : index * 0.04,
+                }}
                 className="group rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden hover:border-accent-cyan/45 transition-colors"
               >
                 <div className="p-4">
@@ -253,7 +261,9 @@ export default function Projects() {
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
                       <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
-                      <span className="text-text-secondary text-xs font-mono truncate">{project.type}</span>
+                      <span className="text-text-secondary text-xs font-mono truncate">
+                        {project.type}
+                      </span>
                     </div>
                     {project.demoUrl && (
                       <a
@@ -268,8 +278,12 @@ export default function Projects() {
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2">{project.title}</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">{project.description}</p>
+                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2">
+                    {project.title}
+                  </h3>
+                  <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">
+                    {project.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-2 mt-4">
                     {project.tags.slice(0, 5).map((tag) => (

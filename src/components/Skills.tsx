@@ -1,5 +1,6 @@
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { skills } from '../data/skills';
 import { staggerDelay } from '../lib/motion';
 
@@ -24,7 +25,21 @@ const translations = {
 
 function SkillBar({ name, level, index, isTabVisible, reducedMotion }: SkillBarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false, amount: 0.5 });
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="space-y-2" ref={ref}>
