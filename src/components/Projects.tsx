@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, useReducedMotion } from 'framer-motion';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight, Github, Code2 } from 'lucide-react';
 
 import { projects as projectsSource } from '../data/projects';
 import { getLocaleFromUrl } from '../i18n';
@@ -15,6 +15,9 @@ const translations: Record<
     view: string;
     all: string;
     filtersLabel: string;
+    viewProject: string;
+    code: string;
+    flipHint: string;
   }
 > = {
   es: {
@@ -25,6 +28,9 @@ const translations: Record<
     view: 'Ver',
     all: 'Todos',
     filtersLabel: 'Filtrar',
+    viewProject: 'Ver proyecto',
+    code: 'Ver código',
+    flipHint: 'Hover para más info',
   },
   en: {
     title: 'Featured ',
@@ -34,6 +40,9 @@ const translations: Record<
     view: 'View',
     all: 'All',
     filtersLabel: 'Filter',
+    viewProject: 'View project',
+    code: 'View code',
+    flipHint: 'Hover for more',
   },
 };
 
@@ -49,6 +58,124 @@ interface ProjectData {
   demoUrl?: string;
   repoUrl?: string;
   image?: string;
+}
+
+function FlipCard({
+  project,
+  t,
+  prefersReducedMotion,
+}: {
+  project: ProjectData;
+  t: typeof translations.es;
+  prefersReducedMotion: boolean | null;
+}) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <motion.article
+      initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="relative h-[420px] perspective-1000"
+      onMouseEnter={() => !prefersReducedMotion && setIsFlipped(true)}
+      onMouseLeave={() => !prefersReducedMotion && setIsFlipped(false)}
+    >
+      <motion.div
+        className="relative w-full h-full preserve-3d"
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.6, ease: 'easeInOut' }}
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        <div
+          className="absolute inset-0 backface-hidden rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <div className="h-full flex flex-col">
+            <div className="p-4">
+              <ProjectPreview
+                title={project.title}
+                url={project.demoUrl}
+                emoji={project.image}
+                tags={project.tags}
+                previewImage={project.previewImage}
+              />
+            </div>
+            <div className="px-5 pb-5 mt-auto">
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2">
+                  <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
+                  <span className="h-1 w-1 rounded-full bg-border" />
+                  <span className="text-text-muted text-xs font-mono">{project.type}</span>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold font-heading text-text-primary mb-2">
+                {project.title}
+              </h3>
+              <p className="text-text-secondary text-sm leading-relaxed line-clamp-2">
+                {project.description}
+              </p>
+              <div className="flex items-center gap-2 mt-3 text-accent-cyan/60 text-xs">
+                <Code2 className="w-3.5 h-3.5" />
+                <span>{t.flipHint}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          className="absolute inset-0 backface-hidden rounded-3xl border border-accent-cyan/30 bg-gradient-to-br from-surface-2 to-background p-6 flex flex-col"
+          style={{
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+          }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">{project.image}</span>
+            <div>
+              <h3 className="text-lg font-bold font-heading text-text-primary">{project.title}</h3>
+              <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
+            </div>
+          </div>
+
+          <p className="text-text-secondary text-sm leading-relaxed mb-6">{project.description}</p>
+
+          <div className="flex flex-wrap gap-2 mb-auto">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-1 bg-background/60 text-text-muted text-xs rounded-full border border-border/60 font-mono"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="flex gap-3 mt-6">
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-accent text-white rounded-xl font-medium text-sm hover:bg-accent/90 transition-colors"
+              >
+                <ArrowUpRight className="w-4 h-4" />
+                {t.viewProject}
+              </a>
+            )}
+            {project.repoUrl && (
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border text-text-secondary rounded-xl font-medium text-sm hover:border-accent-cyan/50 hover:text-accent-cyan transition-colors"
+              >
+                <Github className="w-4 h-4" />
+              </a>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    </motion.article>
+  );
 }
 
 function ProjectPreview({
@@ -223,14 +350,14 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Grid cards (como CerqueTech) */}
+        {/* Grid cards con flip */}
         <motion.div
           layout={!prefersReducedMotion}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <motion.article
+              <motion.div
                 key={project.id}
                 layout={!prefersReducedMotion}
                 initial={{
@@ -244,59 +371,9 @@ export default function Projects() {
                   duration: prefersReducedMotion ? 0 : 0.28,
                   delay: prefersReducedMotion ? 0 : index * 0.04,
                 }}
-                className="group rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden hover:border-accent-cyan/45 transition-colors"
               >
-                <div className="p-4">
-                  <ProjectPreview
-                    title={project.title}
-                    url={project.demoUrl}
-                    emoji={project.image}
-                    tags={project.tags}
-                    previewImage={project.previewImage}
-                  />
-                </div>
-
-                <div className="px-5 pb-5">
-                  <div className="flex items-center justify-between gap-3 mt-1 mb-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
-                      <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
-                      <span className="text-text-muted text-xs font-mono truncate">
-                        {project.type}
-                      </span>
-                    </div>
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-accent-cyan text-sm font-medium hover:underline"
-                      >
-                        {t.view}
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                  </div>
-
-                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {project.tags.slice(0, 5).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-background/50 text-text-muted text-xs rounded-full border border-border font-mono"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.article>
+                <FlipCard project={project} t={t} prefersReducedMotion={prefersReducedMotion} />
+              </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
