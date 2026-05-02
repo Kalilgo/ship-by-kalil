@@ -81,7 +81,7 @@ function ProjectPreview({
             <span className="text-3xl shrink-0">{emoji ?? '💼'}</span>
             <div className="min-w-0">
               <p className="text-text-primary font-heading font-bold text-lg truncate">{title}</p>
-              <p className="text-text-secondary text-xs font-mono truncate">{host}</p>
+              <p className="text-text-muted text-xs font-mono truncate">{host}</p>
             </div>
           </div>
           <div className="hidden sm:flex items-center gap-1.5">
@@ -261,7 +261,7 @@ export default function Projects() {
                     <div className="flex items-center gap-2 min-w-0">
                       <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
                       <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
-                      <span className="text-text-secondary text-xs font-mono truncate">
+                      <span className="text-text-muted text-xs font-mono truncate">
                         {project.type}
                       </span>
                     </div>
@@ -289,7 +289,7 @@ export default function Projects() {
                     {project.tags.slice(0, 5).map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 bg-background/50 text-text-secondary text-xs rounded-full border border-border font-mono"
+                        className="px-2 py-1 bg-background/50 text-text-muted text-xs rounded-full border border-border font-mono"
                       >
                         {tag}
                       </span>

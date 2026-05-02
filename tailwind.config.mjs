@@ -12,6 +12,7 @@ export default {
         'accent-cyan': '#06B6D4',
         'text-primary': '#F0F0F5',
         'text-secondary': '#8888AA',
+        'text-muted': '#a1a1c2',
       },
       fontFamily: {
         heading: ['Syne', 'sans-serif'],
