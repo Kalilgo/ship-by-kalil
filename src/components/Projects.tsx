@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, useReducedMotion } from 'framer-motion';
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 
 import { projects as projectsSource } from '../data/projects';
 import { getLocaleFromUrl } from '../i18n';
@@ -15,6 +16,8 @@ const translations: Record<
     view: string;
     all: string;
     filtersLabel: string;
+    flipHint: string;
+    backTitle: string;
   }
 > = {
   es: {
@@ -25,6 +28,8 @@ const translations: Record<
     view: 'Ver',
     all: 'Todos',
     filtersLabel: 'Filtrar',
+    flipHint: '+info',
+    backTitle: 'Ver más',
   },
   en: {
     title: 'Featured ',
@@ -34,6 +39,8 @@ const translations: Record<
     view: 'View',
     all: 'All',
     filtersLabel: 'Filter',
+    flipHint: '+info',
+    backTitle: 'See more',
   },
 };
 
@@ -167,6 +174,58 @@ function ProjectPreview({
   );
 }
 
+function FlipCard({
+  children,
+  t,
+  prefersReducedMotion,
+}: {
+  children: React.ReactNode;
+  t: typeof translations.es;
+  prefersReducedMotion: boolean | null;
+}) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div className="relative h-[480px] perspective-1000">
+      <div
+        className="relative w-full h-full preserve-3d cursor-pointer"
+        style={{ transformStyle: 'preserve-3d' }}
+        onClick={() => !prefersReducedMotion && setIsFlipped(!isFlipped)}
+      >
+        <div
+          className="absolute inset-0 backface-hidden rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden hover:border-accent-cyan/45 transition-colors"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          {children}
+        </div>
+
+        <div
+          className="absolute inset-0 backface-hidden rounded-3xl border border-accent-cyan/30 bg-gradient-to-br from-surface-2 to-background p-5 flex flex-col"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <ArrowUpRight className="w-5 h-5 text-accent-cyan" />
+            <span className="font-heading font-bold text-lg text-text-primary">{t.backTitle}</span>
+          </div>
+          <p className="text-text-secondary text-sm">
+            Haz click para ver los detalles del proyecto.
+          </p>
+          <button
+            type="button"
+            className="mt-auto pt-4 text-accent-cyan text-sm hover:underline"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsFlipped(false);
+            }}
+          >
+            ← Volver
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Projects() {
   const [locale, setLocale] = useState<Locale>('es');
   const t = translations[locale];
@@ -230,73 +289,75 @@ export default function Projects() {
         >
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <motion.article
+              <motion.div
                 key={project.id}
                 layout={!prefersReducedMotion}
                 initial={{
                   opacity: prefersReducedMotion ? 1 : 0,
                   y: prefersReducedMotion ? 0 : 18,
-                  scale: prefersReducedMotion ? 1 : 0.98,
                 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: prefersReducedMotion ? 1 : 0.98 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
                 transition={{
                   duration: prefersReducedMotion ? 0 : 0.28,
                   delay: prefersReducedMotion ? 0 : index * 0.04,
                 }}
-                className="group rounded-3xl border border-border bg-surface-2/60 glass-panel overflow-hidden hover:border-accent-cyan/45 transition-colors"
               >
-                <div className="p-4">
-                  <ProjectPreview
-                    title={project.title}
-                    url={project.demoUrl}
-                    emoji={project.image}
-                    tags={project.tags}
-                    previewImage={project.previewImage}
-                  />
-                </div>
-
-                <div className="px-5 pb-5">
-                  <div className="flex items-center justify-between gap-3 mt-1 mb-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
-                      <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
-                      <span className="text-text-muted text-xs font-mono truncate">
-                        {project.type}
-                      </span>
+                <FlipCard t={t} prefersReducedMotion={prefersReducedMotion}>
+                  <div className="h-full flex flex-col">
+                    <div className="p-4">
+                      <ProjectPreview
+                        title={project.title}
+                        url={project.demoUrl}
+                        emoji={project.image}
+                        tags={project.tags}
+                        previewImage={project.previewImage}
+                      />
                     </div>
-                    {project.demoUrl && (
-                      <a
-                        href={project.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-accent-cyan text-sm font-medium hover:underline"
-                      >
-                        {t.view}
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    )}
-                  </div>
 
-                  <h3 className="text-xl font-bold font-heading text-text-primary mb-2">
-                    {project.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">
-                    {project.description}
-                  </p>
+                    <div className="px-5 pb-5 mt-auto">
+                      <div className="flex items-center justify-between gap-3 mt-1 mb-3">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <span className="text-accent-cyan font-mono text-xs">{project.year}</span>
+                          <span className="h-1 w-1 rounded-full bg-border" aria-hidden="true" />
+                          <span className="text-text-muted text-xs font-mono truncate">
+                            {project.type}
+                          </span>
+                        </div>
+                        {project.demoUrl && (
+                          <a
+                            href={project.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-accent-cyan text-sm font-medium hover:underline"
+                          >
+                            {t.view}
+                            <span aria-hidden="true">↗</span>
+                          </a>
+                        )}
+                      </div>
 
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {project.tags.slice(0, 5).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-1 bg-background/50 text-text-muted text-xs rounded-full border border-border font-mono"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                      <h3 className="text-xl font-bold font-heading text-text-primary mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-text-secondary text-sm leading-relaxed line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {project.tags.slice(0, 5).map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2 py-1 bg-background/50 text-text-muted text-xs rounded-full border border-border font-mono"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </motion.article>
+                </FlipCard>
+              </motion.div>
             ))}
           </AnimatePresence>
         </motion.div>
