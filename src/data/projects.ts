@@ -34,8 +34,8 @@ export const projects: Project[] = [
     id: 2,
     title: 'FinanzasArgy',
     description: {
-      es: 'Plataforma financiera líder en Argentina con más de 298K seguidores. Muestra cotizaciones del dólar, criptomonedas, bonos y noticias financieras en tiempo real. Actualización automática cada 5 minutos con más de 50K visitas mensuales.',
-      en: 'Leading financial platform in Argentina with more than 298K followers. Shows dollar, cryptocurrency, bonds and financial news in real time.',
+      es: 'Landing page de alto rendimiento creada con Astro para una empresa de tecnología. Optimizada para SEO, con load time inferior a 1 segundo y diseño responsivo.',
+      en: 'High-performance landing page created with Astro for a technology company. Optimized for SEO, with load time under 1 second and responsive design.',
     },
     tags: ['Next.js', 'React', 'Tailwind', 'Vercel'],
     type: 'Freelance',
@@ -49,8 +49,8 @@ export const projects: Project[] = [
     id: 3,
     title: 'PropI',
     description: {
-      es: 'Sistema inmobiliario completo con gestión de propiedades, clientes, alquileres y ventas. Panel de administración con métricas y reportes automáticos.',
-      en: 'Complete real estate system with property, client, rental and sales management. Administration panel with metrics and automatic reports.',
+      es: 'Landing page de alto rendimiento creada con Astro para una empresa de tecnología. Optimizada para SEO, con load time inferior a 1 segundo y diseño responsivo.',
+      en: 'High-performance landing page created with Astro for a technology company. Optimized for SEO, with load time under 1 second and responsive design.',
     },
     tags: ['React', '.NET', 'SQL Server', 'AWS'],
     type: 'Freelance',
