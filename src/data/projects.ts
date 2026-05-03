@@ -56,7 +56,7 @@ export const projects: Project[] = [
     type: 'Freelance',
     year: '2024',
     featured: true,
-    demoUrl: 'https://app.somospropi.com/',
+    demoUrl: 'https://somospropi.com/',
     image: '🏠',
     previewImage: '/projects/propi-preview.png',
   },
