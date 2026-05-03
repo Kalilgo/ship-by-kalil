@@ -1,3 +1,23 @@
+/*
+ * Portal en body: evita que el chat quede bajo main (z-10) / islas con stacking raro
+ * y que se filtre texto del sitio al borde del panel.
+ */
+[data-portfolio-whatsapp-root] {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  pointer-events: none;
+}
+
+[data-portfolio-whatsapp-root] .floating-whatsapp-chatbox {
+  pointer-events: auto !important;
+  isolation: isolate;
+}
+
+[data-portfolio-whatsapp-root] [class*='notification'] {
+  pointer-events: auto !important;
+}
+
 .floating-whatsapp-input {
   color: #111827 !important;
   -webkit-text-fill-color: #111827 !important;
@@ -66,10 +86,12 @@ input::placeholder {
 .floating-whatsapp .floating-whatsapp-chatbox {
   left: 50% !important;
   right: auto !important;
-  transform: translateX(-50%) !important;
+  transform: translate3d(-50%, 0, 0) !important;
+  z-index: 1 !important;
   /* Encima del dock fijo (iconos ~72px + barra + safe area) */
   bottom: max(7.25rem, calc(5.5rem + env(safe-area-inset-bottom, 0px))) !important;
   max-width: min(375px, calc(100vw - 1.5rem)) !important;
+  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.55) !important;
 }
 
 @media (max-width: 640px) {

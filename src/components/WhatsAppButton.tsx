@@ -1,7 +1,8 @@
 'use client';
 
 import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import { getLocaleFromUrl } from '../i18n';
 import type { Locale } from '../i18n';
@@ -28,6 +29,17 @@ export default function WhatsAppButton() {
   const [locale, setLocale] = useState<Locale>(() =>
     typeof window !== 'undefined' ? getLocaleFromUrl(window.location.pathname) : 'es'
   );
+  const [portalEl, setPortalEl] = useState<HTMLElement | null>(null);
+
+  useLayoutEffect(() => {
+    const el = document.createElement('div');
+    el.setAttribute('data-portfolio-whatsapp-root', '');
+    document.body.appendChild(el);
+    setPortalEl(el);
+    return () => {
+      el.remove();
+    };
+  }, []);
 
   useEffect(() => {
     setLocale(getLocaleFromUrl(window.location.pathname));
@@ -47,7 +59,7 @@ export default function WhatsAppButton() {
 
   const t = translations[locale];
 
-  return (
+  const widget = (
     <FloatingWhatsApp
       phoneNumber="+5401161375359"
       accountName="Matías Kalil Gómez"
@@ -61,8 +73,10 @@ export default function WhatsAppButton() {
       notification
       notificationDelay={15}
       notificationSound
-      style={{ zIndex: 9999 }}
+      style={{ zIndex: 10020 }}
       avatar="/images/matias-kalil-portrait.png"
     />
   );
+
+  return portalEl ? createPortal(widget, portalEl) : null;
 }
