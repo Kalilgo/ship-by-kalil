@@ -1,5 +1,6 @@
 ---
 import Counter from './ui/Counter';
+import HeroCodeShell from './HeroCodeShell';
 import es from '../i18n/es.json';
 import en from '../i18n/en.json';
 
@@ -91,29 +92,7 @@ const t = locale === 'en' ? en : es;
     </div>
 
     <div class="hidden md:block relative animate-float reveal min-w-0" style="--reveal-delay: 240ms;">
-      <div class="absolute inset-0 bg-gradient-to-r from-accent/20 to-accent-cyan/20 blur-3xl"></div>
-      <div class="relative glass-panel bg-surface-2/90 border border-border rounded-xl p-5 md:p-6 font-mono text-xs md:text-sm min-w-0 max-w-full">
-        <div class="flex gap-2 mb-4">
-          <span class="w-3 h-3 rounded-full bg-red-500"></span>
-          <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-          <span class="w-3 h-3 rounded-full bg-green-500"></span>
-        </div>
-        <pre class="text-accent-cyan overflow-x-hidden break-words whitespace-pre-wrap"><code><span class="text-text-secondary">{"const"}</span> {t.hero.codeVariable} = {"{"}
-  {t.hero.codeKeyName}: <span class="text-accent">"Matías Kalil Gómez"</span>,
-  {t.hero.codeKeyRole}: <span class="text-accent">"{t.about.role}"</span>,
-  {t.hero.codeKeyStack}: [
-    <span class="text-accent">"React"</span>, <span class="text-accent">"Angular"</span>, <span class="text-accent">"Astro"</span>,
-    <span class="text-accent">".NET"</span>, <span class="text-accent">"AWS"</span>
-  ],
-  {t.hero.codeKeyMission}: <span class="text-accent">"{t.hero.codeMission}"</span>,
-  {t.hero.codeKeyStatus}: <span class="text-accent">"{t.hero.codeStatus}"</span>
-{"}"};</code></pre>
-        <div class="mt-3 flex items-center gap-2 border-t border-border/30 pt-3">
-          <span class="text-accent-cyan/60 font-mono text-xs select-none">~</span>
-          <span class="text-text-secondary/50 font-mono text-xs">{t.hero.codeTerminalReady}</span>
-          <span class="text-accent-cyan animate-blink font-mono text-sm select-none" aria-hidden="true">▋</span>
-        </div>
-      </div>
+      <HeroCodeShell client:load locale={locale} />
     </div>
   </div>
 

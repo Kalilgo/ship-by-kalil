@@ -1,5 +1,8 @@
 ---
 import '../styles/global.css';
+import GlobalDock from '../components/GlobalDock';
+import ScrollToTop from '../components/ScrollToTop';
+import WhatsAppButton from '../components/WhatsAppButton';
 
 interface Props {
   title?: string;
@@ -54,6 +57,9 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     <div id="scroll-progress" aria-hidden="true"></div>
 
     <slot />
+    <GlobalDock client:load />
+    <ScrollToTop client:load />
+    <WhatsAppButton client:load />
 
     <script is:inline>
       (() => {

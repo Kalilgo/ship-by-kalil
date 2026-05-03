@@ -8,7 +8,6 @@ import Projects from '../components/Projects';
 import Experience from '../components/Experience.astro';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer.astro';
-import WhatsAppButton from '../components/WhatsAppButton';
 import { getLocaleFromUrl } from '../i18n';
 
 const locale = getLocaleFromUrl(Astro.url.pathname);
@@ -25,5 +24,4 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
     <Contact client:only="react" locale={locale} />
   </main>
   <Footer locale={locale} />
-  <WhatsAppButton client:only="react" />
 </Layout>

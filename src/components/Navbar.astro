@@ -1,5 +1,4 @@
 ---
-import { languages } from '../i18n';
 import es from '../i18n/es.json';
 import en from '../i18n/en.json';
 import BookingButton from './BookingButton';
@@ -13,6 +12,11 @@ const t = locale === 'en' ? en : es;
 
 const basePath = locale === 'en' ? '/en' : '';
 
+const localeSwitcherOptions = [
+  { code: 'es' as const, label: t.nav.languageOptionEs },
+  { code: 'en' as const, label: t.nav.languageOptionEn },
+];
+
 const navLinks = [
   { label: t.nav.about, href: `${basePath}/#sobre-mi` },
   { label: t.nav.skills, href: `${basePath}/#skills` },
@@ -24,7 +28,7 @@ const navLinks = [
 
 <nav
   id="site-nav"
-  class="nav-site fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
+  class="nav-site fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md"
 >
   <div class="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
     <a
@@ -82,14 +86,14 @@ const navLinks = [
           <span class="uppercase text-xs font-bold">{locale}</span>
         </button>
         <div class="absolute right-0 mt-2 w-36 bg-surface-2 border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
-          {Object.entries(languages).map(([code, name]) => (
+          {localeSwitcherOptions.map(({ code, label }) => (
             <a
               href={code === 'es' ? '/' : `/${code}/`}
               data-set-locale={code}
               class={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors first:rounded-t-lg last:rounded-b-lg ${locale === code ? 'bg-accent-cyan/10 text-accent-cyan font-medium' : 'text-text-secondary hover:bg-surface hover:text-text-primary'}`}
             >
               <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[9px] font-bold">{code.toUpperCase()}</span>
-              {name}
+              {label}
             </a>
           ))}
         </div>
@@ -129,14 +133,14 @@ const navLinks = [
         {t.nav.downloadCV}
       </a>
       <div class="flex gap-2 pt-3 border-t border-border mt-2">
-        {Object.entries(languages).map(([code, name]) => (
+        {localeSwitcherOptions.map(({ code, label }) => (
           <a
             href={code === 'es' ? '/' : `/${code}/`}
             data-set-locale={code}
             class={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 text-center text-sm rounded-lg transition-colors ${locale === code ? 'bg-accent-cyan/20 text-accent-cyan font-medium border border-accent-cyan/30' : 'text-text-secondary hover:bg-surface-2 border border-border'}`}
           >
             <span class="w-5 h-5 flex items-center justify-center rounded-full border border-current text-[9px] font-bold">{code.toUpperCase()}</span>
-            {name}
+            {label}
           </a>
         ))}
       </div>

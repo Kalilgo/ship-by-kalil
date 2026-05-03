@@ -58,3 +58,37 @@ input::placeholder {
   color: #111827 !important;
   background-color: #e0f2fe !important;
 }
+
+/*
+ * Panel centrado encima del dock (la librería lo pone por defecto abajo a la derecha).
+ * Unimos left + translate para centrar en viewport y bottom ~ sobre la barra del dock.
+ */
+.floating-whatsapp .floating-whatsapp-chatbox {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  /* Encima del dock fijo (iconos ~72px + barra + safe area) */
+  bottom: max(7.25rem, calc(5.5rem + env(safe-area-inset-bottom, 0px))) !important;
+  max-width: min(375px, calc(100vw - 1.5rem)) !important;
+}
+
+@media (max-width: 640px) {
+  .floating-whatsapp .floating-whatsapp-chatbox {
+    width: min(375px, calc(100vw - 1.25rem)) !important;
+  }
+}
+
+/* Botón verde oculto: WhatsApp solo desde el dock (el widget sigue montado para el panel). */
+.floating-whatsapp > div.floating-whatsapp-button {
+  position: fixed !important;
+  left: -9999px !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 56px !important;
+  height: 56px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+}

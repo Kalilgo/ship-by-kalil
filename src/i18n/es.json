@@ -7,7 +7,10 @@
     "contact": "Contacto",
     "downloadCV": "Descargar CV",
     "available": "Disponible para trabajo full-time o freelance",
-    "language": "Cambiar idioma"
+    "language": "Cambiar idioma",
+    "scrollToTop": "Volver arriba",
+    "languageOptionEs": "Español",
+    "languageOptionEn": "Inglés"
   },
   "hero": {
     "title": "Gómez",
@@ -99,5 +102,28 @@
     "projects": "Proyectos destacados",
     "role": "Rol actual",
     "response": "Tiempo de respuesta"
+  },
+  "projectsWindow": {
+    "close": "Cerrar ventana",
+    "minimize": "Minimizar",
+    "maximize": "Ampliar",
+    "restore": "Restaurar ventana",
+    "dockTitle": "Dock",
+    "dockWhatsApp": "WhatsApp",
+    "dockCalendar": "Agendar reunión",
+    "dockSettings": "Ajustes",
+    "dockHeroTitle": "Terminal",
+    "dockHeroMinimizedHint": "Minimizado — tocá el ícono del dock para volver.",
+    "dockHeroClosedHint": "Ventana cerrada — restaurá para ver el código otra vez.",
+    "dockLinkedIn": "LinkedIn — perfil",
+    "dockGitHub": "GitHub — proyectos",
+    "dockGmail": "Gmail — contacto",
+    "modalOverlayClose": "Cerrar vista ampliada",
+    "openPreview": "Abrir",
+    "viewRepo": "Ver repositorio",
+    "slotMinimizedHint": "Minimizado — usá el dock o tocá acá para restaurar.",
+    "slotClosedHint": "Cerrada — tocá acá o usá el dock para abrir de nuevo.",
+    "slotMaximizedHint": "Vista ampliada activa (modal abierto).",
+    "slotBackToGrid": "Volver a tarjeta"
   }
 }

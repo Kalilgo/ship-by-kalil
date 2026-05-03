@@ -1,8 +1,3 @@
-export const languages = {
-  es: 'Español',
-  en: 'English',
-} as const;
-
 export type Locale = 'es' | 'en';
 export const defaultLocale: Locale = 'es';
 export const STORAGE_KEY = 'locale';

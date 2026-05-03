@@ -7,7 +7,10 @@
     "contact": "Contact",
     "downloadCV": "Download CV",
     "available": "Available for full-time or freelance work",
-    "language": "Change language"
+    "language": "Change language",
+    "scrollToTop": "Back to top",
+    "languageOptionEs": "Spanish",
+    "languageOptionEn": "English"
   },
   "hero": {
     "title": "Gómez",
@@ -131,5 +134,28 @@
     "projects": "Featured projects",
     "role": "Current role",
     "response": "Response time"
+  },
+  "projectsWindow": {
+    "close": "Close window",
+    "minimize": "Minimize",
+    "maximize": "Zoom",
+    "restore": "Restore window",
+    "dockTitle": "Dock",
+    "dockWhatsApp": "WhatsApp",
+    "dockCalendar": "Schedule meeting",
+    "dockSettings": "Settings",
+    "dockHeroTitle": "Terminal",
+    "dockHeroMinimizedHint": "Minimized — tap the dock icon to restore.",
+    "dockHeroClosedHint": "Window closed — restore to see the code again.",
+    "dockLinkedIn": "LinkedIn — profile",
+    "dockGitHub": "GitHub — repositories",
+    "dockGmail": "Gmail — contact",
+    "modalOverlayClose": "Close expanded view",
+    "openPreview": "Open",
+    "viewRepo": "View repository",
+    "slotMinimizedHint": "Minimized — use the dock or tap here to restore.",
+    "slotClosedHint": "Closed — tap here or use the dock to open again.",
+    "slotMaximizedHint": "Expanded view is open (modal).",
+    "slotBackToGrid": "Back to card"
   }
 }

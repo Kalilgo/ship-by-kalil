@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { getLocaleFromUrl } from '../i18n';
 import type { Locale } from '../i18n';
+import { attachPortfolioWhatsAppOpener } from '../lib/openFloatingWhatsApp';
 
 import './WhatsAppButton.css';
 
@@ -24,17 +25,27 @@ const translations = {
 };
 
 export default function WhatsAppButton() {
-  const [locale, setLocale] = useState<Locale>('es');
-  const [mounted, setMounted] = useState(false);
+  const [locale, setLocale] = useState<Locale>(() =>
+    typeof window !== 'undefined' ? getLocaleFromUrl(window.location.pathname) : 'es'
+  );
 
   useEffect(() => {
     setLocale(getLocaleFromUrl(window.location.pathname));
-    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    return attachPortfolioWhatsAppOpener(() => {
+      window.setTimeout(() => {
+        const root = document.querySelector('.floating-whatsapp');
+        const launcher =
+          root?.querySelector<HTMLElement>(':scope > div.floating-whatsapp-button') ??
+          document.querySelector<HTMLElement>('div.floating-whatsapp-button');
+        launcher?.click();
+      }, 0);
+    });
   }, []);
 
   const t = translations[locale];
-
-  if (!mounted) return null;
 
   return (
     <FloatingWhatsApp
