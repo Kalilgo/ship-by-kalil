@@ -108,6 +108,7 @@ export default function GlobalDock() {
 
   return createPortal(
     <div
+      id="portfolio-dock-root"
       className="pointer-events-none fixed bottom-0 left-0 right-0 z-40 flex justify-center px-3 pb-3 pt-1"
       style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom, 0px))' }}
     >

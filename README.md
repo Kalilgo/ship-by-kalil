@@ -28,6 +28,8 @@ npm run build
 npm run preview
 ```
 
+La página **`/cv`** es la fuente de verdad del currículum (email, portfolio, etc.). Para generar un PDF: abrí `/cv`, pulsá **Guardar como PDF** y en el diálogo de impresión elegí destino PDF. La ruta antigua **`/CV.pdf`** redirige a **`/cv`**.
+
 ---
 
 ## 🛠️ Stack Tecnológico
@@ -49,7 +51,6 @@ npm run preview
 ```
 /
 ├── public/                 # Archivos estáticos
-│   ├── CV.pdf            # Currículum
 │   ├── favicon.svg       # Favicon
 │   ├── og-image.svg      # Open Graph image
 │   └── robots.txt        # SEO
@@ -82,7 +83,7 @@ npm run preview
 │   │   ├── index.astro           # Home (español)
 │   │   ├── en/index.astro        # Home (inglés)
 │   │   ├── 404.astro             # Página 404
-│   │   ├── cv.astro              # Descargar CV
+│   │   ├── cv.astro              # CV web + «Guardar como PDF» (impresión)
 │   │   └── api/                  # API endpoints
 │   │       └── contact.ts        # Endpoint de contacto
 │   └── styles/

@@ -10,6 +10,10 @@ const site = process.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://kalil.d
 export default defineConfig({
   site,
   integrations: [react(), tailwind(), sitemap()],
+  /** El PDF estático estaba desactualizado; la fuente de verdad es /cv (exportar con «Guardar como PDF»). */
+  redirects: {
+    '/CV.pdf': '/cv',
+  },
   output: 'static',
   adapter: vercel({
     webAnalytics: { enabled: false },

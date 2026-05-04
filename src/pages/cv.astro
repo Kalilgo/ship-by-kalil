@@ -9,7 +9,8 @@ const cvContent = {
   location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires',
   phone: '+54 9 11 6137-5359',
   email: 'gomezukalil@gmail.com',
-  email2: 'Matias_gomezu@hotmail.com',
+  /** Portfolio público (Vercel) */
+  portfolioUrl: 'https://ship-by-kalil.vercel.app/',
   
   profile: `Desarrollador web Full Stack con experiencia en proyectos freelance de desarrollo de aplicaciones para el sector financiero e inmobiliario. Proactivo, resolutivo y con fuerte capacidad de aprendizaje autónomo. Con conocimiento de herramientas modernas de desarrollo asistido por inteligencia artificial. Orientado a la entrega de soluciones de calidad, con capacidad para el trabajo en equipo y la gestión eficiente de proyectos bajo metodologías ágiles.`,
 
@@ -81,21 +82,24 @@ const cvContent = {
 <Layout title="CV - Matías Kalil Gómez">
   <Navbar />
 
-  <main class="min-h-screen bg-surface py-12">
+  <main class="cv-print-main min-h-screen bg-surface py-12 print:min-h-0 print:bg-white print:py-6">
     <div class="max-w-4xl mx-auto px-6">
-      <div class="flex justify-end mb-8">
-        <a
-          href="/CV.pdf"
-          download="Matias-Kalil-Gomez-CV.pdf"
-          class="flex items-center gap-2 px-4 py-2 bg-accent-cyan text-background rounded-lg text-sm font-medium hover:bg-accent-cyan/80 transition-colors"
+      <div class="cv-print-hide mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="max-w-xl text-sm text-text-secondary">
+          El archivo <code class="rounded bg-surface-2 px-1 py-0.5 text-xs">CV.pdf</code> fijo quedaba desactualizado. Este contenido es el correcto (email, portfolio, etc.). Para descargar:
+          <strong class="text-text-primary">Guardar como PDF</strong> en la ventana de impresión del navegador.
+        </p>
+        <button
+          type="button"
+          class="js-cv-print flex shrink-0 items-center justify-center gap-2 self-start rounded-lg bg-accent-cyan px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-accent-cyan/80 sm:self-auto"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 9V2h12v7"></path>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8" rx="1"></rect>
           </svg>
-          Descargar CV
-        </a>
+          Guardar como PDF
+        </button>
       </div>
 
       <header class="text-center mb-12">
@@ -112,10 +116,13 @@ const cvContent = {
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
             {cvContent.phone}
           </span>
-          <span class="flex items-center gap-1">
+          <a
+            href={`mailto:${cvContent.email}`}
+            class="flex items-center gap-1 text-text-secondary hover:text-accent-cyan transition-colors"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
             {cvContent.email}
-          </span>
+          </a>
         </div>
       </header>
 
@@ -215,6 +222,35 @@ const cvContent = {
       <section class="mb-8">
         <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
           <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">06</span>
+          Contacto
+        </h2>
+        <div class="bg-surface-2/50 border border-border rounded-xl p-6 space-y-5">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">Email</p>
+            <a
+              href={`mailto:${cvContent.email}`}
+              class="text-lg text-accent-cyan font-medium hover:underline break-all"
+            >
+              {cvContent.email}
+            </a>
+          </div>
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">Sitio web / Portfolio</p>
+            <a
+              href={cvContent.portfolioUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-lg text-accent-cyan font-medium hover:underline break-all"
+            >
+              {cvContent.portfolioUrl.replace(/^https:\/\//, '').replace(/\/$/, '')}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">07</span>
           Datos Personales
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -237,22 +273,78 @@ const cvContent = {
         </div>
       </section>
 
-      <div class="flex justify-center pt-8 border-t border-border">
-        <a
-          href="/CV.pdf"
-          download="Matias-Kalil-Gomez-CV.pdf"
-          class="flex items-center gap-2 px-6 py-3 bg-accent-cyan text-background rounded-lg font-medium hover:bg-accent-cyan/80 transition-colors"
+      <div class="cv-print-hide flex flex-col items-center justify-center gap-3 border-t border-border pt-8">
+        <button
+          type="button"
+          class="js-cv-print flex items-center gap-2 rounded-lg bg-accent-cyan px-6 py-3 font-medium text-background transition-colors hover:bg-accent-cyan/80"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M6 9V2h12v7"></path>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8" rx="1"></rect>
           </svg>
-          Descargar CV
-        </a>
+          Guardar como PDF
+        </button>
+        <p class="text-center text-xs text-text-secondary">Chrome / Edge / Firefox: Imprimir → Destino «Guardar como PDF».</p>
       </div>
     </div>
   </main>
 
   <Footer />
+
+  <style is:global>
+    @media print {
+      #site-nav,
+      footer,
+      #portfolio-dock-root,
+      #scroll-progress,
+      [data-portfolio-whatsapp-root],
+      .cv-print-hide {
+        display: none !important;
+      }
+
+      @page {
+        margin: 14mm 12mm;
+      }
+
+      html,
+      body {
+        background: #fff !important;
+      }
+
+      .cv-print-main {
+        background: #fff !important;
+        color: #111 !important;
+      }
+
+      .cv-print-main .text-text-primary,
+      .cv-print-main .font-heading {
+        color: #0a0a0f !important;
+      }
+
+      .cv-print-main .text-text-secondary {
+        color: #3f3f46 !important;
+      }
+
+      .cv-print-main .text-accent-cyan {
+        color: #0e7490 !important;
+      }
+
+      .cv-print-main .border-border {
+        border-color: #d4d4d8 !important;
+      }
+
+      .cv-print-main .bg-surface-2\/50,
+      .cv-print-main .bg-surface-2\/30,
+      .cv-print-main .bg-surface-2\/65 {
+        background: #f4f4f5 !important;
+      }
+    }
+  </style>
+
+  <script is:inline>
+    document.querySelectorAll('.js-cv-print').forEach((btn) => {
+      btn.addEventListener('click', () => window.print());
+    });
+  </script>
 </Layout>
