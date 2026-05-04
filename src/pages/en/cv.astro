@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import CvPage from '../../components/CvPage.astro';
+import { cvByLocale, cvPageLabels } from '../../data/cv';
+
+const cvContent = cvByLocale.en;
+const labels = cvPageLabels.en;
+---
+
+<Layout title="CV - Matías Kalil Gómez" locale="en">
+  <Navbar locale="en" />
+  <CvPage cvContent={cvContent} labels={labels} />
+  <Footer locale="en" />
+</Layout>

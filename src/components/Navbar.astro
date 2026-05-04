@@ -1,6 +1,7 @@
 ---
 import es from '../i18n/es.json';
 import en from '../i18n/en.json';
+import { getAlternateLocaleUrl } from '../i18n';
 import BookingButton from './BookingButton';
 
 interface Props {
@@ -9,6 +10,9 @@ interface Props {
 
 const { locale = 'es' } = Astro.props;
 const t = locale === 'en' ? en : es;
+
+const pathname = Astro.url.pathname;
+const cvHref = locale === 'en' ? '/en/cv' : '/cv';
 
 const basePath = locale === 'en' ? '/en' : '';
 
@@ -59,7 +63,7 @@ const navLinks = [
 
     <div class="flex items-center gap-3">
       <a
-        href="/cv"
+        href={cvHref}
         class="hidden sm:flex items-center gap-2 px-4 py-2 bg-accent-cyan text-background rounded-lg hover:bg-accent-cyan/80 transition-colors font-medium text-sm"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -88,7 +92,7 @@ const navLinks = [
         <div class="absolute right-0 mt-2 w-36 bg-surface-2 border border-border rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
           {localeSwitcherOptions.map(({ code, label }) => (
             <a
-              href={code === 'es' ? '/' : `/${code}/`}
+              href={getAlternateLocaleUrl(pathname, code)}
               data-set-locale={code}
               class={`flex items-center gap-2 px-4 py-2.5 text-sm transition-colors first:rounded-t-lg last:rounded-b-lg ${locale === code ? 'bg-accent-cyan/10 text-accent-cyan font-medium' : 'text-text-secondary hover:bg-surface hover:text-text-primary'}`}
             >
@@ -121,7 +125,7 @@ const navLinks = [
         </a>
       ))}
       <a
-        href="/cv"
+        href={cvHref}
         class="flex items-center justify-center gap-2 px-4 py-3 bg-accent-cyan text-background rounded-lg text-center font-medium"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -135,7 +139,7 @@ const navLinks = [
       <div class="flex gap-2 pt-3 border-t border-border mt-2">
         {localeSwitcherOptions.map(({ code, label }) => (
           <a
-            href={code === 'es' ? '/' : `/${code}/`}
+            href={getAlternateLocaleUrl(pathname, code)}
             data-set-locale={code}
             class={`flex-1 flex items-center justify-center gap-2 px-3 py-2.5 text-center text-sm rounded-lg transition-colors ${locale === code ? 'bg-accent-cyan/20 text-accent-cyan font-medium border border-accent-cyan/30' : 'text-text-secondary hover:bg-surface-2 border border-border'}`}
           >

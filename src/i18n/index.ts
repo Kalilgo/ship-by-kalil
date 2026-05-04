@@ -45,3 +45,30 @@ export function getPathForLocale(path: string, locale: Locale): string {
   }
   return path.startsWith('/') ? `/${locale}${path}` : `/${locale}/${path}`;
 }
+
+/**
+ * Href for the language switcher: same logical page in the other locale (e.g. /cv ↔ /en/cv).
+ */
+export function getAlternateLocaleUrl(pathname: string, target: Locale): string {
+  const raw = pathname.split('?')[0] ?? '/';
+  let p = raw;
+  if (p.length > 1 && p.endsWith('/')) p = p.slice(0, -1);
+
+  const onEnglishSite = p === '/en' || p.startsWith('/en/');
+
+  if (p === '/cv' || p === '/en/cv') {
+    return target === defaultLocale ? '/cv' : '/en/cv';
+  }
+
+  if (target === defaultLocale) {
+    const stripped = p.replace(/^\/en(?=\/|$)/, '') || '/';
+    return stripped === '' ? '/' : stripped.startsWith('/') ? stripped : `/${stripped}`;
+  }
+
+  if (onEnglishSite) {
+    if (p === '/en') return '/en/';
+    return p;
+  }
+  if (p === '/') return '/en/';
+  return `/en${p}`;
+}

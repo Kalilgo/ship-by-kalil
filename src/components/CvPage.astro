@@ -1,0 +1,190 @@
+---
+import type { CvContent, CvPageLabels } from '../data/cv';
+
+interface Props {
+  cvContent: CvContent;
+  labels: CvPageLabels;
+}
+
+const { cvContent, labels } = Astro.props;
+
+const skillOrder = ['frontend', 'backend', 'cloud', 'tools'] as const;
+---
+
+<main class="min-h-screen bg-surface py-12">
+  <div class="max-w-4xl mx-auto px-6">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold font-heading text-text-primary mb-2">
+        {cvContent.name}
+      </h1>
+      <p class="text-xl text-accent-cyan mb-4">{cvContent.title}</p>
+      <div class="flex flex-wrap justify-center gap-4 text-text-secondary text-sm">
+        <span class="flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          {cvContent.location}
+        </span>
+        <span class="flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          {cvContent.phone}
+        </span>
+        <a
+          href={`mailto:${cvContent.email}`}
+          class="flex items-center gap-1 text-text-secondary hover:text-accent-cyan transition-colors"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          {cvContent.email}
+        </a>
+      </div>
+    </header>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">01</span>
+        {labels.professionalProfile}
+      </h2>
+      <p class="text-text-secondary leading-relaxed bg-surface-2/50 border border-border rounded-xl p-6">
+        {cvContent.profile}
+      </p>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">02</span>
+        {labels.professionalExperience}
+      </h2>
+      {cvContent.experience.map((exp) => (
+        <div class="bg-surface-2/50 border border-border rounded-xl p-6 mb-4">
+          <div class="flex flex-wrap justify-between items-start mb-4">
+            <div>
+              <h3 class="text-xl font-bold text-text-primary">{exp.role}</h3>
+              <p class="text-accent-cyan">{exp.company}</p>
+            </div>
+            <span class="px-3 py-1 bg-accent/20 text-accent text-sm rounded-full">{exp.period}</span>
+          </div>
+          <ul class="space-y-2">
+            {exp.highlights.map((h) => (
+              <li class="flex items-start gap-2 text-text-secondary">
+                <span class="text-accent-cyan mt-1">▹</span>
+                {h}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">03</span>
+        {labels.technicalSkills}
+      </h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        {skillOrder.map((category) => {
+          const items = cvContent.skills[category];
+          return (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-5">
+              <h3 class="text-lg font-bold text-text-primary mb-3">{labels.skillCategories[category]}</h3>
+              <div class="flex flex-wrap gap-2">
+                {items.map((item) => (
+                  <span class="px-3 py-1 bg-background text-text-secondary text-sm rounded-lg border border-border">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">04</span>
+        {labels.education}
+      </h2>
+      <div class="space-y-4">
+        {cvContent.education.map((edu) => (
+          <div class="bg-surface-2/50 border border-border rounded-xl p-5 flex flex-wrap justify-between items-center">
+            <div>
+              <h3 class="text-lg font-bold text-text-primary">{edu.degree}</h3>
+              <p class="text-text-secondary">{edu.institution} • {edu.location}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-accent-cyan text-sm">{edu.period}</p>
+              <span class="px-2 py-0.5 bg-accent/10 text-accent text-xs rounded">{edu.status}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">05</span>
+        {labels.aptitudes}
+      </h2>
+      <div class="grid md:grid-cols-2 gap-3">
+        {cvContent.aptitudes.map((apt) => (
+          <div class="flex items-center gap-2 text-text-secondary bg-surface-2/30 border border-border/50 rounded-lg p-3">
+            <span class="text-accent-cyan">✓</span>
+            {apt}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">06</span>
+        {labels.contact}
+      </h2>
+      <div class="bg-surface-2/50 border border-border rounded-xl p-6 space-y-5">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">{labels.email}</p>
+          <a
+            href={`mailto:${cvContent.email}`}
+            class="text-lg text-accent-cyan font-medium hover:underline break-all"
+          >
+            {cvContent.email}
+          </a>
+        </div>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">{labels.websitePortfolio}</p>
+          <a
+            href={cvContent.portfolioUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-lg text-accent-cyan font-medium hover:underline break-all"
+          >
+            {cvContent.portfolioUrl.replace(/^https:\/\//, '').replace(/\/$/, '')}
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">07</span>
+        {labels.personalData}
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+          <p class="text-xs text-text-secondary mb-1">{labels.birthDate}</p>
+          <p class="text-text-primary font-medium">{cvContent.personal.birth}</p>
+        </div>
+        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+          <p class="text-xs text-text-secondary mb-1">{labels.idDoc}</p>
+          <p class="text-text-primary font-medium">{cvContent.personal.dni}</p>
+        </div>
+        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+          <p class="text-xs text-text-secondary mb-1">{labels.nationality}</p>
+          <p class="text-text-primary font-medium">{cvContent.personal.nationality}</p>
+        </div>
+        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+          <p class="text-xs text-text-secondary mb-1">{labels.maritalStatus}</p>
+          <p class="text-text-primary font-medium">{cvContent.personal.status}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
