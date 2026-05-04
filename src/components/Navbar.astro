@@ -153,7 +153,7 @@ const navLinks = [
 </nav>
 
 <script>
-  import { setStoredLocale, STORAGE_KEY } from '../i18n';
+  import { setStoredLocale, LOCALE_SCROLL_RESTORE_KEY } from '../i18n';
 
   const toggle = document.getElementById('mobile-menu-toggle');
   const menu = document.getElementById('mobile-menu');
@@ -183,7 +183,7 @@ const navLinks = [
     closeMobileMenu();
   });
 
-  // Cerrar si cambia el hash (navegación in-page) o al tocar fuera
+  // Cerrar menú si cambia el hash (navegación in-page)
   window.addEventListener('hashchange', closeMobileMenu);
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement | null;
@@ -197,6 +197,13 @@ const navLinks = [
 
   function handleLocaleSelection() {
     document.querySelectorAll('[data-set-locale]').forEach((el) => {
+      el.addEventListener('pointerdown', () => {
+        try {
+          sessionStorage.setItem(LOCALE_SCROLL_RESTORE_KEY, String(window.scrollY));
+        } catch {
+          /* ignore */
+        }
+      });
       el.addEventListener('click', () => {
         const value = el.getAttribute('data-set-locale');
         if (value === 'es' || value === 'en') {

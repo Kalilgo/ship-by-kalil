@@ -2,6 +2,9 @@ export type Locale = 'es' | 'en';
 export const defaultLocale: Locale = 'es';
 export const STORAGE_KEY = 'locale';
 
+/** sessionStorage: scroll Y a restaurar tras cambiar de idioma (misma posición visual). */
+export const LOCALE_SCROLL_RESTORE_KEY = 'portfolio-locale-scroll-y';
+
 export function getStoredLocale(): Locale | null {
   if (typeof window === 'undefined') return null;
 
