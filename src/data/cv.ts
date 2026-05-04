@@ -94,8 +94,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
         degree: 'Diplomatura en Programación .NET',
         institution: 'Universidad Tecnológica Nacional',
         location: 'Modalidad a distancia',
-        period: 'Julio 2021 – Presente',
-        status: 'En curso',
+        period: 'Julio 2021 – 2024',
+        status: 'Completado',
       },
       {
         degree: 'Bachiller en Ciencias Sociales',
@@ -161,8 +161,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
         degree: '.NET Programming Diploma',
         institution: 'Universidad Tecnológica Nacional',
         location: 'Distance learning',
-        period: 'July 2021 – Present',
-        status: 'In progress',
+        period: 'July 2021 – 2024',
+        status: 'Completed',
       },
       {
         degree: 'High School Diploma in Social Sciences',

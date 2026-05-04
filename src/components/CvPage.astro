@@ -9,6 +9,9 @@ interface Props {
 const { cvContent, labels } = Astro.props;
 
 const skillOrder = ['frontend', 'backend', 'cloud', 'tools'] as const;
+
+const educationStatusDone = (status: string) =>
+  status === 'Completado' || status === 'Completed';
 ---
 
 <main class="min-h-screen bg-surface py-12">
@@ -104,14 +107,25 @@ const skillOrder = ['frontend', 'backend', 'cloud', 'tools'] as const;
       </h2>
       <div class="space-y-4">
         {cvContent.education.map((edu) => (
-          <div class="bg-surface-2/50 border border-border rounded-xl p-5 flex flex-wrap justify-between items-center">
-            <div>
-              <h3 class="text-lg font-bold text-text-primary">{edu.degree}</h3>
-              <p class="text-text-secondary">{edu.institution} • {edu.location}</p>
+          <div class="bg-surface-2/50 border border-border rounded-xl p-5 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+            <div class="min-w-0 flex-1">
+              <h3 class="text-lg font-bold text-text-primary leading-snug">{edu.degree}</h3>
+              <p class="mt-1 text-sm leading-snug text-text-secondary sm:text-base">
+                {edu.institution} • {edu.location}
+              </p>
             </div>
-            <div class="text-right">
-              <p class="text-accent-cyan text-sm">{edu.period}</p>
-              <span class="px-2 py-0.5 bg-accent/10 text-accent text-xs rounded">{edu.status}</span>
+            <div class="flex shrink-0 flex-col gap-2 sm:items-end sm:text-right">
+              <p class="text-sm font-medium text-accent-cyan">{edu.period}</p>
+              <span
+                class:list={[
+                  'inline-flex w-fit max-w-full items-center rounded-lg border px-2.5 py-1 text-xs font-medium leading-tight',
+                  educationStatusDone(edu.status)
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
+                    : 'border-accent/35 bg-accent/10 text-accent',
+                ]}
+              >
+                {edu.status}
+              </span>
             </div>
           </div>
         ))}
