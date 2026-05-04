@@ -5,7 +5,7 @@
     "projects": "Proyectos",
     "experience": "Experiencia",
     "contact": "Contacto",
-    "downloadCV": "Descargar CV",
+    "downloadCV": "CV",
     "available": "Disponible para trabajo full-time o freelance",
     "language": "Cambiar idioma",
     "scrollToTop": "Volver arriba",
@@ -92,7 +92,7 @@
   },
   "footer": {
     "rights": "Todos los derechos reservados.",
-    "downloadCV": "Descargar CV",
+    "downloadCV": "CV",
     "explore": "Explorar",
     "getInTouch": "Contacto",
     "connect": "Seguime",

@@ -5,7 +5,7 @@
     "projects": "Projects",
     "experience": "Experience",
     "contact": "Contact",
-    "downloadCV": "Download CV",
+    "downloadCV": "CV",
     "available": "Available for full-time or freelance work",
     "language": "Change language",
     "scrollToTop": "Back to top",
@@ -124,7 +124,7 @@
   },
   "footer": {
     "rights": "All rights reserved.",
-    "downloadCV": "Download CV",
+    "downloadCV": "CV",
     "explore": "Explore",
     "getInTouch": "Get in touch",
     "connect": "Connect",

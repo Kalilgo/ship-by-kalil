@@ -28,7 +28,7 @@ npm run build
 npm run preview
 ```
 
-La página **`/cv`** es la fuente de verdad del currículum (email, portfolio, etc.). Para generar un PDF: abrí `/cv`, pulsá **Guardar como PDF** y en el diálogo de impresión elegí destino PDF. La ruta antigua **`/CV.pdf`** redirige a **`/cv`**.
+La página **`/cv`** es el currículum en la web (email, portfolio, etc.). La ruta antigua **`/CV.pdf`** redirige a **`/cv`**.
 
 ---
 
@@ -83,7 +83,7 @@ La página **`/cv`** es la fuente de verdad del currículum (email, portfolio, e
 │   │   ├── index.astro           # Home (español)
 │   │   ├── en/index.astro        # Home (inglés)
 │   │   ├── 404.astro             # Página 404
-│   │   ├── cv.astro              # CV web + «Guardar como PDF» (impresión)
+│   │   ├── cv.astro              # Página de CV (/cv)
 │   │   └── api/                  # API endpoints
 │   │       └── contact.ts        # Endpoint de contacto
 │   └── styles/
