@@ -124,6 +124,10 @@
     "slotMinimizedHint": "Minimizado — usá el dock o tocá acá para restaurar.",
     "slotClosedHint": "Cerrada — tocá acá o usá el dock para abrir de nuevo.",
     "slotMaximizedHint": "Vista ampliada activa (modal abierto).",
-    "slotBackToGrid": "Volver a tarjeta"
+    "slotBackToGrid": "Volver a tarjeta",
+    "cardMoreInfo": "+ Información",
+    "cardLessInfo": "− Información",
+    "cardOverview": "Resumen",
+    "cardDelivered": "Qué se realizó"
   }
 }
