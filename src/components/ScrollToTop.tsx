@@ -60,7 +60,7 @@ export default function ScrollToTop() {
             onClick={scrollTop}
             aria-label={labels[locale]}
             title={labels[locale]}
-            className="flex size-12 shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 text-foreground shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md transition-[transform,box-shadow] hover:border-accent-cyan/35 hover:shadow-[0_10px_32px_-10px_rgba(6,182,212,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:scale-[0.94]"
+            className="flex size-12 shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 text-foreground shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md [@media(pointer:coarse)]:backdrop-blur-none transition-[transform,box-shadow] hover:border-accent-cyan/35 hover:shadow-[0_10px_32px_-10px_rgba(6,182,212,0.35)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:scale-[0.94]"
           >
             <ChevronUp className="size-[46%] min-w-[18px] stroke-[2.25]" aria-hidden />
           </button>

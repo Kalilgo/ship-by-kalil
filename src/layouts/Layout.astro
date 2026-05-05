@@ -89,9 +89,14 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
       (() => {
         const initMotion = () => {
           const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+
           if (!prefersReducedMotion) {
             document.body.classList.add('motion-enabled');
+          }
 
+          /* Spotlight solo con puntero fino: en táctil el dedo al scroll dispara pointermove y re-pinta toda la capa → scroll entrecortado */
+          if (!prefersReducedMotion && !coarsePointer) {
             const spot = document.createElement('div');
             spot.className = 'pointer-spotlight';
             spot.setAttribute('aria-hidden', 'true');

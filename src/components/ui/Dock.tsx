@@ -88,7 +88,7 @@ function DockMagnifyItem({
             ? { width: baseSize, height: baseSize }
             : { width: sizeSpring, height: sizeSpring }
         }
-        className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md transition-opacity hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:brightness-110 active:duration-75 ${className}`}
+        className={`relative flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md [@media(pointer:coarse)]:backdrop-blur-none transition-opacity hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:brightness-110 active:duration-75 ${className}`}
       >
         {thumbnailUrl ? (
           <>
@@ -174,7 +174,7 @@ function DockSocialButton({ mouseX, reducedMotion, sizeFixed, titleAttr, href, c
             ? { width: baseSize, height: baseSize }
             : { width: sizeSpring, height: sizeSpring }
         }
-        className="relative flex shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md transition-opacity hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:brightness-110 active:duration-75"
+        className="relative flex shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-gradient-to-b from-surface-2/95 to-background/90 shadow-[0_8px_28px_-12px_rgba(0,0,0,0.65)] backdrop-blur-md [@media(pointer:coarse)]:backdrop-blur-none transition-opacity hover:border-accent-cyan/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-cyan/70 active:brightness-110 active:duration-75"
       >
         {children}
         </motion.button>
@@ -311,7 +311,7 @@ export function Dock({
     <motion.nav
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Number.POSITIVE_INFINITY)}
-      className="mx-auto inline-flex max-w-[min(100vw-1rem,52rem)] flex-nowrap items-center justify-center gap-2 rounded-[1.35rem] border border-border/90 bg-surface-2/65 px-3 py-2 shadow-[0_16px_48px_-16px_rgba(0,0,0,0.55)] backdrop-blur-xl sm:gap-2.5 sm:px-4"
+      className="mx-auto inline-flex max-w-[min(100vw-1rem,52rem)] flex-nowrap items-center justify-center gap-2 rounded-[1.35rem] border border-border/90 bg-surface-2/65 px-3 py-2 shadow-[0_16px_48px_-16px_rgba(0,0,0,0.55)] backdrop-blur-xl [@media(pointer:coarse)]:bg-surface-2/90 [@media(pointer:coarse)]:backdrop-blur-none sm:gap-2.5 sm:px-4"
       aria-label={labels.dockTitle}
     >
         {settingsMinimized ? (

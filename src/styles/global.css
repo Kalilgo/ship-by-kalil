@@ -50,6 +50,16 @@
       linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
     background-size: 56px 56px;
     mask-image: radial-gradient(ellipse 95% 75% at 50% 45%, black 0%, transparent 72%);
+    contain: strict;
+  }
+
+  /* Máscara + scroll en capas fijas = trabajo extra del compositor en iOS/Android */
+  @media (pointer: coarse) {
+    body::after {
+      mask-image: none;
+      opacity: 0.22;
+      contain: strict;
+    }
   }
 
   h1,
@@ -128,8 +138,16 @@
 
   /* Navbar: menos blur en táctil = menos presión en el compositor al hacer scroll */
   @media (pointer: coarse) {
+    .nav-bar-strip {
+      @apply bg-background/95;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
     .nav-site.nav-elevated {
-      @apply bg-background backdrop-blur-md border-border/80;
+      @apply bg-background border-border/80;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
   }
 
@@ -147,6 +165,14 @@
     background-clip: text;
     color: transparent;
     animation: gradient-shimmer 10s ease-in-out infinite;
+  }
+
+  @media (pointer: coarse) {
+    .text-gradient-shimmer {
+      animation: none;
+      background: linear-gradient(100deg, #06b6d4, #2563eb, #06b6d4);
+      background-size: 100% auto;
+    }
   }
 
   .btn-hero-primary {
