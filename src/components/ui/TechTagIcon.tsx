@@ -23,6 +23,175 @@ export function TechTagIcon({ tag }: { tag: string }) {
   const gid = useId().replace(/:/g, '');
   const k = tag.trim().toLowerCase();
 
+  if (k.includes('sveltekit')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#ff3e00]`} aria-hidden>
+        <title>{tag}</title>
+        <path
+          fill="currentColor"
+          d="M9.8 4.2 6 9.5l5.4 3.1 3.8-5.3L15 4.2l-5.2-.02zm7.5 5.5-3.8 5.3L18 18l-5.4-3.1-5.4 3.1 3.8-5.3L8 9.7l5.4 3.1 4-5.1z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('svelte')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#ff3e00]`} aria-hidden>
+        <title>{tag}</title>
+        <path
+          fill="currentColor"
+          d="M10.3 4.4c-1.8-.6-3.8.2-4.6 2L5 9.5c-.8 1.8.1 3.9 1.9 4.8l5.4 2.8c1.7.9 3.8.3 4.9-1.3l2.6-4.2c1.1-1.7.8-4-1-5.2l-4.8-2.8c-.9-.5-2-.7-3-.6z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('vite')) {
+    return (
+      <svg viewBox="0 0 24 24" className={iconClass} aria-hidden>
+        <title>{tag}</title>
+        <defs>
+          <linearGradient id={`tv-${gid}`} x1="4" y1="4" x2="20" y2="20">
+            <stop stopColor="#bd34fe" />
+            <stop offset="1" stopColor="#41d1ff" />
+          </linearGradient>
+        </defs>
+        <path
+          fill={`url(#tv-${gid})`}
+          d="m8.5 3 9 16.5L15 21 6 4.5 8.5 3zm3 9 3 5.5L21 6h-6l-3.5 6z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('bun')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#fbf0df]`} aria-hidden>
+        <title>{tag}</title>
+        <ellipse cx="12" cy="13" rx="9" ry="8" fill="#141416" stroke="#fbf0df" strokeWidth="1.2" />
+        <ellipse cx="9" cy="11" rx="1.3" ry="1.8" fill="#fbf0df" />
+        <ellipse cx="15" cy="11" rx="1.3" ry="1.8" fill="#fbf0df" />
+      </svg>
+    );
+  }
+
+  if (k.includes('three') || k.includes('globe.gl')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#22c55e]`} aria-hidden>
+        <title>{tag}</title>
+        <path
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          d="M12 4 5 8v8l7 4 7-4V8l-7-4zm0 0v16m7-12-7 4m0 0-7-4"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('daisy')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#fbbf24]`} aria-hidden>
+        <title>{tag}</title>
+        <circle cx="12" cy="12" r="3" fill="currentColor" />
+        <ellipse cx="12" cy="7" rx="2.5" ry="4" fill="currentColor" opacity="0.85" />
+        <ellipse cx="17" cy="14" rx="2.5" ry="4" fill="currentColor" opacity="0.85" transform="rotate(72 12 12)" />
+        <ellipse cx="7" cy="14" rx="2.5" ry="4" fill="currentColor" opacity="0.85" transform="rotate(-72 12 12)" />
+      </svg>
+    );
+  }
+
+  if (k.includes('zustand')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#433f41]`} aria-hidden>
+        <title>{tag}</title>
+        <path
+          fill="currentColor"
+          d="M8 6c0 2 2 4 4 5 2-1 4-3 4-5-2 1-4 1-6 0-1 0-2 0-2 0zm8 6c-2 1-4 2-6 2s-4-1-6-2v6h12v-6zm-8 8v2h8v-2H8z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('amplify')) {
+    return (
+      <svg viewBox="0 0 24 24" className={iconClass} aria-hidden>
+        <title>{tag}</title>
+        <defs>
+          <linearGradient id={`ta2-${gid}`} x1="4" y1="20" x2="20" y2="4">
+            <stop stopColor="#ff9900" />
+            <stop offset="1" stopColor="#ffb84d" />
+          </linearGradient>
+        </defs>
+        <path
+          fill={`url(#ta2-${gid})`}
+          d="M6 18 12 6l3 6 3-6 6 12H6zm6-12v4l2 4h-4l2-8z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('mui') || k.includes('material')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#007FFF]`} aria-hidden>
+        <title>{tag}</title>
+        <path fill="currentColor" d="M4 4h16v16H4V4zm3 13h4v-7l4 7h4v-7l-4 7H7v-7z" />
+      </svg>
+    );
+  }
+
+  if (k.includes('prisma')) {
+    return (
+      <svg viewBox="0 0 24 24" className={iconClass} aria-hidden>
+        <title>{tag}</title>
+        <defs>
+          <linearGradient id={`tp-${gid}`} x1="4" y1="20" x2="20" y2="4">
+            <stop stopColor="#5a67d8" />
+            <stop offset="1" stopColor="#2d3748" />
+          </linearGradient>
+        </defs>
+        <path fill={`url(#tp-${gid})`} d="M12 3 4 20h16L12 3zm0 4.5 5.5 11h-11L12 7.5z" />
+      </svg>
+    );
+  }
+
+  if (k.includes('postgres')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#336791]`} aria-hidden>
+        <title>{tag}</title>
+        <ellipse cx="12" cy="14" rx="7" ry="6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+        <path
+          fill="currentColor"
+          d="M9 9c0-1 .8-2 2.5-2h3v3h-2c-.7 0-1 .4-1 1v2H9V9zm5 7v3h-3v-3h3z"
+        />
+      </svg>
+    );
+  }
+
+  if (k.includes('lambda') || k === 'λ') {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#FF9900]`} aria-hidden>
+        <title>{tag}</title>
+        <text x="12" y="17" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor" fontFamily="serif">
+          λ
+        </text>
+      </svg>
+    );
+  }
+
+  if (k.includes('emailjs')) {
+    return (
+      <svg viewBox="0 0 24 24" className={`${iconClass} text-[#00b7ff]`} aria-hidden>
+        <title>{tag}</title>
+        <path
+          fill="currentColor"
+          d="M4 7c0-1.1.9-2 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7zm2 0 6 4 6-4v10H6V7zm2.5 0L12 11l3.5-4H8.5z"
+        />
+      </svg>
+    );
+  }
+
   if (k.includes('react') && !k.includes('native')) {
     return (
       <svg viewBox="0 0 24 24" className={`${iconClass} text-[#61DAFB]`} aria-hidden>

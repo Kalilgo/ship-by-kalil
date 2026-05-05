@@ -27,26 +27,27 @@ export function dockMinimizeKeyframeXY(
   dy: number,
   borderStart: DockMinimizeBorderStart
 ) {
+  /** Sin `as const`: Framer Motion espera arrays mutables en keyframes (tuples readonly fallan en TS). */
   return {
-    x: [0, dx * 0.22, dx * 0.55, dx] as const,
-    y: [0, dy * 0.12, dy * 0.45, dy] as const,
-    scaleX: [1, 0.72, 0.38, 0.1] as const,
-    scaleY: [1, 0.68, 0.32, 0.036] as const,
-    rotateX: [0, 10, 32, 58] as const,
-    opacity: [1, 0.95, 0.62, 0.18] as const,
-    borderRadius: [borderStart, 28, 80, 999] as const,
+    x: [0, dx * 0.22, dx * 0.55, dx],
+    y: [0, dy * 0.12, dy * 0.45, dy],
+    scaleX: [1, 0.72, 0.38, 0.1],
+    scaleY: [1, 0.68, 0.32, 0.036],
+    rotateX: [0, 10, 32, 58],
+    opacity: [1, 0.95, 0.62, 0.18],
+    borderRadius: [borderStart, 28, 80, 999],
   };
 }
 
 /** Keyframes para modal que usa `scale` uniforme (compat. con layout actual). */
 export function dockMinimizeKeyframeUniform(dx: number, dy: number, borderStart: DockMinimizeBorderStart) {
   return {
-    x: [0, dx * 0.22, dx * 0.55, dx] as const,
-    y: [0, dy * 0.12, dy * 0.45, dy] as const,
-    scale: [1, 0.78, 0.42, 0.12] as const,
-    rotateX: [0, 10, 32, 56] as const,
-    opacity: [1, 0.95, 0.6, 0.2] as const,
-    borderRadius: [borderStart, 28, 80, 999] as const,
+    x: [0, dx * 0.22, dx * 0.55, dx],
+    y: [0, dy * 0.12, dy * 0.45, dy],
+    scale: [1, 0.78, 0.42, 0.12],
+    rotateX: [0, 10, 32, 56],
+    opacity: [1, 0.95, 0.6, 0.2],
+    borderRadius: [borderStart, 28, 80, 999],
   };
 }
 

@@ -75,8 +75,10 @@ const navLinks = [
         <span>{t.nav.downloadCV}</span>
       </a>
 
-      <BookingButton client:load locale={locale} />
-      
+      <div class="hidden md:flex items-center shrink-0">
+        <BookingButton client:load locale={locale} />
+      </div>
+
       <div class="relative group" id="lang-switcher">
         <button
           class="flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-surface-2 hover:border-accent-cyan hover:text-accent-cyan transition-all text-sm"
