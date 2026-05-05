@@ -21,7 +21,7 @@ const locale = getLocaleFromUrl(Astro.url.pathname);
     <Skills client:visible locale={locale} />
     <Projects client:visible />
     <Experience locale={locale} />
-    <Contact client:only="react" locale={locale} />
+    <Contact client:visible={{ rootMargin: '180px' }} locale={locale} />
   </main>
   <Footer locale={locale} />
 </Layout>

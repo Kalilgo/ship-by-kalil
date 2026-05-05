@@ -18,7 +18,7 @@ import Footer from '../../components/Footer.astro';
     <Skills client:visible locale="en" />
     <Projects client:visible />
     <Experience locale="en" />
-    <Contact client:only="react" locale="en" />
+    <Contact client:visible={{ rootMargin: '180px' }} locale="en" />
   </main>
   <Footer locale="en" />
 </Layout>

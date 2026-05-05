@@ -82,8 +82,8 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     </script>
 
     <GlobalDock client:load />
-    <ScrollToTop client:load />
-    <WhatsAppButton client:load />
+    <ScrollToTop client:idle />
+    <WhatsAppButton client:idle />
 
     <script is:inline>
       (() => {
