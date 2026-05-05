@@ -1,8 +1,8 @@
 'use client';
 
-import { FloatingWhatsApp } from 'react-floating-whatsapp';
-import { useEffect, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useEffect, useLayoutEffect, useState, type ComponentType } from 'react';
+import type { FloatingWhatsAppProps } from 'react-floating-whatsapp';
 
 import { getLocaleFromUrl } from '../i18n';
 import type { Locale } from '../i18n';
@@ -30,6 +30,19 @@ export default function WhatsAppButton() {
     typeof window !== 'undefined' ? getLocaleFromUrl(window.location.pathname) : 'es'
   );
   const [portalEl, setPortalEl] = useState<HTMLElement | null>(null);
+  const [FloatingWidget, setFloatingWidget] = useState<ComponentType<FloatingWhatsAppProps> | null>(
+    null
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    import('react-floating-whatsapp').then((mod) => {
+      if (!cancelled) setFloatingWidget(() => mod.FloatingWhatsApp);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   useLayoutEffect(() => {
     const el = document.createElement('div');
@@ -59,8 +72,10 @@ export default function WhatsAppButton() {
 
   const t = translations[locale];
 
+  if (!portalEl || !FloatingWidget) return null;
+
   const widget = (
-    <FloatingWhatsApp
+    <FloatingWidget
       phoneNumber="+5401161375359"
       accountName="Matías Kalil Gómez"
       chatMessage={t.message}
@@ -78,5 +93,5 @@ export default function WhatsAppButton() {
     />
   );
 
-  return portalEl ? createPortal(widget, portalEl) : null;
+  return createPortal(widget, portalEl);
 }

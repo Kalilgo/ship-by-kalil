@@ -10,6 +10,21 @@ const site = process.env.PUBLIC_SITE_URL?.replace(/\/$/, '') || 'https://kalil.d
 export default defineConfig({
   site,
   integrations: [react(), tailwind(), sitemap()],
+  /** Menos trabajo en parse inicial + mejor cache entre páginas (chunks estables). */
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return;
+            if (id.includes('framer-motion')) return 'vendor-motion';
+            if (id.includes('lucide-react')) return 'vendor-icons';
+          },
+        },
+      },
+    },
+  },
+  compressHTML: true,
   /** PDF estático desactualizado; el CV vivo está en /cv. */
   redirects: {
     '/CV.pdf': '/cv',

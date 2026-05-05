@@ -7,7 +7,6 @@ import {
   type RefCallback,
 } from 'react';
 import { createPortal } from 'react-dom';
-import html2canvas from 'html2canvas';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
 import { projects as projectsSource } from '../data/projects';
@@ -610,12 +609,13 @@ export default function Projects() {
     async (el: HTMLElement | null, projectId: number) => {
       if (!el || prefersReducedMotion) return;
       try {
+        const { default: html2canvas } = await import('html2canvas');
         const canvas = await html2canvas(el, {
           useCORS: true,
           allowTaint: true,
           backgroundColor: '#0a0a0f',
           logging: false,
-        } as Parameters<typeof html2canvas>[1]);
+        });
         const dataUrl = canvas.toDataURL('image/jpeg', 0.82);
         setDockThumbnails((prev) => ({ ...prev, [projectId]: dataUrl }));
       } catch {
