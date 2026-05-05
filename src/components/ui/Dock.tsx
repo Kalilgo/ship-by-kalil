@@ -1,4 +1,4 @@
-import { useRef, type MouseEventHandler } from 'react';
+import { useEffect, useRef, useState, type MouseEventHandler } from 'react';
 import { Calendar } from 'lucide-react';
 import {
   motion,
@@ -24,6 +24,8 @@ export interface DockProjectSlot {
 interface DockMagnifyItemProps {
   mouseX: MotionValue<number>;
   reducedMotion: boolean;
+  /** En táctil no hay hover fino: tamaño fijo sin efecto macOS */
+  sizeFixed: boolean;
   children: React.ReactNode;
   className?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -38,6 +40,7 @@ interface DockMagnifyItemProps {
 function DockMagnifyItem({
   mouseX,
   reducedMotion,
+  sizeFixed,
   children,
   className = '',
   onClick,
@@ -69,7 +72,7 @@ function DockMagnifyItem({
       <div className="group/dock-tip relative flex flex-col items-center justify-center">
         <span
           role="tooltip"
-          className="pointer-events-none absolute bottom-full left-1/2 z-[100] mb-2 block max-w-[min(14rem,calc(100vw-2rem))] -translate-x-1/2 truncate rounded-md border border-border/90 bg-surface-2/95 px-2.5 py-1 text-center text-[11px] font-medium text-text-primary shadow-[0_8px_24px_-8px_rgba(0,0,0,0.75)] backdrop-blur-md opacity-0 transition-opacity duration-150 ease-out group-hover/dock-tip:opacity-100"
+          className="pointer-events-none absolute bottom-full left-1/2 z-[100] mb-2 block max-w-[min(14rem,calc(100vw-2rem))] -translate-x-1/2 truncate rounded-md border border-border/90 bg-surface-2/95 px-2.5 py-1 text-center text-[11px] font-medium text-text-primary shadow-[0_8px_24px_-8px_rgba(0,0,0,0.75)] backdrop-blur-md [@media(pointer:coarse)]:hidden opacity-0 transition-opacity duration-150 ease-out group-hover/dock-tip:opacity-100"
         >
           {titleAttr}
         </span>
@@ -81,7 +84,7 @@ function DockMagnifyItem({
         whileTap={reducedMotion ? undefined : { scale: 0.88 }}
         transition={{ type: 'spring', stiffness: 520, damping: 22 }}
         style={
-          reducedMotion
+          reducedMotion || sizeFixed
             ? { width: baseSize, height: baseSize }
             : { width: sizeSpring, height: sizeSpring }
         }
@@ -121,13 +124,14 @@ function DockMagnifyItem({
 interface DockSocialButtonProps {
   mouseX: MotionValue<number>;
   reducedMotion: boolean;
+  sizeFixed: boolean;
   titleAttr: string;
   href: string;
   children: React.ReactNode;
 }
 
 /** Misma magnificación que el resto; enlaces externos en nueva pestaña (mailto en mismo tab). */
-function DockSocialButton({ mouseX, reducedMotion, titleAttr, href, children }: DockSocialButtonProps) {
+function DockSocialButton({ mouseX, reducedMotion, sizeFixed, titleAttr, href, children }: DockSocialButtonProps) {
   const ref = useRef<HTMLButtonElement>(null);
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect();
@@ -151,7 +155,7 @@ function DockSocialButton({ mouseX, reducedMotion, titleAttr, href, children }: 
       <div className="group/dock-tip relative flex flex-col items-center justify-center">
         <span
           role="tooltip"
-          className="pointer-events-none absolute bottom-full left-1/2 z-[100] mb-2 block max-w-[min(14rem,calc(100vw-2rem))] -translate-x-1/2 truncate rounded-md border border-border/90 bg-surface-2/95 px-2.5 py-1 text-center text-[11px] font-medium text-text-primary shadow-[0_8px_24px_-8px_rgba(0,0,0,0.75)] backdrop-blur-md opacity-0 transition-opacity duration-150 ease-out group-hover/dock-tip:opacity-100"
+          className="pointer-events-none absolute bottom-full left-1/2 z-[100] mb-2 block max-w-[min(14rem,calc(100vw-2rem))] -translate-x-1/2 truncate rounded-md border border-border/90 bg-surface-2/95 px-2.5 py-1 text-center text-[11px] font-medium text-text-primary shadow-[0_8px_24px_-8px_rgba(0,0,0,0.75)] backdrop-blur-md [@media(pointer:coarse)]:hidden opacity-0 transition-opacity duration-150 ease-out group-hover/dock-tip:opacity-100"
         >
           {titleAttr}
         </span>
@@ -166,7 +170,7 @@ function DockSocialButton({ mouseX, reducedMotion, titleAttr, href, children }: 
         whileTap={reducedMotion ? undefined : { scale: 0.88 }}
         transition={{ type: 'spring', stiffness: 520, damping: 22 }}
         style={
-          reducedMotion
+          reducedMotion || sizeFixed
             ? { width: baseSize, height: baseSize }
             : { width: sizeSpring, height: sizeSpring }
         }
@@ -282,6 +286,27 @@ export function Dock({
   const mouseX = useMotionValue(Number.POSITIVE_INFINITY);
   const showProjSep = projects.length > 0 || settingsMinimized !== null;
 
+  const [coarsePointer, setCoarsePointer] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(pointer: coarse)');
+    const sync = () => setCoarsePointer(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+
+  /** Táctil: sin zoom por cursor; solo escritorio con puntero fino magnifica */
+  const sizeFixed = reducedMotion || coarsePointer;
+
+  useEffect(() => {
+    const onVis = () => {
+      if (document.visibilityState === 'visible') mouseX.set(Number.POSITIVE_INFINITY);
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, [mouseX]);
+
   return (
     <motion.nav
       onMouseMove={(e) => mouseX.set(e.pageX)}
@@ -293,6 +318,7 @@ export function Dock({
           <DockMagnifyItem
             mouseX={mouseX}
             reducedMotion={reducedMotion}
+            sizeFixed={sizeFixed}
             titleAttr={settingsMinimized.titleAttr}
             onButtonRef={settingsMinimized.onDockButtonRef}
             onClick={(e) => {
@@ -311,6 +337,7 @@ export function Dock({
             key={p.id}
             mouseX={mouseX}
             reducedMotion={reducedMotion}
+            sizeFixed={sizeFixed}
             titleAttr={p.title}
             onButtonRef={(el) => registerProjectDockRef(p.id, el)}
             onClick={p.onActivate}
@@ -333,6 +360,7 @@ export function Dock({
         <DockMagnifyItem
           mouseX={mouseX}
           reducedMotion={reducedMotion}
+          sizeFixed={sizeFixed}
           titleAttr={labels.whatsapp}
           onClick={(e) => {
             e.stopPropagation();
@@ -345,6 +373,7 @@ export function Dock({
         <DockMagnifyItem
           mouseX={mouseX}
           reducedMotion={reducedMotion}
+          sizeFixed={sizeFixed}
           titleAttr={labels.calendar}
           onClick={onCalendarClick}
           className="text-accent-cyan"
@@ -357,15 +386,28 @@ export function Dock({
         <DockSocialButton
           mouseX={mouseX}
           reducedMotion={reducedMotion}
+          sizeFixed={sizeFixed}
           titleAttr={labels.linkedIn}
           href={social.linkedIn}
         >
           <LinkedInMark />
         </DockSocialButton>
-        <DockSocialButton mouseX={mouseX} reducedMotion={reducedMotion} titleAttr={labels.github} href={social.github}>
+        <DockSocialButton
+          mouseX={mouseX}
+          reducedMotion={reducedMotion}
+          sizeFixed={sizeFixed}
+          titleAttr={labels.github}
+          href={social.github}
+        >
           <GitHubMark />
         </DockSocialButton>
-        <DockSocialButton mouseX={mouseX} reducedMotion={reducedMotion} titleAttr={labels.gmail} href={social.gmail}>
+        <DockSocialButton
+          mouseX={mouseX}
+          reducedMotion={reducedMotion}
+          sizeFixed={sizeFixed}
+          titleAttr={labels.gmail}
+          href={social.gmail}
+        >
           <GmailMark />
         </DockSocialButton>
     </motion.nav>
