@@ -167,11 +167,19 @@
     animation: gradient-shimmer 10s ease-in-out infinite;
   }
 
+  /*
+   * Táctil (Safari/Chrome): background-clip:text + transparent a veces pinta un rectángulo sólido.
+   * Texto accent sin clip = mismo look limpio, sin barra azul debajo del nombre.
+   */
   @media (pointer: coarse) {
     .text-gradient-shimmer {
       animation: none;
-      background: linear-gradient(100deg, #06b6d4, #2563eb, #06b6d4);
-      background-size: 100% auto;
+      background: none !important;
+      background-size: unset !important;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: #22d3ee;
+      -webkit-text-fill-color: #22d3ee;
     }
   }
 
@@ -312,8 +320,11 @@
 
   .text-gradient-shimmer {
     animation: none;
-    background: linear-gradient(90deg, #06b6d4, #2563eb);
-    background-size: 100% auto;
+    background: none !important;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #22d3ee;
+    -webkit-text-fill-color: #22d3ee;
   }
 
   .motion-enabled .reveal {
