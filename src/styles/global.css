@@ -25,6 +25,17 @@
       radial-gradient(ellipse 75% 50% at 88% 8%, var(--glow-cyan), transparent 42%),
       radial-gradient(ellipse 55% 40% at 50% 95%, rgba(37, 99, 235, 0.09), transparent 58%);
     animation: mesh-drift 24s ease-in-out infinite alternate;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Fondo animado + scroll en móvil: mucho trabajo de compositor; fondo estático se siente más fluido. */
+  @media (pointer: coarse) {
+    body::before {
+      animation: none;
+      transform: translate3d(-1%, -1%, 0) scale(1);
+      will-change: auto;
+    }
   }
 
   body::after {
@@ -64,7 +75,18 @@
     background-size: 200% auto;
     animation: gradient-shimmer 4s ease-in-out infinite;
     pointer-events: none;
-    transition: width 80ms linear;
+    /* transition en width = desfase vs el dedo al hacer scroll */
+    transition: none;
+    transform: translateZ(0);
+    contain: strict;
+  }
+
+  @media (pointer: coarse) {
+    #scroll-progress {
+      animation: none;
+      background: linear-gradient(90deg, #06b6d4, #2563eb);
+      background-size: 100% auto;
+    }
   }
 
   /* ─── Active Nav Link ─────────────────────────────────── */

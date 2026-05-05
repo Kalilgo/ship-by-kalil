@@ -176,8 +176,18 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
 </html>
 
 <style is:global>
+  /*
+   * scroll-behavior: smooth en el html entero en móvil suele pelearse con el inercia nativo
+   * y se nota “trabado”. Solo en puntero fino (ratón / precisión) mantenemos smooth.
+   */
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (pointer: fine) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
