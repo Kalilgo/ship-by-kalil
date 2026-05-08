@@ -383,7 +383,7 @@ function FlipCardBody({
 
   const frontScroll = (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
-      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [scrollbar-gutter:stable]">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-auto [scrollbar-gutter:stable]">
         <div className="flex flex-col gap-5 px-5 pb-1 pt-5 sm:gap-6 sm:px-6 sm:pb-2 sm:pt-6">
           <ProjectPreview
             embedded
@@ -427,7 +427,7 @@ function FlipCardBody({
         <div className="absolute -right-12 top-8 h-80 w-80 rounded-full bg-accent-cyan/45 blur-3xl" />
         <div className="absolute -left-8 bottom-10 h-64 w-64 rounded-full bg-accent/35 blur-3xl" />
       </div>
-      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain [scrollbar-gutter:stable]">
+      <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-auto [scrollbar-gutter:stable]">
         <div className="flex flex-col gap-4 px-5 pb-6 pt-6 sm:px-6 sm:pb-7 sm:pt-7">
           <div className="h-px w-10 rounded-full bg-gradient-to-r from-accent-cyan/80 to-transparent" aria-hidden="true" />
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-cyan/90">{pw.cardDelivered}</p>
@@ -534,6 +534,16 @@ export default function Projects() {
   const maximizedModalRef = useRef<HTMLDivElement>(null);
   const windowStatesRef = useRef(windowStates);
   const [dockThumbnails, setDockThumbnails] = useState<Record<number, string>>({});
+  const [coarsePointer, setCoarsePointer] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mq = window.matchMedia('(pointer: coarse)');
+    const sync = () => setCoarsePointer(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
 
   useEffect(() => {
     windowStatesRef.current = windowStates;
@@ -576,6 +586,8 @@ export default function Projects() {
   const filteredProjects = isAllProjectsFilter
     ? projects
     : projects.filter((p) => p.tags.includes(activeFilter));
+
+  const layoutGridEnabled = !prefersReducedMotion && minimizeAnim === null;
 
   const maximizedProject = useMemo(() => {
     const id = Number(
@@ -778,8 +790,8 @@ export default function Projects() {
           </div>
 
           <motion.div
-            layout={!prefersReducedMotion && minimizeAnim === null}
-            className={`grid grid-cols-1 gap-7 overflow-visible sm:gap-8 md:grid-cols-2 2xl:grid-cols-3 ${!prefersReducedMotion ? dockMinimizePerspectiveClass : ''}`}
+            layout={layoutGridEnabled}
+            className={`grid grid-cols-1 gap-7 overflow-visible sm:gap-8 md:grid-cols-2 2xl:grid-cols-3 ${!prefersReducedMotion && !coarsePointer ? dockMinimizePerspectiveClass : ''}`}
           >
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => {
@@ -929,7 +941,7 @@ export default function Projects() {
                       ...dockMinimizeMotionStyle,
                       zIndex: minimizeActive ? 80 : undefined,
                     }}
-                    className="group overflow-visible rounded-3xl border border-border/60 bg-surface-2/90 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.5)] transition-[border-color,box-shadow] hover:border-accent-cyan/40 hover:shadow-[0_14px_44px_-22px_rgba(6,182,212,0.12)]"
+                    className="group touch-pan-y overflow-visible rounded-3xl border border-border/60 bg-surface-2/90 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.5)] transition-[border-color,box-shadow] hover:border-accent-cyan/40 hover:shadow-[0_14px_44px_-22px_rgba(6,182,212,0.12)]"
                   >
                     <FlipCardBody
                       project={project}
