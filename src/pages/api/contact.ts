@@ -8,17 +8,17 @@ const RATE_LIMIT_WINDOW = 60 * 1000;
 const RATE_LIMIT_MAX = 3;
 const rateLimitStore = new Map<string, { count: number; timestamp: number }>();
 
-function escapeHtml(s: string): string {
-  return s
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+function evictStaleEntries(now: number): void {
+  for (const [key, val] of rateLimitStore) {
+    if (now - val.timestamp > RATE_LIMIT_WINDOW) {
+      rateLimitStore.delete(key);
+    }
+  }
 }
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
+  evictStaleEntries(now);
   const record = rateLimitStore.get(ip);
 
   if (!record || now - record.timestamp > RATE_LIMIT_WINDOW) {
@@ -82,6 +82,14 @@ export const POST: APIRoute = async ({ request }) => {
         headers: { 'Content-Type': 'application/json' },
       });
     }
+
+    const escapeHtml = (s: string): string =>
+      s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 
     const safeName = escapeHtml(String(name));
     const safeEmail = escapeHtml(String(email));
