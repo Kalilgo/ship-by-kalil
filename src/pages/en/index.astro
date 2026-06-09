@@ -12,7 +12,7 @@ import Footer from '../../components/Footer.astro';
 
 <Layout locale="en">
   <Navbar locale="en" />
-  <main class="relative z-10">
+  <main id="main-content" tabindex="-1" class="relative z-10 outline-none">
     <Hero locale="en" />
     <About locale="en" />
     <Skills client:visible locale="en" />

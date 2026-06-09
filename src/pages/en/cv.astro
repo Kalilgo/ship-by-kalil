@@ -11,6 +11,8 @@ const labels = cvPageLabels.en;
 
 <Layout title="CV - Matías Kalil Gómez" locale="en">
   <Navbar locale="en" />
-  <CvPage cvContent={cvContent} labels={labels} />
+  <div id="main-content" tabindex="-1" class="outline-none">
+    <CvPage cvContent={cvContent} labels={labels} />
+  </div>
   <Footer locale="en" />
 </Layout>

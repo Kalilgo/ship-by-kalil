@@ -24,6 +24,14 @@ const {
 
 const siteOrigin = (import.meta.env.SITE as string | undefined)?.replace(/\/$/, '') ?? '';
 const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-image.svg', canonicalUrl).href;
+
+const currentPath = Astro.url.pathname;
+const hreflangEs = siteOrigin
+  ? `${siteOrigin}${currentPath.replace(/^\/en/, '') || '/'}`
+  : canonicalUrl;
+const hreflangEn = siteOrigin
+  ? `${siteOrigin}${currentPath === '/' ? '/en/' : currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`}`
+  : `${siteOrigin || ''}/en${currentPath}`;
 ---
 
 <!doctype html>
@@ -35,6 +43,9 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     <meta name="description" content={description} />
     <meta name="robots" content={robots} />
     <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang="es" href={hreflangEs} />
+    <link rel="alternate" hreflang="en" href={hreflangEn} />
+    <link rel="alternate" hreflang="x-default" href={hreflangEs} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
@@ -55,6 +66,10 @@ const ogImageUrl = siteOrigin ? `${siteOrigin}/og-image.svg` : new URL('/og-imag
     <meta name="theme-color" content="#0A0A0F" />
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
+    <a href="#main-content" class="fixed -top-40 left-4 z-[9999] rounded-b-lg bg-accent-cyan px-4 py-2 text-sm font-semibold text-background shadow-lg transition-all focus:top-0 focus:outline-none">
+      {locale === 'en' ? 'Skip to content' : 'Ir al contenido'}
+    </a>
+
     <div id="scroll-progress" aria-hidden="true"></div>
 
     <slot />
