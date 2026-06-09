@@ -111,6 +111,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
 
           <form
             onSubmit={handleSubmit(onSubmit)}
+            noValidate
             className="space-y-4 glass-panel border border-border rounded-xl p-5"
           >
             <div>
@@ -121,6 +122,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 {...register('name', { required: t.nameRequired })}
                 type="text"
                 id="name"
+                required
                 aria-invalid={errors.name ? 'true' : 'false'}
                 aria-describedby={errors.name ? 'name-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
@@ -147,6 +149,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 })}
                 type="email"
                 id="email"
+                required
                 aria-invalid={errors.email ? 'true' : 'false'}
                 aria-describedby={errors.email ? 'email-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
@@ -167,6 +170,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
                 {...register('subject', { required: t.subjectRequired })}
                 type="text"
                 id="subject"
+                required
                 aria-invalid={errors.subject ? 'true' : 'false'}
                 aria-describedby={errors.subject ? 'subject-error' : undefined}
                 className="w-full px-4 py-3 bg-surface-2 border border-border rounded-lg text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-2 focus:ring-accent-cyan/25 transition-colors"
@@ -186,6 +190,7 @@ export default function Contact({ locale = 'es' }: ContactProps) {
               <textarea
                 {...register('message', { required: t.messageRequired })}
                 id="message"
+                required
                 aria-invalid={errors.message ? 'true' : 'false'}
                 aria-describedby={errors.message ? 'message-error' : undefined}
                 rows={5}

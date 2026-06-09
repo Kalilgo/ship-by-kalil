@@ -6,6 +6,10 @@ interface CounterProps {
   suffix?: string;
 }
 
+function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
+}
+
 export default function Counter({ end, label, suffix = '' }: CounterProps) {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -21,22 +25,24 @@ export default function Counter({ end, label, suffix = '' }: CounterProps) {
           setCount(0);
 
           const duration = 1500;
-          const steps = 60;
-          const stepTime = duration / steps;
-          const increment = end / steps;
-          let current = 0;
+          let start: number | null = null;
+          let rafId: number;
 
-          const timer = setInterval(() => {
-            current += increment;
-            if (current >= end) {
-              setCount(end);
-              clearInterval(timer);
-            } else {
-              setCount(Math.floor(current));
+          const animate = (timestamp: number) => {
+            if (start === null) start = timestamp;
+            const elapsed = timestamp - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = easeOutCubic(progress);
+
+            setCount(Math.round(eased * end));
+
+            if (progress < 1) {
+              rafId = requestAnimationFrame(animate);
             }
-          }, stepTime);
+          };
 
-          return () => clearInterval(timer);
+          rafId = requestAnimationFrame(animate);
+          return () => cancelAnimationFrame(rafId);
         }
       },
       { threshold: 0.5 }
