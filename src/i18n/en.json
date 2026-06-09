@@ -46,17 +46,17 @@
       "description": "Web application development for the financial and real estate sectors. Teamwork with agile methodologies."
     },
     {
+      "period": "2019 — Present",
+      "role": "Systems Degree (in progress)",
+      "company": "Universidad Nacional de General Sarmiento",
+      "description": "University degree focused on software development and information systems."
+    },
+    {
       "period": "March 2021 — August 2021",
       "role": ".NET Programming Diploma",
       "company": "Universidad Tecnológica Nacional",
       "description": "Training in .NET Core development, C#, MVC, and SQL Server.",
       "current": false
-    },
-    {
-      "period": "2019 — Present",
-      "role": "Systems Degree (in progress)",
-      "company": "Universidad Nacional de General Sarmiento",
-      "description": "University degree focused on software development and information systems."
     }
   ],
   "projectsData": [

@@ -18,20 +18,20 @@ export const experience: Experience[] = [
     current: true,
   },
   {
-    period: 'Marzo 2021 — Agosto 2021',
-    role: 'Diplomatura en Programación .NET',
-    company: 'Universidad Tecnológica Nacional',
-    description: 'Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.',
-    tech: ['C#', '.NET Core', 'SQL Server'],
-    current: false,
-  },
-  {
     period: '2019 — Presente',
     role: 'Lic. en Sistemas (en curso)',
     company: 'Universidad Nacional de General Sarmiento',
     description:
       'Carrera universitaria orientada al desarrollo de software y sistemas de información.',
     tech: [],
+    current: false,
+  },
+  {
+    period: 'Marzo 2021 — Agosto 2021',
+    role: 'Diplomatura en Programación .NET',
+    company: 'Universidad Tecnológica Nacional',
+    description: 'Formación en desarrollo con tecnología .NET Core, C#, MVC y SQL Server.',
+    tech: ['C#', '.NET Core', 'SQL Server'],
     current: false,
   },
 ];
