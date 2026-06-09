@@ -40,7 +40,11 @@ export function dockMinimizeKeyframeXY(
 }
 
 /** Keyframes para modal que usa `scale` uniforme (compat. con layout actual). */
-export function dockMinimizeKeyframeUniform(dx: number, dy: number, borderStart: DockMinimizeBorderStart) {
+export function dockMinimizeKeyframeUniform(
+  dx: number,
+  dy: number,
+  borderStart: DockMinimizeBorderStart
+) {
   return {
     x: [0, dx * 0.22, dx * 0.55, dx],
     y: [0, dy * 0.12, dy * 0.45, dy],

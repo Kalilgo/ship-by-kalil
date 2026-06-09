@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type RefCallback,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type RefCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 
@@ -132,20 +125,17 @@ function ProjectPreview({
 }) {
   const host = url ? url.replace(/^https?:\/\//, '').replace(/\/$/, '') : 'preview';
   const Wrapper = url ? 'a' : 'div';
-  const previewPadding =
-    variant === 'modal' ? 'p-6 md:p-8' : embedded ? 'p-1.5 sm:p-2' : 'p-5';
+  const previewPadding = variant === 'modal' ? 'p-6 md:p-8' : embedded ? 'p-1.5 sm:p-2' : 'p-5';
   const imgRounded = variant === 'modal' ? 'rounded-2xl' : embedded ? 'rounded-lg' : 'rounded-xl';
 
   const shellClass = embedded
-    ? 'relative overflow-hidden rounded-xl border border-border/50 bg-background/25'
+    ? 'relative overflow-hidden rounded-xl border border-border/50 bg-background/40'
     : 'relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-surface-2 to-background';
 
   return (
     <div className={shellClass}>
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        {embedded ? (
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[length:40px_40px] opacity-50" />
-        ) : (
+        {!embedded && (
           <>
             <div className="absolute -top-28 -right-28 h-80 w-80 rounded-full bg-accent-cyan/14 blur-3xl" />
             <div className="absolute -bottom-28 -left-28 h-80 w-80 rounded-full bg-accent/12 blur-3xl" />
@@ -214,8 +204,12 @@ function ProjectPreview({
               <img
                 src={previewImage}
                 alt=""
-                className={`block h-auto w-full transition-transform duration-500 ease-out group-hover/preview:scale-[1.03] ${
-                  variant === 'modal' ? 'max-h-[min(52vh,520px)] object-cover object-top sm:max-h-[56vh]' : ''
+                className={`block h-auto w-full ${
+                  !embedded ? 'transition-transform duration-500 ease-out group-hover/preview:scale-[1.03]' : ''
+                } ${
+                  variant === 'modal'
+                    ? 'max-h-[min(52vh,520px)] object-cover object-top sm:max-h-[56vh]'
+                    : ''
                 } ${previewImageClassName ?? ''}`}
                 loading="lazy"
                 decoding="async"
@@ -311,10 +305,10 @@ function FlipCardBody({
   const metaRow = (
     <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2.5">
       <div className="flex flex-wrap items-center gap-2">
-        <span className="rounded-full border border-accent-cyan/30 bg-accent-cyan/[0.08] px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wide text-accent-cyan">
+        <span className="rounded-full border border-accent-cyan/30 bg-accent-cyan/[0.08] px-3 py-1 font-mono text-xs font-medium uppercase tracking-wide text-accent-cyan">
           {project.year}
         </span>
-        <span className="rounded-full border border-border/60 bg-background/30 px-3 py-1 font-mono text-[11px] text-text-secondary">
+        <span className="rounded-full border border-border/60 bg-background/30 px-3 py-1 font-mono text-xs text-text-secondary">
           {project.type}
         </span>
       </div>
@@ -333,7 +327,10 @@ function FlipCardBody({
   );
 
   const stackIcons = (
-    <ul className="flex flex-wrap items-center gap-2.5 sm:gap-3" aria-label={`Stack: ${project.tags.join(', ')}`}>
+    <ul
+      className="flex flex-wrap items-center gap-2.5 sm:gap-3"
+      aria-label={`Stack: ${project.tags.join(', ')}`}
+    >
       {project.tags.map((tag) => (
         <li key={tag}>
           <TechTagIcon tag={tag} />
@@ -357,7 +354,7 @@ function FlipCardBody({
 
   /** Barra tipo ventana (dentro de cada cara del flip para que gire la carta entera). */
   const windowChrome = (
-    <div className="flex shrink-0 items-center gap-3 border-b border-border/40 bg-surface-2/95 px-4 py-3 backdrop-blur-sm sm:gap-3.5 sm:px-5 sm:py-3.5">
+    <div className="flex shrink-0 items-center gap-3 border-b border-border/40 bg-surface-2 px-4 py-3 sm:gap-3.5 sm:px-5 sm:py-3.5">
       <div className="flex shrink-0 items-center">
         <WindowTrafficLights
           labels={{
@@ -408,7 +405,7 @@ function FlipCardBody({
           />
           <div className="flex flex-col gap-4">
             {metaRow}
-            <p className="text-[15px] leading-relaxed text-text-secondary/95 sm:leading-[1.68]">
+            <p className="text-[15px] leading-relaxed text-text-secondary sm:leading-[1.68]">
               {project.description}
             </p>
             <div className="border-t border-border/30 pt-4">{stackIcons}</div>
@@ -420,18 +417,18 @@ function FlipCardBody({
 
   const backScroll = (
     <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden rounded-3xl opacity-[0.09]"
-        aria-hidden="true"
-      >
-        <div className="absolute -right-12 top-8 h-80 w-80 rounded-full bg-accent-cyan/45 blur-3xl" />
-        <div className="absolute -left-8 bottom-10 h-64 w-64 rounded-full bg-accent/35 blur-3xl" />
-      </div>
       <div className="relative z-[1] flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-auto [scrollbar-gutter:stable]">
         <div className="flex flex-col gap-4 px-5 pb-6 pt-6 sm:px-6 sm:pb-7 sm:pt-7">
-          <div className="h-px w-10 rounded-full bg-gradient-to-r from-accent-cyan/80 to-transparent" aria-hidden="true" />
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-cyan/90">{pw.cardDelivered}</p>
-          <p className="max-w-prose text-[15px] leading-[1.72] text-text-secondary/95">{project.whatWasDone}</p>
+          <div
+            className="h-px w-10 rounded-full bg-gradient-to-r from-accent-cyan/80 to-transparent"
+            aria-hidden="true"
+          />
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent-cyan">
+            {pw.cardDelivered}
+          </p>
+          <p className="max-w-prose text-[15px] leading-[1.72] text-text-secondary">
+            {project.whatWasDone}
+          </p>
         </div>
       </div>
     </div>
@@ -441,75 +438,47 @@ function FlipCardBody({
   const flipCardHeightClass =
     'h-[min(36rem,88svh)] min-h-[30rem] sm:h-[min(38rem,82svh)] sm:min-h-[34rem] lg:h-[min(40rem,78svh)] lg:min-h-[36rem]';
 
-  /**
-   * Grid superpuesto: las caras son `h-full` del contenedor de altura fija (sin huecos ni gris).
-   * `rounded-3xl`: la ventana completa gira (chrome + contenido + pie).
-   */
-  const faceBase =
-    'col-start-1 row-start-1 flex h-full min-h-0 w-full min-w-0 flex-col overflow-hidden rounded-3xl bg-gradient-to-b from-surface-2 to-background/[0.97] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] [transform-style:preserve-3d]';
+  const cardShellClass = `flex flex-col overflow-hidden rounded-3xl border border-border/55 bg-surface-2 antialiased shadow-[0_8px_32px_-20px_rgba(0,0,0,0.45)] ${flipCardHeightClass}`;
 
-  if (prefersReducedMotion) {
-    return (
-      <div
-        className={`flex flex-col overflow-hidden rounded-3xl border border-border/55 bg-gradient-to-b from-surface-2 to-background/95 shadow-[0_8px_32px_-20px_rgba(0,0,0,0.45)] ${flipCardHeightClass}`}
-      >
-        {windowChrome}
-        {!showBack ? (
-          <>
-            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{frontScroll}</div>
-            {cardActionFooter('more', () => setShowBack(true), false)}
-          </>
-        ) : (
-          <>
-            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{backScroll}</div>
-            {cardActionFooter('less', () => setShowBack(false), true)}
-          </>
-        )}
-      </div>
-    );
-  }
+  const panelTransition = prefersReducedMotion
+    ? { duration: 0 }
+    : { duration: 0.24, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
-    <div className={`relative [transform-style:preserve-3d] ${flipCardHeightClass}`}>
-      <div className="absolute inset-0 overflow-hidden rounded-3xl [perspective:1200px] [perspective-origin:50%_50%]">
-        <div
-          className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-b from-surface-2 to-surface-2"
-          aria-hidden="true"
-        />
-        <motion.div
-          className="relative z-[1] h-full w-full rounded-3xl will-change-transform"
-          style={{ transformStyle: 'preserve-3d', transformOrigin: '50% 50%' }}
-          initial={false}
-          animate={{ rotateY: showBack ? 180 : 0 }}
-          transition={{
-            type: 'tween',
-            duration: 0.62,
-            ease: [0.32, 0.72, 0, 1],
-          }}
-        >
-          <div className="relative grid h-full w-full auto-rows-auto grid-cols-1 [transform-style:preserve-3d]">
-            <div
-              className={`${faceBase} [backface-visibility:hidden] [-webkit-backface-visibility:hidden] ${showBack ? 'pointer-events-none' : ''}`}
-              style={{ transform: 'translateZ(2px)' }}
+    <div className={cardShellClass}>
+      {windowChrome}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+        <AnimatePresence mode="wait" initial={false}>
+          {!showBack ? (
+            <motion.div
+              key="front"
+              className="flex min-h-0 flex-1 flex-col overflow-hidden"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={panelTransition}
             >
-              {windowChrome}
               {frontScroll}
-              {cardActionFooter('more', () => setShowBack(true), false)}
-            </div>
-
-            <div
-              className={`${faceBase} [backface-visibility:hidden] [-webkit-backface-visibility:hidden] ${
-                showBack ? '' : 'pointer-events-none'
-              }`}
-              style={{ transform: 'rotateY(180deg) translateZ(2px)' }}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="back"
+              className="flex min-h-0 flex-1 flex-col overflow-hidden"
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={panelTransition}
             >
-              {windowChrome}
               {backScroll}
-              {cardActionFooter('less', () => setShowBack(false), true)}
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+      {cardActionFooter(
+        showBack ? 'less' : 'more',
+        () => setShowBack((prev) => !prev),
+        showBack
+      )}
     </div>
   );
 }
@@ -520,9 +489,8 @@ export default function Projects() {
   const pw = locale === 'en' ? enI18n.projectsWindow : esI18n.projectsWindow;
   const prefersReducedMotion = useReducedMotion();
   const [activeFilter, setActiveFilter] = useState<string>(translations.es.all);
-  const [windowStates, setWindowStates] = useState<Record<number, WindowState>>(
-    buildInitialWindowStates
-  );
+  const [windowStates, setWindowStates] =
+    useState<Record<number, WindowState>>(buildInitialWindowStates);
   const [minimizeAnim, setMinimizeAnim] = useState<{
     id: number;
     dx: number;
@@ -590,9 +558,7 @@ export default function Projects() {
   const layoutGridEnabled = !prefersReducedMotion && minimizeAnim === null;
 
   const maximizedProject = useMemo(() => {
-    const id = Number(
-      Object.entries(windowStates).find(([, s]) => s === 'maximized')?.[0] ?? NaN
-    );
+    const id = Number(Object.entries(windowStates).find(([, s]) => s === 'maximized')?.[0] ?? NaN);
     if (!Number.isFinite(id)) return null;
     return projects.find((p) => p.id === id) ?? null;
   }, [windowStates, projects]);
@@ -791,7 +757,7 @@ export default function Projects() {
 
           <motion.div
             layout={layoutGridEnabled}
-            className={`grid grid-cols-1 gap-7 overflow-visible sm:gap-8 md:grid-cols-2 2xl:grid-cols-3 ${!prefersReducedMotion && !coarsePointer ? dockMinimizePerspectiveClass : ''}`}
+            className="grid grid-cols-1 gap-7 overflow-visible sm:gap-8 md:grid-cols-2 2xl:grid-cols-3"
           >
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => {
@@ -804,7 +770,10 @@ export default function Projects() {
                       key={project.id}
                       id={`project-window-${project.id}`}
                       layout={!prefersReducedMotion}
-                      initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 12 }}
+                      initial={{
+                        opacity: prefersReducedMotion ? 1 : 0,
+                        y: prefersReducedMotion ? 0 : 12,
+                      }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: prefersReducedMotion ? 0 : 0.22 }}
@@ -816,7 +785,9 @@ export default function Projects() {
                       <h3 className="mb-1 font-heading text-lg font-bold text-text-primary">
                         {project.title}
                       </h3>
-                      <p className="mb-4 max-w-xs text-sm text-text-secondary">{pw.slotClosedHint}</p>
+                      <p className="mb-4 max-w-xs text-sm text-text-secondary">
+                        {pw.slotClosedHint}
+                      </p>
                       <button
                         type="button"
                         onClick={() => setWindow(project.id, 'open')}
@@ -834,7 +805,10 @@ export default function Projects() {
                       key={project.id}
                       id={`project-window-${project.id}`}
                       layout={!prefersReducedMotion}
-                      initial={{ opacity: prefersReducedMotion ? 1 : 0, y: prefersReducedMotion ? 0 : 12 }}
+                      initial={{
+                        opacity: prefersReducedMotion ? 1 : 0,
+                        y: prefersReducedMotion ? 0 : 12,
+                      }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: prefersReducedMotion ? 0 : 0.22 }}
@@ -874,7 +848,9 @@ export default function Projects() {
                       <h3 className="mb-1 font-heading text-lg font-bold text-text-primary">
                         {project.title}
                       </h3>
-                      <p className="mb-4 max-w-xs text-sm text-text-secondary">{pw.slotMaximizedHint}</p>
+                      <p className="mb-4 max-w-xs text-sm text-text-secondary">
+                        {pw.slotMaximizedHint}
+                      </p>
                       <button
                         type="button"
                         onClick={() => setWindow(project.id, 'open')}
@@ -894,8 +870,7 @@ export default function Projects() {
                     layout={!prefersReducedMotion && minimizeAnim === null}
                     initial={{
                       opacity: prefersReducedMotion ? 1 : 0,
-                      y: prefersReducedMotion ? 0 : 18,
-                      scale: prefersReducedMotion ? 1 : 0.98,
+                      y: prefersReducedMotion ? 0 : 12,
                     }}
                     animate={
                       minimizeActive
@@ -923,14 +898,12 @@ export default function Projects() {
                     exit={{
                       opacity: 0,
                       y: 10,
-                      scale: prefersReducedMotion ? 1 : 0.98,
                     }}
                     transition={{
                       ...(prefersReducedMotion && minimizeActive
                         ? { duration: 0.12, ease: 'easeOut' as const }
                         : dockMinimizeTransition(minimizeActive)),
-                      delay:
-                        prefersReducedMotion || minimizeActive ? 0 : index * 0.04,
+                      delay: prefersReducedMotion || minimizeActive ? 0 : index * 0.04,
                     }}
                     onAnimationComplete={() => {
                       if (minimizeActive) {
@@ -938,10 +911,14 @@ export default function Projects() {
                       }
                     }}
                     style={{
-                      ...dockMinimizeMotionStyle,
+                      ...(minimizeActive ? dockMinimizeMotionStyle : undefined),
                       zIndex: minimizeActive ? 80 : undefined,
                     }}
-                    className="group touch-pan-y overflow-visible rounded-3xl border border-border/60 bg-surface-2/90 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.5)] transition-[border-color,box-shadow] hover:border-accent-cyan/40 hover:shadow-[0_14px_44px_-22px_rgba(6,182,212,0.12)]"
+                    className={`group touch-pan-y overflow-visible rounded-3xl border border-border/60 bg-surface-2 shadow-[0_10px_40px_-24px_rgba(0,0,0,0.5)] transition-[border-color,box-shadow] hover:border-accent-cyan/40 hover:shadow-[0_14px_44px_-22px_rgba(6,182,212,0.12)] ${
+                      minimizeActive && !prefersReducedMotion && !coarsePointer
+                        ? dockMinimizePerspectiveClass
+                        : ''
+                    }`}
                   >
                     <FlipCardBody
                       project={project}
@@ -1005,13 +982,21 @@ export default function Projects() {
                     }
                     exit={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.98 }}
                     transition={
-                      prefersReducedMotion && minimizeAnim && minimizeAnim.id === maximizedProject.id
+                      prefersReducedMotion &&
+                      minimizeAnim &&
+                      minimizeAnim.id === maximizedProject.id
                         ? { duration: 0.12, ease: 'easeOut' as const }
-                        : dockMinimizeTransition(!!(minimizeAnim && minimizeAnim.id === maximizedProject.id))
+                        : dockMinimizeTransition(
+                            !!(minimizeAnim && minimizeAnim.id === maximizedProject.id)
+                          )
                     }
                     style={dockMinimizeMotionStyle}
                     onAnimationComplete={() => {
-                      if (minimizeAnim && maximizedProject && minimizeAnim.id === maximizedProject.id) {
+                      if (
+                        minimizeAnim &&
+                        maximizedProject &&
+                        minimizeAnim.id === maximizedProject.id
+                      ) {
                         handleMinimizeAnimationComplete(maximizedProject.id);
                       }
                     }}

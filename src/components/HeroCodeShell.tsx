@@ -132,14 +132,17 @@ export default function HeroCodeShell({ locale }: HeroCodeShellProps) {
         <code>
           <span className="text-text-secondary">{'const'}</span> {t.codeVariable} = {'{'}
           {'\n'}
-          {t.codeKeyName}: <span className="text-accent">&quot;Matías Kalil Gómez&quot;</span>,{'\n'}
-          {t.codeKeyRole}: <span className="text-accent">&quot;{about.role}&quot;</span>,{'\n'}
-          {t.codeKeyStack}: [
-          <span className="text-accent">&quot;React&quot;</span>, <span className="text-accent">&quot;Angular&quot;</span>,{' '}
-          <span className="text-accent">&quot;Astro&quot;</span>,{'\n'}
-          <span className="text-accent">&quot;.NET&quot;</span>, <span className="text-accent">&quot;AWS&quot;</span>],
+          {t.codeKeyName}: <span className="text-accent">&quot;Matías Kalil Gómez&quot;</span>,
           {'\n'}
-          {t.codeKeyMission}: <span className="text-accent">&quot;{t.codeMission}&quot;</span>,{'\n'}
+          {t.codeKeyRole}: <span className="text-accent">&quot;{about.role}&quot;</span>,{'\n'}
+          {t.codeKeyStack}: [<span className="text-accent">&quot;React&quot;</span>,{' '}
+          <span className="text-accent">&quot;Angular&quot;</span>,{' '}
+          <span className="text-accent">&quot;Astro&quot;</span>,{'\n'}
+          <span className="text-accent">&quot;.NET&quot;</span>,{' '}
+          <span className="text-accent">&quot;AWS&quot;</span>],
+          {'\n'}
+          {t.codeKeyMission}: <span className="text-accent">&quot;{t.codeMission}&quot;</span>,
+          {'\n'}
           {t.codeKeyStatus}: <span className="text-accent">&quot;{t.codeStatus}&quot;</span>
           {'\n'}
           {'}'};
@@ -148,7 +151,10 @@ export default function HeroCodeShell({ locale }: HeroCodeShellProps) {
       <div className="mt-3 flex items-center gap-2 border-t border-border/30 pt-3">
         <span className="select-none font-mono text-xs text-accent-cyan/60">~</span>
         <span className="font-mono text-xs text-text-secondary/50">{t.codeTerminalReady}</span>
-        <span className="animate-blink select-none font-mono text-sm text-accent-cyan" aria-hidden="true">
+        <span
+          className="animate-blink select-none font-mono text-sm text-accent-cyan"
+          aria-hidden="true"
+        >
           ▋
         </span>
       </div>
@@ -251,7 +257,9 @@ export default function HeroCodeShell({ locale }: HeroCodeShellProps) {
                   onMaximize={() => setMode('maximized')}
                 />
               </div>
-              <span className="font-mono text-[10px] text-text-muted sm:hidden">{pw.dockHeroTitle}</span>
+              <span className="font-mono text-[10px] text-text-muted sm:hidden">
+                {pw.dockHeroTitle}
+              </span>
             </div>
             {codeBlock}
           </motion.div>

@@ -22,7 +22,10 @@ export const experience: ExperienceItem[] = [
   {
     period: { es: '2019 — Presente', en: '2019 — Present' },
     role: { es: 'Lic. en Sistemas (en curso)', en: 'Systems Degree (in progress)' },
-    company: { es: 'Universidad Nacional de General Sarmiento', en: 'Universidad Nacional de General Sarmiento' },
+    company: {
+      es: 'Universidad Nacional de General Sarmiento',
+      en: 'Universidad Nacional de General Sarmiento',
+    },
     description: {
       es: 'Carrera universitaria orientada al desarrollo de software y sistemas de información.',
       en: 'University degree focused on software development and information systems.',

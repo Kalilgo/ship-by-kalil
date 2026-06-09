@@ -139,7 +139,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
         period: '2024 – Present',
         role: 'Full Stack Web Developer (Freelance)',
         company: 'Independent development team',
-        description: 'Web application development for companies in the financial and real estate sectors.',
+        description:
+          'Web application development for companies in the financial and real estate sectors.',
         highlights: [
           'Modern UI implementation with React and Astro',
           'API and backend service development with .NET Core',

@@ -96,8 +96,24 @@ export function TechTagIcon({ tag }: { tag: string }) {
         <title>{tag}</title>
         <circle cx="12" cy="12" r="3" fill="currentColor" />
         <ellipse cx="12" cy="7" rx="2.5" ry="4" fill="currentColor" opacity="0.85" />
-        <ellipse cx="17" cy="14" rx="2.5" ry="4" fill="currentColor" opacity="0.85" transform="rotate(72 12 12)" />
-        <ellipse cx="7" cy="14" rx="2.5" ry="4" fill="currentColor" opacity="0.85" transform="rotate(-72 12 12)" />
+        <ellipse
+          cx="17"
+          cy="14"
+          rx="2.5"
+          ry="4"
+          fill="currentColor"
+          opacity="0.85"
+          transform="rotate(72 12 12)"
+        />
+        <ellipse
+          cx="7"
+          cy="14"
+          rx="2.5"
+          ry="4"
+          fill="currentColor"
+          opacity="0.85"
+          transform="rotate(-72 12 12)"
+        />
       </svg>
     );
   }
@@ -124,10 +140,7 @@ export function TechTagIcon({ tag }: { tag: string }) {
             <stop offset="1" stopColor="#ffb84d" />
           </linearGradient>
         </defs>
-        <path
-          fill={`url(#ta2-${gid})`}
-          d="M6 18 12 6l3 6 3-6 6 12H6zm6-12v4l2 4h-4l2-8z"
-        />
+        <path fill={`url(#ta2-${gid})`} d="M6 18 12 6l3 6 3-6 6 12H6zm6-12v4l2 4h-4l2-8z" />
       </svg>
     );
   }
@@ -160,7 +173,15 @@ export function TechTagIcon({ tag }: { tag: string }) {
     return (
       <svg viewBox="0 0 24 24" className={`${iconClass} text-[#336791]`} aria-hidden>
         <title>{tag}</title>
-        <ellipse cx="12" cy="14" rx="7" ry="6" fill="none" stroke="currentColor" strokeWidth="1.4" />
+        <ellipse
+          cx="12"
+          cy="14"
+          rx="7"
+          ry="6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+        />
         <path
           fill="currentColor"
           d="M9 9c0-1 .8-2 2.5-2h3v3h-2c-.7 0-1 .4-1 1v2H9V9zm5 7v3h-3v-3h3z"
@@ -173,7 +194,15 @@ export function TechTagIcon({ tag }: { tag: string }) {
     return (
       <svg viewBox="0 0 24 24" className={`${iconClass} text-[#FF9900]`} aria-hidden>
         <title>{tag}</title>
-        <text x="12" y="17" textAnchor="middle" fontSize="14" fontWeight="bold" fill="currentColor" fontFamily="serif">
+        <text
+          x="12"
+          y="17"
+          textAnchor="middle"
+          fontSize="14"
+          fontWeight="bold"
+          fill="currentColor"
+          fontFamily="serif"
+        >
           λ
         </text>
       </svg>
@@ -196,9 +225,35 @@ export function TechTagIcon({ tag }: { tag: string }) {
     return (
       <svg viewBox="0 0 24 24" className={`${iconClass} text-[#61DAFB]`} aria-hidden>
         <circle cx="12" cy="12" r="2.2" fill="currentColor" />
-        <ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.2" />
-        <ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.2" transform="rotate(60 12 12)" />
-        <ellipse cx="12" cy="12" rx="11" ry="4.2" fill="none" stroke="currentColor" strokeWidth="1.2" transform="rotate(120 12 12)" />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="11"
+          ry="4.2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+        />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="11"
+          ry="4.2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          transform="rotate(60 12 12)"
+        />
+        <ellipse
+          cx="12"
+          cy="12"
+          rx="11"
+          ry="4.2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          transform="rotate(120 12 12)"
+        />
       </svg>
     );
   }
@@ -207,7 +262,14 @@ export function TechTagIcon({ tag }: { tag: string }) {
     return (
       <svg viewBox="0 0 24 24" className={iconClass} aria-hidden>
         <defs>
-          <linearGradient id={`ta-${gid}`} x1="6" y1="4" x2="18" y2="22" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id={`ta-${gid}`}
+            x1="6"
+            y1="4"
+            x2="18"
+            y2="22"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="#ff5d01" />
             <stop offset="1" stopColor="#ffc107" />
           </linearGradient>
@@ -275,7 +337,10 @@ export function TechTagIcon({ tag }: { tag: string }) {
   if (k.includes('.net') || k.includes('dotnet')) {
     return (
       <svg viewBox="0 0 24 24" className={iconClass} aria-hidden>
-        <path fill="#512BD4" d="M4 4h16v16H4V4zm3.5 11.5h2L12 9l2.5 6.5h2L21 6h-2.5l-2 6-2-6h-2l-2 6-2-6H6l3.5 9.5z" />
+        <path
+          fill="#512BD4"
+          d="M4 4h16v16H4V4zm3.5 11.5h2L12 9l2.5 6.5h2L21 6h-2.5l-2 6-2-6h-2l-2 6-2-6H6l3.5 9.5z"
+        />
       </svg>
     );
   }
@@ -284,8 +349,18 @@ export function TechTagIcon({ tag }: { tag: string }) {
     return (
       <svg viewBox="0 0 24 24" className={`${iconClass} text-[#cc2927]`} aria-hidden>
         <ellipse cx="12" cy="6" rx="8" ry="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <path
+          d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
       </svg>
     );
   }
