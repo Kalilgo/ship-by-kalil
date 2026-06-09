@@ -3,6 +3,8 @@ import { AnimatePresence, useReducedMotion } from 'framer-motion';
 import { motion } from 'framer-motion';
 import { skills } from '../data/skills';
 import { staggerDelay } from '../lib/motion';
+import esI18n from '../i18n/es.json';
+import enI18n from '../i18n/en.json';
 
 interface SkillBarProps {
   name: string;
@@ -11,17 +13,6 @@ interface SkillBarProps {
   isTabVisible: boolean;
   reducedMotion: boolean | null;
 }
-
-const translations = {
-  es: {
-    title: 'Skills & ',
-    titleHighlight: 'Tecnologías',
-  },
-  en: {
-    title: 'Skills & ',
-    titleHighlight: 'Technologies',
-  },
-};
 
 function SkillBar({ name, level, index, isTabVisible, reducedMotion }: SkillBarProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -70,14 +61,14 @@ export default function Skills({ locale = 'es' }: SkillsProps) {
   const [activeTab, setActiveTab] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  const t = translations[locale];
+  const t = locale === 'en' ? enI18n : esI18n;
 
   return (
     <section id="skills" className="py-20">
       <div className="max-w-6xl mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-bold font-heading text-text-primary mb-12">
-          {t.title}
-          <span className="text-accent-cyan">{t.titleHighlight}</span>
+          {t.skillsSection.title}
+          <span className="text-accent-cyan">{t.skillsSection.titleHighlight}</span>
         </h2>
 
         <div className="flex flex-wrap gap-2 mb-8">

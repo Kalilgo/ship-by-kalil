@@ -5,6 +5,9 @@ import { useForm } from 'react-hook-form';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Check, Loader2, Mail, Linkedin, Github, Calendar } from 'lucide-react';
 
+import esI18n from '../i18n/es.json';
+import enI18n from '../i18n/en.json';
+
 interface FormData {
   name: string;
   email: string;
@@ -12,70 +15,13 @@ interface FormData {
   message: string;
 }
 
-const translations = {
-  es: {
-    title: 'Contact',
-    titleHighlight: 'o',
-    subtitle:
-      '¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo lo antes posible.',
-    quickResponse: 'Respuesta rápida',
-    quickResponseDesc: 'Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.',
-    name: 'Nombre',
-    namePlaceholder: 'Tu nombre',
-    email: 'Email',
-    emailPlaceholder: 'tu@email.com',
-    subject: 'Asunto',
-    subjectPlaceholder: '¿De qué se trata?',
-    message: 'Mensaje',
-    messagePlaceholder: 'Tu mensaje...',
-    nameRequired: 'Nombre es requerido',
-    emailRequired: 'Email es requerido',
-    emailInvalid: 'Email inválido',
-    subjectRequired: 'Asunto es requerido',
-    messageRequired: 'Mensaje es requerido',
-    send: 'Enviar mensaje',
-    sending: 'Enviando...',
-    sent: 'Enviado!',
-    successMessage: '¡Mensaje enviado! Te responderé pronto.',
-    errorMessage: 'Error al enviar. Escribime directamente a gomezukalil@gmail.com',
-  },
-  en: {
-    title: 'Contact',
-    titleHighlight: '',
-    subtitle:
-      "Have a project in mind? Want to work together? Write to me and I'll respond as soon as possible.",
-    quickResponse: 'Quick response',
-    quickResponseDesc: 'I usually respond within 24 hours with a proposal for next steps.',
-    name: 'Name',
-    namePlaceholder: 'Your name',
-    email: 'Email',
-    emailPlaceholder: 'your@email.com',
-    subject: 'Subject',
-    subjectPlaceholder: "What's it about?",
-    message: 'Message',
-    messagePlaceholder: 'Your message...',
-    nameRequired: 'Name is required',
-    emailRequired: 'Email is required',
-    emailInvalid: 'Invalid email',
-    subjectRequired: 'Subject is required',
-    messageRequired: 'Message is required',
-    send: 'Send message',
-    sending: 'Sending...',
-    sent: 'Sent!',
-    successMessage: 'Message sent! I will respond soon.',
-    errorMessage: 'Error sending. Email me directly at gomezukalil@gmail.com',
-  },
-};
-
 interface ContactProps {
   locale?: 'es' | 'en';
-  contactEmail?: string;
 }
 
-export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
-  const t = translations[locale];
-  const displayEmail =
-    contactEmail || (locale === 'es' ? 'gomezukalil@gmail.com' : 'gomezukalil@gmail.com');
+export default function Contact({ locale = 'es' }: ContactProps) {
+  const t = (locale === 'en' ? enI18n : esI18n).contact;
+  const displayEmail = 'gomezukalil@gmail.com';
   const prefersReducedMotion = useReducedMotion();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -107,7 +53,7 @@ export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
     } catch (error) {
       console.error('Contact form error:', error);
       setStatus('error');
-      setErrorMessage(t.errorMessage);
+      setErrorMessage(t.error);
     }
   };
 
@@ -281,7 +227,7 @@ export default function Contact({ locale = 'es', contactEmail }: ContactProps) {
                 transition={{ duration: prefersReducedMotion ? 0 : 0.25 }}
                 className="p-3 bg-green-500/20 border border-green-500 rounded-lg text-green-500 text-sm"
               >
-                {t.successMessage}
+                {t.success}
               </motion.div>
             )}
           </form>

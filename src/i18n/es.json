@@ -31,6 +31,10 @@
     "codeStatus": "abierto a oportunidades",
     "codeTerminalReady": "listo"
   },
+  "skillsSection": {
+    "title": "Skills & ",
+    "titleHighlight": "Tecnologías"
+  },
   "about": {
     "title": "Sobre <span>mí</span>",
     "name": "Matías Kalil Gómez",
@@ -57,15 +61,29 @@
     "training": "Formación"
   },
   "contact": {
-    "title": "Contacto",
-    "subtitle": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "title": "Contact",
+    "titleHighlight": "o",
+    "subtitle": "¿Tenés un proyecto en mente? ¿Querés trabajar juntos? Escribime y te respondo lo antes posible.",
+    "quickResponse": "Respuesta rápida",
+    "quickResponseDesc": "Normalmente respondo en menos de 24 horas con propuesta de próximos pasos.",
     "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
     "email": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "subject": "Asunto",
+    "subjectPlaceholder": "¿De qué se trata?",
     "message": "Mensaje",
+    "messagePlaceholder": "Tu mensaje...",
     "send": "Enviar mensaje",
     "sending": "Enviando...",
-    "success": "¡Mensaje enviado! Te contactaré pronto.",
-    "error": "Error al enviar el mensaje. Intenta de nuevo."
+    "sent": "Enviado!",
+    "success": "¡Mensaje enviado! Te responderé pronto.",
+    "error": "Error al enviar. Escribime directamente a gomezukalil@gmail.com",
+    "nameRequired": "Nombre es requerido",
+    "emailRequired": "Email es requerido",
+    "emailInvalid": "Email inválido",
+    "subjectRequired": "Asunto es requerido",
+    "messageRequired": "Mensaje es requerido"
   },
   "footer": {
     "rights": "Todos los derechos reservados.",
