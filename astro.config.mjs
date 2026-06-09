@@ -25,10 +25,6 @@ export default defineConfig({
     },
   },
   compressHTML: true,
-  /** PDF estático desactualizado; el CV vivo está en /cv. */
-  redirects: {
-    '/CV.pdf': '/cv',
-  },
   output: 'static',
   adapter: vercel({
     webAnalytics: { enabled: false },

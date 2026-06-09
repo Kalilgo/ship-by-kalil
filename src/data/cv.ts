@@ -53,6 +53,7 @@ export interface CvPageLabels {
   idDoc: string;
   nationality: string;
   maritalStatus: string;
+  downloadPdf: string;
   skillCategories: Record<keyof CvContent['skills'], string>;
 }
 
@@ -209,6 +210,7 @@ export const cvPageLabels: Record<'es' | 'en', CvPageLabels> = {
     idDoc: 'DNI',
     nationality: 'Nacionalidad',
     maritalStatus: 'Estado civil',
+    downloadPdf: 'Descargar',
     skillCategories: {
       frontend: 'Frontend',
       backend: 'Backend',
@@ -230,6 +232,7 @@ export const cvPageLabels: Record<'es' | 'en', CvPageLabels> = {
     idDoc: 'National ID',
     nationality: 'Nationality',
     maritalStatus: 'Marital status',
+    downloadPdf: 'Download',
     skillCategories: {
       frontend: 'Frontend',
       backend: 'Backend',
