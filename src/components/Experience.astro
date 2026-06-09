@@ -9,9 +9,14 @@ interface Props {
 
 const { locale = 'es' } = Astro.props;
 const t = locale === 'en' ? en : es;
-const tExperience = t.experienceData.map((item, i) => ({
-  ...item,
-  tech: experience[i]?.tech ?? [],
+const l = locale;
+const tExperience = experience.map((item) => ({
+  period: item.period[l],
+  role: item.role[l],
+  company: item.company[l],
+  description: item.description[l],
+  tech: item.tech,
+  current: item.current,
 }));
 ---
 
