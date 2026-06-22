@@ -129,5 +129,12 @@
     "cardLessInfo": "− Information",
     "cardOverview": "Overview",
     "cardDelivered": "What I did"
+  },
+  "commandPalette": {
+    "placeholder": "Quick navigate...",
+    "noResults": "No results for",
+    "categoryNav": "Navigation",
+    "categoryProjects": "Projects",
+    "categoryActions": "Actions"
   }
 }

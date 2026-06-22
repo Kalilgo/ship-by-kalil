@@ -3,6 +3,7 @@ import '../styles/global.css';
 import GlobalDock from '../components/GlobalDock';
 import ScrollToTop from '../components/ScrollToTop';
 import WhatsAppButton from '../components/WhatsAppButton';
+import CommandPalette from '../components/CommandPalette';
 import { LOCALE_SCROLL_RESTORE_KEY } from '../i18n';
 
 interface Props {
@@ -99,6 +100,7 @@ const hreflangEn = siteOrigin
     <GlobalDock client:idle />
     <ScrollToTop client:idle />
     <WhatsAppButton client:idle />
+    <CommandPalette client:idle locale={locale} />
 
     <script is:inline>
       (() => {

@@ -124,5 +124,12 @@
     "cardLessInfo": "− Información",
     "cardOverview": "Resumen",
     "cardDelivered": "Qué se realizó"
+  },
+  "commandPalette": {
+    "placeholder": "Navegá rápido...",
+    "noResults": "Sin resultados para",
+    "categoryNav": "Navegación",
+    "categoryProjects": "Proyectos",
+    "categoryActions": "Acciones"
   }
 }
