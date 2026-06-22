@@ -4,6 +4,7 @@ import GlobalDock from '../components/GlobalDock';
 import ScrollToTop from '../components/ScrollToTop';
 import WhatsAppButton from '../components/WhatsAppButton';
 import CommandPalette from '../components/CommandPalette';
+import { ViewTransitions } from 'astro:transitions';
 import { LOCALE_SCROLL_RESTORE_KEY } from '../i18n';
 
 interface Props {
@@ -65,6 +66,24 @@ const hreflangEn = siteOrigin
     />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#0A0A0F" />
+    <ViewTransitions>
+      <style is:global>
+        html[data-astro-transition]::view-transition-old(root) {
+          animation: 200ms ease-out both vt-fade-out;
+        }
+        html[data-astro-transition]::view-transition-new(root) {
+          animation: 250ms ease-in 50ms both vt-fade-in;
+        }
+        @keyframes vt-fade-out {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+        @keyframes vt-fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      </style>
+    </ViewTransitions>
   </head>
   <body class="bg-background text-text-primary font-body antialiased">
     <a href="#main-content" class="fixed -top-40 left-4 z-[9999] rounded-b-lg bg-accent-cyan px-4 py-2 text-sm font-semibold text-background shadow-lg transition-all focus:top-0 focus:outline-none">
@@ -104,6 +123,15 @@ const hreflangEn = siteOrigin
 
     <script is:inline>
       (() => {
+        /* View Transitions re-ejecuta is:inline scripts → limpiamos instancias previas */
+        document.querySelector('.pointer-spotlight')?.remove();
+        if (window.__portfolioScrollHandler) {
+          window.removeEventListener('scroll', window.__portfolioScrollHandler);
+        }
+        if (window.__portfolioRevealObserver) {
+          window.__portfolioRevealObserver.disconnect();
+        }
+
         const initMotion = () => {
           const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
           const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
@@ -112,7 +140,6 @@ const hreflangEn = siteOrigin
             document.body.classList.add('motion-enabled');
           }
 
-          /* Spotlight solo con puntero fino: en táctil el dedo al scroll dispara pointermove y re-pinta toda la capa → scroll entrecortado */
           if (!prefersReducedMotion && !coarsePointer) {
             const spot = document.createElement('div');
             spot.className = 'pointer-spotlight';
@@ -153,6 +180,7 @@ const hreflangEn = siteOrigin
             { threshold: 0.2, rootMargin: '0px 0px -60px 0px' }
           );
 
+          window.__portfolioRevealObserver = observer;
           revealItems.forEach((item) => observer.observe(item));
         };
 
@@ -160,27 +188,23 @@ const hreflangEn = siteOrigin
           const progressEl = document.getElementById('scroll-progress');
           let ticking = false;
 
-          const update = () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            if (progressEl && docHeight > 0) {
-              progressEl.style.width = ((scrollTop / docHeight) * 100).toFixed(1) + '%';
+          const handler = () => {
+            if (!ticking) {
+              requestAnimationFrame(() => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                if (progressEl && docHeight > 0) {
+                  progressEl.style.width = ((scrollTop / docHeight) * 100).toFixed(1) + '%';
+                }
+                ticking = false;
+              });
+              ticking = true;
             }
-            ticking = false;
           };
 
-          window.addEventListener(
-            'scroll',
-            () => {
-              if (!ticking) {
-                requestAnimationFrame(update);
-                ticking = true;
-              }
-            },
-            { passive: true }
-          );
-
-          update();
+          window.__portfolioScrollHandler = handler;
+          window.addEventListener('scroll', handler, { passive: true });
+          handler();
         };
 
         if (document.readyState === 'loading') {
