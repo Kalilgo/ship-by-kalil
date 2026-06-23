@@ -38,7 +38,7 @@ const hreflangEn = siteOrigin
 ---
 
 <!doctype html>
-<html lang={locale}>
+<html lang={locale} data-section="hero">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -133,6 +133,9 @@ const hreflangEn = siteOrigin
         if (window.__portfolioRevealObserver) {
           window.__portfolioRevealObserver.disconnect();
         }
+        if (window.__portfolioSectionObserver) {
+          window.__portfolioSectionObserver.disconnect();
+        }
 
         const initMotion = () => {
           const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -186,6 +189,45 @@ const hreflangEn = siteOrigin
           revealItems.forEach((item) => observer.observe(item));
         };
 
+        const initSectionColors = () => {
+          const sections = [
+            { id: 'sobre-mi', attr: 'sobre-mi' },
+            { id: 'skills', attr: 'skills' },
+            { id: 'proyectos', attr: 'proyectos' },
+            { id: 'experiencia', attr: 'experiencia' },
+            { id: 'contacto', attr: 'contacto' },
+          ];
+          const html = document.documentElement;
+          const sectionEls = sections
+            .map((s) => ({ el: document.getElementById(s.id), attr: s.attr }))
+            .filter((s) => s.el);
+
+          if (!sectionEls.length) return;
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const visible = entries
+                .filter((e) => e.isIntersecting)
+                .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+              if (visible.length > 0) {
+                const best = sectionEls.find(
+                  (s) => s.el === visible[0].target
+                );
+                if (best) html.setAttribute('data-section', best.attr);
+              } else {
+                const firstEl = sectionEls[0].el!;
+                if (firstEl && firstEl.getBoundingClientRect().top > 0) {
+                  html.setAttribute('data-section', 'hero');
+                }
+              }
+            },
+            { threshold: [0, 0.15, 0.3, 0.45, 0.6] }
+          );
+
+          window.__portfolioSectionObserver = observer;
+          sectionEls.forEach((s) => observer.observe(s.el!));
+        };
+
         const initScrollUI = () => {
           const progressEl = document.getElementById('scroll-progress');
           let ticking = false;
@@ -213,10 +255,12 @@ const hreflangEn = siteOrigin
           document.addEventListener('DOMContentLoaded', () => {
             initMotion();
             initScrollUI();
+            initSectionColors();
           }, { once: true });
         } else {
           initMotion();
           initScrollUI();
+          initSectionColors();
         }
       })();
     </script>
