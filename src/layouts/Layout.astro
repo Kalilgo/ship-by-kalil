@@ -228,6 +228,64 @@ const hreflangEn = siteOrigin
           sectionEls.forEach((s) => observer.observe(s.el!));
         };
 
+        const initSwipeSections = () => {
+          if (typeof document === 'undefined') return;
+          const coarse = window.matchMedia('(pointer: coarse)').matches;
+          if (!coarse) return;
+
+          const getSections = function () {
+            return Array.from(document.querySelectorAll('#main-content > section'));
+          };
+
+          let touchX = 0;
+          let touchY = 0;
+          let touchTime = 0;
+
+          document.addEventListener('touchstart', function (e) {
+            if (e.touches.length !== 1) return;
+            var t = e.touches[0];
+            touchX = t.clientX;
+            touchY = t.clientY;
+            touchTime = Date.now();
+          }, { passive: true });
+
+          document.addEventListener('touchend', function (e) {
+            if (e.changedTouches.length !== 1) return;
+            var t = e.changedTouches[0];
+            var dx = t.clientX - touchX;
+            var dy = t.clientY - touchY;
+            var dt = Date.now() - touchTime;
+
+            if (dt > 400) return;
+            if (Math.abs(dx) < 60 || Math.abs(dy) > Math.abs(dx) * 1.5) return;
+
+            var sections = getSections();
+            if (!sections.length) return;
+
+            var viewCenter = window.scrollY + window.innerHeight / 2;
+            var currentIdx = 0;
+            sections.forEach(function (s, i) {
+              var top = s.offsetTop;
+              var bottom = top + s.offsetHeight;
+              if (viewCenter >= top && viewCenter < bottom) currentIdx = i;
+            });
+
+            var nextIdx = dx < 0
+              ? Math.min(currentIdx + 1, sections.length - 1)
+              : Math.max(currentIdx - 1, 0);
+
+            if (nextIdx === currentIdx) return;
+
+            var target = sections[nextIdx];
+            window.scrollTo({
+              top: target.offsetTop - 16,
+              behavior: 'smooth',
+            });
+
+            try { navigator.vibrate(12); } catch (e) { /* no haptics */ }
+          }, { passive: true });
+        };
+
         const initScrollUI = () => {
           const progressEl = document.getElementById('scroll-progress');
           let ticking = false;
@@ -256,11 +314,13 @@ const hreflangEn = siteOrigin
             initMotion();
             initScrollUI();
             initSectionColors();
+            initSwipeSections();
           }, { once: true });
         } else {
           initMotion();
           initScrollUI();
           initSectionColors();
+          initSwipeSections();
         }
       })();
     </script>
