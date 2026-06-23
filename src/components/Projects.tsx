@@ -956,114 +956,205 @@ export default function Projects() {
                   className="absolute inset-0 bg-background/80 backdrop-blur-md"
                   onClick={() => setWindow(maximizedProject.id, 'open')}
                 />
-                <div
-                  className={`pointer-events-none absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8 ${!prefersReducedMotion ? dockMinimizePerspectiveClass : ''}`}
-                >
-                  <motion.div
-                    ref={maximizedModalRef}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby={`max-title-${maximizedProject.id}`}
-                    className="pointer-events-auto max-h-[min(94vh,920px)] w-full max-w-[min(96vw,80rem)] overflow-y-auto rounded-3xl border border-border bg-surface-2/95 p-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.65)] backdrop-blur-xl md:p-8"
-                    initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
-                    animate={
-                      minimizeAnim && minimizeAnim.id === maximizedProject.id
-                        ? prefersReducedMotion
-                          ? {
-                              x: minimizeAnim.dx,
-                              y: minimizeAnim.dy,
-                              scale: 0.12,
-                              rotateX: 0,
-                              opacity: 0.2,
-                              borderRadius: 999,
-                            }
-                          : dockMinimizeKeyframeUniform(minimizeAnim.dx, minimizeAnim.dy, 24)
-                        : { opacity: 1, scale: 1, x: 0, y: 0, rotateX: 0, borderRadius: 24 }
-                    }
-                    exit={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.98 }}
-                    transition={
-                      prefersReducedMotion &&
-                      minimizeAnim &&
-                      minimizeAnim.id === maximizedProject.id
-                        ? { duration: 0.12, ease: 'easeOut' as const }
-                        : dockMinimizeTransition(
-                            !!(minimizeAnim && minimizeAnim.id === maximizedProject.id)
-                          )
-                    }
-                    style={dockMinimizeMotionStyle}
-                    onAnimationComplete={() => {
-                      if (
-                        minimizeAnim &&
-                        maximizedProject &&
-                        minimizeAnim.id === maximizedProject.id
-                      ) {
-                        handleMinimizeAnimationComplete(maximizedProject.id);
+
+                {coarsePointer ? (
+                  <div className="pointer-events-none absolute inset-0 flex items-end justify-center">
+                    <motion.div
+                      ref={maximizedModalRef}
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby={`max-title-${maximizedProject.id}`}
+                      className="pointer-events-auto w-full max-h-[85dvh] overflow-y-auto rounded-t-3xl border border-border/80 border-b-0 bg-surface-2/95 pb-[max(1.25rem,env(safe-area-inset-bottom))] shadow-[0_-12px_60px_-24px_rgba(0,0,0,0.6)]"
+                      initial={{ y: '100%' }}
+                      animate={
+                        minimizeAnim && minimizeAnim.id === maximizedProject.id
+                          ? { y: minimizeAnim.dy, opacity: 0.2, scale: 0.12 }
+                          : { y: 0, opacity: 1, scale: 1 }
                       }
-                    }}
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <div className="mb-4 flex items-center justify-between gap-3">
-                      <h2
-                        id={`max-title-${maximizedProject.id}`}
-                        className="font-heading text-lg font-bold text-text-primary md:text-xl"
-                      >
-                        {maximizedProject.title}
-                      </h2>
-                      <WindowTrafficLights
-                        labels={{
-                          close: pw.close,
-                          minimize: pw.minimize,
-                          maximize: pw.maximize,
-                        }}
-                        onClose={() => setWindow(maximizedProject.id, 'open')}
-                        onMinimize={() => {
-                          void handleMinimize(maximizedProject.id);
-                        }}
-                        hideMaximize
-                      />
-                    </div>
-                    <ProjectPreview
-                      variant="modal"
-                      title={maximizedProject.title}
-                      url={maximizedProject.demoUrl}
-                      emoji={maximizedProject.image}
-                      tags={maximizedProject.tags}
-                      previewImage={maximizedProject.previewImage}
-                      modalDescription={`${maximizedProject.description}\n\n${pw.cardDelivered}: ${maximizedProject.whatWasDone}`}
-                      windowLabels={{
-                        close: pw.close,
-                        minimize: pw.minimize,
-                        maximize: pw.maximize,
+                      exit={{ y: '100%', opacity: 0 }}
+                      transition={
+                        prefersReducedMotion
+                          ? { duration: 0.12, ease: 'easeOut' }
+                          : minimizeAnim && minimizeAnim.id === maximizedProject.id
+                            ? { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+                            : { type: 'spring', damping: 28, stiffness: 350 }
+                      }
+                      style={dockMinimizeMotionStyle}
+                      onAnimationComplete={() => {
+                        if (minimizeAnim && minimimeAnim.id === maximizedProject.id) {
+                          handleMinimizeAnimationComplete(maximizedProject.id);
+                        }
                       }}
-                      hideWindowControls
-                      openPreviewLabel={pw.openPreview}
-                    />
-                    <div className="mt-6 flex flex-wrap gap-3">
-                      {maximizedProject.demoUrl ? (
-                        <a
-                          href={maximizedProject.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn-hero-primary inline-flex items-center gap-2 text-sm"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="flex justify-center pt-2 pb-1">
+                        <div className="h-1 w-10 rounded-full bg-border" />
+                      </div>
+
+                      <div className="flex items-center justify-between gap-3 px-5 py-3">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="shrink-0 text-lg">{maximizedProject.image ?? '💼'}</span>
+                          <h2
+                            id={`max-title-${maximizedProject.id}`}
+                            className="truncate font-heading text-base font-bold text-text-primary"
+                          >
+                            {maximizedProject.title}
+                          </h2>
+                        </div>
+                        <span
+                          className="shrink-0 text-xs text-text-muted"
+                          onClick={() => setWindow(maximizedProject.id, 'open')}
                         >
-                          {t.view}
-                          <span aria-hidden="true">↗</span>
-                        </a>
-                      ) : null}
-                      {maximizedProject.repoUrl ? (
-                        <a
-                          href={maximizedProject.repoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-2 px-5 py-2.5 text-sm font-medium text-text-primary transition hover:border-accent-cyan/50"
-                        >
-                          {pw.viewRepo}
-                          <span aria-hidden="true">↗</span>
-                        </a>
-                      ) : null}
-                    </div>
-                  </motion.div>
-                </div>
+                          {pw.close}
+                        </span>
+                      </div>
+
+                      <div className="px-5 pb-5">
+                        <ProjectPreview
+                          variant="modal"
+                          title={maximizedProject.title}
+                          url={maximizedProject.demoUrl}
+                          emoji={maximizedProject.image}
+                          tags={maximizedProject.tags}
+                          previewImage={maximizedProject.previewImage}
+                          modalDescription={`${maximizedProject.description}\n\n${pw.cardDelivered}: ${maximizedProject.whatWasDone}`}
+                          windowLabels={{ close: pw.close, minimize: pw.minimize, maximize: pw.maximize }}
+                          hideWindowControls
+                          openPreviewLabel={pw.openPreview}
+                        />
+                        <div className="mt-5 flex flex-wrap gap-3">
+                          {maximizedProject.demoUrl ? (
+                            <a
+                              href={maximizedProject.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn-hero-primary inline-flex items-center gap-2 text-sm"
+                            >
+                              {t.view}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          ) : null}
+                          {maximizedProject.repoUrl ? (
+                            <a
+                              href={maximizedProject.repoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-2 px-5 py-2.5 text-sm font-medium text-text-primary transition hover:border-accent-cyan/50"
+                            >
+                              {pw.viewRepo}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          ) : null}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                ) : (
+                  <div
+                    className={`pointer-events-none absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8 ${!prefersReducedMotion ? dockMinimizePerspectiveClass : ''}`}
+                  >
+                    <motion.div
+                      ref={maximizedModalRef}
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby={`max-title-${maximizedProject.id}`}
+                      className="pointer-events-auto max-h-[min(94vh,920px)] w-full max-w-[min(96vw,80rem)] overflow-y-auto rounded-3xl border border-border bg-surface-2/95 p-5 shadow-[0_24px_80px_-24px_rgba(0,0,0,0.65)] backdrop-blur-xl md:p-8"
+                      initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.96 }}
+                      animate={
+                        minimizeAnim && minimizeAnim.id === maximizedProject.id
+                          ? prefersReducedMotion
+                            ? {
+                                x: minimizeAnim.dx,
+                                y: minimizeAnim.dy,
+                                scale: 0.12,
+                                rotateX: 0,
+                                opacity: 0.2,
+                                borderRadius: 999,
+                              }
+                            : dockMinimizeKeyframeUniform(minimizeAnim.dx, minimizeAnim.dy, 24)
+                          : { opacity: 1, scale: 1, x: 0, y: 0, rotateX: 0, borderRadius: 24 }
+                      }
+                      exit={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.98 }}
+                      transition={
+                        prefersReducedMotion &&
+                        minimizeAnim &&
+                        minimizeAnim.id === maximizedProject.id
+                          ? { duration: 0.12, ease: 'easeOut' as const }
+                          : dockMinimizeTransition(
+                              !!(minimizeAnim && minimizeAnim.id === maximizedProject.id)
+                            )
+                      }
+                      style={dockMinimizeMotionStyle}
+                      onAnimationComplete={() => {
+                        if (
+                          minimizeAnim &&
+                          maximizedProject &&
+                          minimizeAnim.id === maximizedProject.id
+                        ) {
+                          handleMinimizeAnimationComplete(maximizedProject.id);
+                        }
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div className="flex items-center justify-between gap-3 border-b border-border/50 px-5 py-3 md:px-8 md:py-4">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <span className="shrink-0 text-xl">{maximizedProject.image ?? '💼'}</span>
+                          <h2
+                            id={`max-title-${maximizedProject.id}`}
+                            className="truncate font-heading text-base font-bold text-text-primary md:text-lg"
+                          >
+                            {maximizedProject.title}
+                          </h2>
+                        </div>
+                        <WindowTrafficLights
+                          labels={{ close: pw.close, minimize: pw.minimize, maximize: pw.maximize }}
+                          onClose={() => setWindow(maximizedProject.id, 'open')}
+                          onMinimize={() => { void handleMinimize(maximizedProject.id); }}
+                          hideMaximize
+                        />
+                      </div>
+
+                      <div className="p-5 md:p-8">
+                        <ProjectPreview
+                          variant="modal"
+                          title={maximizedProject.title}
+                          url={maximizedProject.demoUrl}
+                          emoji={maximizedProject.image}
+                          tags={maximizedProject.tags}
+                          previewImage={maximizedProject.previewImage}
+                          modalDescription={`${maximizedProject.description}\n\n${pw.cardDelivered}: ${maximizedProject.whatWasDone}`}
+                          windowLabels={{ close: pw.close, minimize: pw.minimize, maximize: pw.maximize }}
+                          hideWindowControls
+                          openPreviewLabel={pw.openPreview}
+                        />
+                        <div className="mt-6 flex flex-wrap gap-3">
+                          {maximizedProject.demoUrl ? (
+                            <a
+                              href={maximizedProject.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn-hero-primary inline-flex items-center gap-2 text-sm"
+                            >
+                              {t.view}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          ) : null}
+                          {maximizedProject.repoUrl ? (
+                            <a
+                              href={maximizedProject.repoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface-2 px-5 py-2.5 text-sm font-medium text-text-primary transition hover:border-accent-cyan/50"
+                            >
+                              {pw.viewRepo}
+                              <span aria-hidden="true">↗</span>
+                            </a>
+                          ) : null}
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                )}
               </motion.div>
             ) : null}
           </AnimatePresence>,
