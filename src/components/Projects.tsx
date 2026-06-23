@@ -23,6 +23,7 @@ import {
 
 import { TechTagIcon } from './ui/TechTagIcon';
 import { WindowTrafficLights } from './ui/WindowTrafficLights';
+import { triggerHaptic } from '../lib/haptic';
 
 const translations: Record<
   Locale,
@@ -980,6 +981,15 @@ export default function Projects() {
                             : { type: 'spring', damping: 28, stiffness: 350 }
                       }
                       style={dockMinimizeMotionStyle}
+                      drag={minimizeAnim && minimizeAnim.id === maximizedProject.id ? false : 'y'}
+                      dragConstraints={{ top: 0, bottom: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(_e, info) => {
+                        if (info.offset.y > 120 || info.velocity.y > 300) {
+                          triggerHaptic('medium');
+                          setWindow(maximizedProject.id, 'open');
+                        }
+                      }}
                       onAnimationComplete={() => {
                         if (minimizeAnim && minimimeAnim.id === maximizedProject.id) {
                           handleMinimizeAnimationComplete(maximizedProject.id);
