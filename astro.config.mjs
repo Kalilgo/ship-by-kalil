@@ -19,6 +19,7 @@ export default defineConfig({
             if (!id.includes('node_modules')) return;
             if (id.includes('framer-motion')) return 'vendor-motion';
             if (id.includes('lucide-react')) return 'vendor-icons';
+            if (id.includes('three')) return 'vendor-three';
           },
         },
       },

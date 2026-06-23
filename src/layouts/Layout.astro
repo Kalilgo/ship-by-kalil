@@ -4,6 +4,7 @@ import GlobalDock from '../components/GlobalDock';
 import ScrollToTop from '../components/ScrollToTop';
 import WhatsAppButton from '../components/WhatsAppButton';
 import CommandPalette from '../components/CommandPalette';
+import Background3D from '../components/Background3D';
 import { ViewTransitions } from 'astro:transitions';
 import { LOCALE_SCROLL_RESTORE_KEY } from '../i18n';
 
@@ -92,6 +93,7 @@ const hreflangEn = siteOrigin
 
     <div id="scroll-progress" aria-hidden="true"></div>
 
+    <Background3D client:visible />
     <slot />
 
     <script define:vars={{ localeScrollKey: LOCALE_SCROLL_RESTORE_KEY }}>
