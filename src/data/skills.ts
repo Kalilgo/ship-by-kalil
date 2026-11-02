@@ -12,20 +12,18 @@ export const skills: SkillCategory[] = [
   {
     name: 'Frontend',
     skills: [
-      { name: 'React', level: 85 },
-      { name: 'Angular', level: 70 },
-      { name: 'Astro', level: 80 },
-      { name: 'TypeScript', level: 75 },
-      { name: 'Tailwind CSS', level: 85 },
+      { name: 'React', level: 90 },
+      { name: 'TypeScript', level: 90 },
+      { name: 'Astro', level: 85 },
       { name: 'JavaScript', level: 90 },
+      { name: 'Tailwind CSS', level: 90 },
     ],
   },
   {
     name: 'Backend',
     skills: [
       { name: 'C# / .NET Core', level: 80 },
-      { name: 'Java', level: 95 },
-      { name: 'MVC', level: 75 },
+      { name: 'Node.js', level: 75 },
       { name: 'REST APIs', level: 80 },
     ],
   },
@@ -33,24 +31,23 @@ export const skills: SkillCategory[] = [
     name: 'Bases de Datos',
     skills: [
       { name: 'SQL Server', level: 80 },
-      { name: 'PostgreSQL', level: 70 },
-      { name: 'MongoDB (NoSQL)', level: 60 },
+      { name: 'PostgreSQL', level: 75 },
     ],
   },
   {
     name: 'Cloud & DevOps',
     skills: [
-      { name: 'AWS', level: 65 },
-      { name: 'Vercel', level: 85 },
-      { name: 'Railway', level: 70 },
-      { name: 'GitHub / Git', level: 85 },
+      { name: 'AWS', level: 75 },
+      { name: 'Vercel', level: 90 },
+      { name: 'Railway', level: 75 },
+      { name: 'GitHub / Git', level: 90 },
     ],
   },
   {
     name: 'Herramientas IA',
     skills: [
-      { name: 'Cursor', level: 80 },
-      { name: 'Claude AI', level: 80 },
+      { name: 'Cursor', level: 85 },
+      { name: 'Claude AI', level: 85 },
     ],
   },
 ];
