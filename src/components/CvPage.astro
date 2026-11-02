@@ -187,6 +187,32 @@ const educationStatusDone = (status: string) =>
             {cvContent.portfolioUrl.replace(/^https:\/\//, '').replace(/\/$/, '')}
           </a>
         </div>
+        {cvContent.githubUrl && (
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">GitHub</p>
+            <a
+              href={cvContent.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-lg text-accent-cyan font-medium hover:underline break-all"
+            >
+              {cvContent.githubUrl.replace(/^https:\/\//, '').replace(/\/$/, '')}
+            </a>
+          </div>
+        )}
+        {cvContent.linkedinUrl && (
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-text-secondary mb-2">LinkedIn</p>
+            <a
+              href={cvContent.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-lg text-accent-cyan font-medium hover:underline break-all"
+            >
+              {cvContent.linkedinUrl.replace(/^https:\/\//, '').replace(/\/$/, '')}
+            </a>
+          </div>
+        )}
       </div>
     </section>
 
