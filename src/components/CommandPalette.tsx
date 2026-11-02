@@ -62,7 +62,7 @@ export default function CommandPalette({ locale }: Props) {
           .querySelector(`[data-set-locale="${locale === 'es' ? 'en' : 'es'}"]`)
           ?.getAttribute('href');
         if (altHref) {
-          try { sessionStorage.setItem('portfolio-locale-scroll-y', String(window.scrollY)); } catch {}
+          try { sessionStorage.setItem('portfolio-locale-scroll-y', String(window.scrollY)); } catch { /* ignore */ }
           window.location.href = altHref;
         }
       },
@@ -265,7 +265,7 @@ export default function CommandPalette({ locale }: Props) {
                   </div>
                   {filtered
                     .filter((i) => i.category === cat)
-                    .map((item, idx) => {
+                    .map((item, _idx) => {
                       const globalIdx = filtered.indexOf(item);
                       return (
                         <button

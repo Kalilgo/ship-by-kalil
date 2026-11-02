@@ -34,7 +34,7 @@ export default function BottomSheet({
     return () => window.removeEventListener('keydown', handler);
   }, [isOpen]);
 
-  const handleDragEnd = (_: any, info: { offset: { y: number }; velocity: { y: number } }) => {
+  const handleDragEnd = (_: unknown, info: { offset: { y: number }; velocity: { y: number } }) => {
     if (disableDrag) return;
     if (info.offset.y > DRAG_THRESHOLD || info.velocity.y > 300) {
       triggerHaptic('medium');
