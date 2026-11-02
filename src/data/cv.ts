@@ -132,8 +132,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
     location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires, Argentina',
     phone: '+54 9 11 6137-5359',
     email: 'gomezukalil@gmail.com',
-    portfolioUrl: 'https://ship-by-kalil.vercel.app/',
-    profile: `Full Stack web developer with experience in freelance projects building applications for the financial and real estate sectors. Proactive, resourceful, and a strong self-learner. Familiar with modern AI-assisted development tools. Focused on delivering quality solutions, teamwork, and efficient project delivery using agile practices.`,
+    portfolioUrl: 'https://kalil.dev/',
+    profile: `Full Stack Web Developer focused on building web applications for the financial and real estate sectors. Specialized in React, Astro, TypeScript, .NET Core and AWS. Experienced in shipping features, migrating infrastructure and deploying to production. Focused on scalable solutions, performance and delivering value under agile methodologies.`
     experience: [
       {
         period: '2024 – Present',
