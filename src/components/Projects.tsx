@@ -991,7 +991,7 @@ export default function Projects() {
                         }
                       }}
                       onAnimationComplete={() => {
-                        if (minimizeAnim && minimimeAnim.id === maximizedProject.id) {
+                        if (minimizeAnim && minimizeAnim.id === maximizedProject.id) {
                           handleMinimizeAnimationComplete(maximizedProject.id);
                         }
                       }}
