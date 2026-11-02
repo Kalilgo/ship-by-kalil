@@ -59,6 +59,23 @@ const hreflangEn = siteOrigin
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImageUrl} />
     <meta name="twitter:site" content="@matiaskalil" />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Person',
+      name: 'Matías Kalil Gómez',
+      url: siteOrigin || canonicalUrl,
+      jobTitle: locale === 'en' ? 'Full Stack Web Developer' : 'Desarrollador Web Full Stack',
+      sameAs: [
+        'https://github.com/Kalilgo',
+        'https://www.linkedin.com/in/matias-kalil-gomez/'
+      ],
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Buenos Aires',
+        addressCountry: 'AR'
+      },
+      email: 'gomezukalil@gmail.com'
+    })} />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
