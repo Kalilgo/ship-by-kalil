@@ -111,8 +111,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
       },
     ],
     skills: {
-      frontend: ['React', 'Astro', 'Tailwind CSS', 'TypeScript', 'Next.js'],
-      backend: ['.NET Core', 'C#', 'Node.js', 'SQL Server', 'PostgreSQL'],
+      frontend: ['React', 'Astro', 'TypeScript', 'JavaScript', 'Tailwind CSS'],
+      backend: ['.NET Core', 'C#', 'Node.js', 'REST APIs'],
       cloud: ['AWS', 'Vercel', 'Railway'],
       tools: ['Git', 'GitHub', 'Cursor', 'Claude AI', 'Figma'],
     },
@@ -181,8 +181,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
       },
     ],
     skills: {
-      frontend: ['React', 'Astro', 'Tailwind CSS', 'TypeScript', 'Next.js'],
-      backend: ['.NET Core', 'C#', 'Node.js', 'SQL Server', 'PostgreSQL'],
+      frontend: ['React', 'Astro', 'TypeScript', 'JavaScript', 'Tailwind CSS'],
+      backend: ['.NET Core', 'C#', 'Node.js', 'REST APIs'],
       cloud: ['AWS', 'Vercel', 'Railway'],
       tools: ['Git', 'GitHub', 'Cursor', 'Claude AI', 'Figma'],
     },
