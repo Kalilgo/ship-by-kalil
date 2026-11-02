@@ -21,6 +21,8 @@ export interface CvContent {
   phone: string;
   email: string;
   portfolioUrl: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
   profile: string;
   experience: CvExperience[];
   education: CvEducation[];
@@ -61,11 +63,13 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
   es: {
     name: 'Matías Kalil Gómez',
     title: 'Desarrollador Web Full Stack',
-    location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires',
+    location: 'San Miguel, Buenos Aires, Argentina',
     phone: '+54 9 11 6137-5359',
     email: 'gomezukalil@gmail.com',
     portfolioUrl: 'https://kalil.dev/',
-    profile: `Desarrollador Web Full Stack enfocado a aplicaciones web para el sector financiero e inmobiliario. Especializado en React, Astro, TypeScript, .NET Core y AWS. Experiencia en desarrollo de features, migraciones de infraestructura y despliegue en producción. Orientado a soluciones escalables, rendimiento y trabajo en equipo bajo metodologías ágiles.`
+    githubUrl: 'https://github.com/Kalilgo',
+    linkedinUrl: 'https://www.linkedin.com/in/matias-kalil-gomez/',
+    profile: `Desarrollador Web Full Stack enfocado a aplicaciones web para el sector financiero e inmobiliario. Especializado en React, Astro, TypeScript, .NET Core y AWS. Experiencia en desarrollo de features, migraciones de infraestructura y despliegue en producción. Orientado a soluciones escalables, rendimiento y trabajo en equipo bajo metodologías ágiles.`,
     experience: [
       {
         period: '2024 – Actualidad',
@@ -133,6 +137,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
     phone: '+54 9 11 6137-5359',
     email: 'gomezukalil@gmail.com',
     portfolioUrl: 'https://kalil.dev/',
+    githubUrl: 'https://github.com/Kalilgo',
+    linkedinUrl: 'https://www.linkedin.com/in/matias-kalil-gomez/',
     profile: `Full Stack Web Developer focused on building web applications for the financial and real estate sectors. Specialized in React, Astro, TypeScript, .NET Core and AWS. Experienced in shipping features, migrating infrastructure and deploying to production. Focused on scalable solutions, performance and delivering value under agile methodologies.`,
     experience: [
       {
