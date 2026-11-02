@@ -64,8 +64,8 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
     location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires',
     phone: '+54 9 11 6137-5359',
     email: 'gomezukalil@gmail.com',
-    portfolioUrl: 'https://ship-by-kalil.vercel.app/',
-    profile: `Desarrollador web Full Stack con experiencia en proyectos freelance de desarrollo de aplicaciones para el sector financiero e inmobiliario. Proactivo, resolutivo y con fuerte capacidad de aprendizaje autónomo. Con conocimiento de herramientas modernas de desarrollo asistido por inteligencia artificial. Orientado a la entrega de soluciones de calidad, con capacidad para el trabajo en equipo y la gestión eficiente de proyectos bajo metodologías ágiles.`,
+    portfolioUrl: 'https://kalil.dev/',
+    profile: `Desarrollador Web Full Stack enfocado a aplicaciones web para el sector financiero e inmobiliario. Especializado en React, Astro, TypeScript, .NET Core y AWS. Experiencia en desarrollo de features, migraciones de infraestructura y despliegue en producción. Orientado a soluciones escalables, rendimiento y trabajo en equipo bajo metodologías ágiles.`
     experience: [
       {
         period: '2024 – Actualidad',
