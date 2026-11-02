@@ -129,11 +129,11 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
   en: {
     name: 'Matías Kalil Gómez',
     title: 'Full Stack Web Developer',
-    location: 'Roque Sáenz Peña 1475, San Miguel, Buenos Aires, Argentina',
+    location: 'Buenos Aires, Argentina',
     phone: '+54 9 11 6137-5359',
     email: 'gomezukalil@gmail.com',
     portfolioUrl: 'https://kalil.dev/',
-    profile: `Full Stack Web Developer focused on building web applications for the financial and real estate sectors. Specialized in React, Astro, TypeScript, .NET Core and AWS. Experienced in shipping features, migrating infrastructure and deploying to production. Focused on scalable solutions, performance and delivering value under agile methodologies.`
+    profile: `Full Stack Web Developer focused on building web applications for the financial and real estate sectors. Specialized in React, Astro, TypeScript, .NET Core and AWS. Experienced in shipping features, migrating infrastructure and deploying to production. Focused on scalable solutions, performance and delivering value under agile methodologies.`,
     experience: [
       {
         period: '2024 – Present',
@@ -188,10 +188,10 @@ export const cvByLocale: Record<'es' | 'en', CvContent> = {
       'Analytical thinking focused on problem solving',
     ],
     personal: {
-      birth: '05/22/1999',
-      dni: '41.874.133',
+      birth: '',
+      dni: '',
       nationality: 'Argentine',
-      status: 'Single',
+      status: '',
     },
   },
 };
