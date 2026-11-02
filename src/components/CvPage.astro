@@ -190,29 +190,39 @@ const educationStatusDone = (status: string) =>
       </div>
     </section>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
-        <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">07</span>
-        {labels.personalData}
-      </h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
-          <p class="text-xs text-text-secondary mb-1">{labels.birthDate}</p>
-          <p class="text-text-primary font-medium">{cvContent.personal.birth}</p>
+    {(cvContent.personal.birth || cvContent.personal.dni || cvContent.personal.nationality || cvContent.personal.status) && (
+      <section class="mb-8">
+        <h2 class="text-2xl font-bold font-heading text-text-primary mb-4 flex items-center gap-2">
+          <span class="w-8 h-8 bg-accent-cyan/20 text-accent-cyan rounded-lg flex items-center justify-center text-sm">07</span>
+          {labels.personalData}
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {cvContent.personal.birth && (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+              <p class="text-xs text-text-secondary mb-1">{labels.birthDate}</p>
+              <p class="text-text-primary font-medium">{cvContent.personal.birth}</p>
+            </div>
+          )}
+          {cvContent.personal.dni && (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+              <p class="text-xs text-text-secondary mb-1">{labels.idDoc}</p>
+              <p class="text-text-primary font-medium">{cvContent.personal.dni}</p>
+            </div>
+          )}
+          {cvContent.personal.nationality && (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+              <p class="text-xs text-text-secondary mb-1">{labels.nationality}</p>
+              <p class="text-text-primary font-medium">{cvContent.personal.nationality}</p>
+            </div>
+          )}
+          {cvContent.personal.status && (
+            <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
+              <p class="text-xs text-text-secondary mb-1">{labels.maritalStatus}</p>
+              <p class="text-text-primary font-medium">{cvContent.personal.status}</p>
+            </div>
+          )}
         </div>
-        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
-          <p class="text-xs text-text-secondary mb-1">{labels.idDoc}</p>
-          <p class="text-text-primary font-medium">{cvContent.personal.dni}</p>
-        </div>
-        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
-          <p class="text-xs text-text-secondary mb-1">{labels.nationality}</p>
-          <p class="text-text-primary font-medium">{cvContent.personal.nationality}</p>
-        </div>
-        <div class="bg-surface-2/50 border border-border rounded-xl p-4 text-center">
-          <p class="text-xs text-text-secondary mb-1">{labels.maritalStatus}</p>
-          <p class="text-text-primary font-medium">{cvContent.personal.status}</p>
-        </div>
-      </div>
-    </section>
+      </section>
+    )}
   </div>
 </main>
